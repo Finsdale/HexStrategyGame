@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/cursor.png","D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/cursor.xnb","TextureProcessor","Texture2DContent",2905,3649,0.3864936
+"D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/DebugFont.spritefont","D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/DebugFont.xnb","LocalizedFontProcessor","SpriteFontContent",2427,21538,0.4191802
+"D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/GameFont.spritefont","D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/GameFont.xnb","LocalizedFontProcessor","SpriteFontContent",2426,956,0.0073946
+"D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/test_tiles.png","D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/test_tiles.xnb","TextureProcessor","Texture2DContent",10861,21469,0.0098607
