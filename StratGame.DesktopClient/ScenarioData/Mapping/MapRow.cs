@@ -24,5 +24,10 @@ namespace HexStrategyGame.MapData
     {
       return MapTiles.Count();
     }
+
+        public MapTile MapTile(int xIndex)
+        {
+            return MapTiles[xIndex];
+        }
   }
 }

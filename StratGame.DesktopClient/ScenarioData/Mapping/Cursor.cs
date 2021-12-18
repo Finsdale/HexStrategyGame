@@ -41,11 +41,11 @@ namespace HexStrategyGame.MapData
           {
             if (lastRight)
             {
-              Move(1, -1);
+              Move(Position.Y % 2, -1);
             }
             else
             {
-              Move(-1, -1);
+              Move(-(Position.Y + 1) % 2, -1);
             }
             lastRight = !lastRight;
           }
@@ -55,29 +55,29 @@ namespace HexStrategyGame.MapData
           {
             if (lastRight)
             {
-              Move(1, 1);
+              Move(Position.Y % 2, 1);
             }
             else
             {
-              Move(-1, 1);
+              Move(-(Position.Y + 1) % 2, 1);
             }
             lastRight = !lastRight;
           }
           break;
         case Direction.UpLeft:
-          Move(-1, -1);
+          Move(-(Position.Y + 1) % 2, -1);
           lastRight = false;
           break;
         case Direction.UpRight:
-          Move(1, -1);
+          Move(Position.Y % 2, -1);
           lastRight = true;
           break;
         case Direction.DownLeft:
-          Move(-1, 1);
+          Move(-(Position.Y + 1) % 2, 1);
           lastRight = false;
           break;
         case Direction.DownRight:
-          Move(1, 1);
+          Move(Position.Y % 2, 1);
           lastRight = true;
           break;
         case Direction.Left:

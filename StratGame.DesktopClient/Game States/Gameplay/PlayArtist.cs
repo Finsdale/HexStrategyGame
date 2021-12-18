@@ -37,9 +37,17 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch, SpriteFont font, Texture2D texture)
     {
-      spriteBatch.Draw(texture, new Rectangle(0, 0, 27, 33), new Rectangle(0, 33, 27, 33), Color.White);
-      spriteBatch.Draw(texture, new Rectangle(27, 0, 27, 33), new Rectangle(0, 66, 27, 33), Color.White);
-      spriteBatch.Draw(texture, new Rectangle(54, 0, 27, 33), new Rectangle(0, 99, 27, 33), Color.White);
+            for (int y = 0; y <= scenario.map.MapHeight(); y++)
+            {
+                for (int x = 0; x <= scenario.map.MapLength(); x++)
+                {
+                    spriteBatch.Draw(
+                        texture, 
+                        new Rectangle((x * TileData.xStep) + (y % 2 * TileData.xHalfStep), y * TileData.yStep, TileData.width, TileData.height), 
+                        new Rectangle(0, TileData.height * scenario.map.TileTerrain(x, y), 27, 33), 
+                        Color.White);
+                }
+            }
     }
   }
 }

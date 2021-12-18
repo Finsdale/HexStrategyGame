@@ -8,13 +8,13 @@ namespace HexStrategyGame.MapData
 {
   public class MapTile
   {
-    Terrain TileTerrain { get; set; }
+    public Terrain TileTerrain { get; set; }
     bool HasUnit { get; set; }
     bool HasBuilding { get; set; }
 
     public MapTile()
     {
-      TileTerrain = 0;
+      TileTerrain = Terrain.Sea;
       HasUnit = false;
       HasBuilding = false;
     }

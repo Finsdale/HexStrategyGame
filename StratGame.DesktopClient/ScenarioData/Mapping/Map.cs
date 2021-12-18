@@ -29,5 +29,10 @@ namespace HexStrategyGame.MapData
     {
       return MapRows[0].Length() - 1;
     }
+
+    public int TileTerrain(int xIndex, int yIndex)
+        {
+            return (int)MapRows[yIndex].MapTile(xIndex).TileTerrain;
+        }
   }
 }
