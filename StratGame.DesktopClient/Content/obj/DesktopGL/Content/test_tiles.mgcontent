@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/test_tiles.png</SourceFile>
-  <SourceTime>2021-12-06T23:49:29.0992938-05:00</SourceTime>
-  <DestFile>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/Content/test_tiles.xnb</DestFile>
-  <DestTime>2021-12-12T22:47:42.8990442-05:00</DestTime>
+  <SourceFile>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/test_tiles.png</SourceFile>
+  <SourceTime>2021-12-17T15:35:30.2771345-05:00</SourceTime>
+  <DestFile>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/bin/DesktopGL/Content/test_tiles.xnb</DestFile>
+  <DestTime>2021-12-17T17:54:35.128739-05:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2020-08-10T11:17:54-05:00</ImporterTime>
+  <ImporterTime>2020-08-10T16:17:54-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2020-08-10T11:17:54-05:00</ProcessorTime>
+  <ProcessorTime>2020-08-10T16:17:54-04:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>

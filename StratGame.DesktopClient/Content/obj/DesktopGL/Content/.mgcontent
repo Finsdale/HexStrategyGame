@@ -4,10 +4,10 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/cursor.png</File>
-    <File>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/DebugFont.spritefont</File>
-    <File>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/GameFont.spritefont</File>
-    <File>D:/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/test_tiles.png</File>
+    <File>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/cursor.png</File>
+    <File>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/DebugFont.spritefont</File>
+    <File>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/GameFont.spritefont</File>
+    <File>C:/Users/Jeremy/Documents/GitHub/HexStrategyGame/StratGame.DesktopClient/Content/test_tiles.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
