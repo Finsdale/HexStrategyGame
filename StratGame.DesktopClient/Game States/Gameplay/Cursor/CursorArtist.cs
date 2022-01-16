@@ -12,17 +12,13 @@ namespace HexStrategyGame.Gameplay
 {
   class CursorArtist: IArtist
   {
-    PlayArtist playArtist;
-    private float frameTimerValue;
-        private SpriteFont font;
-        private Texture2D texture;
+        readonly PlayArtist playArtist;
+        readonly TextureCollection TC;
 
         public CursorArtist(PlayArtist playArtist)
     {
       this.playArtist = playArtist;
-            TextureCollection TC = TextureCollection.Instance;
-            font = TC.GameFont;
-            texture = TC.TerrainTiles;
+            TC = TextureCollection.Instance;
     }
 
     private Cursor Cursor()
@@ -30,18 +26,13 @@ namespace HexStrategyGame.Gameplay
       return playArtist.Cursor();
     }
 
-    public float FrameTimerValue(float frameTimerValue)
-    {
-      return this.frameTimerValue = frameTimerValue;
-    }
-
     public void Draw(SpriteBatch spriteBatch)
     {
       playArtist.Draw(spriteBatch);
-            spriteBatch.DrawString(font, $"X:{Cursor().Position.X}", new Vector2(0, 60), Color.Black);
-            spriteBatch.DrawString(font, $"Y:{Cursor().Position.Y}", new Vector2(0, 90), Color.Black);
+            spriteBatch.DrawString(TC.GameFont, $"X:{Cursor().Position.X}", new Vector2(0, 60), Color.Black);
+            spriteBatch.DrawString(TC.GameFont, $"Y:{Cursor().Position.Y}", new Vector2(0, 90), Color.Black);
             spriteBatch.Draw(
-                texture, 
+                TC.TerrainTiles, 
                 new Rectangle((Cursor().Position.X * TileData.xStep) + (Cursor().Position.Y % 2 * TileData.xHalfStep), Cursor().Position.Y * TileData.yStep, TileData.width, TileData.height), 
                 new Rectangle(0,TileData.height * 2,TileData.width,TileData.height),
                 Color.White);

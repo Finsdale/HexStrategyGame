@@ -10,9 +10,11 @@ namespace HexStrategyGame.Gameplay
 {
   public class CursorState : IGameState
   {
-    PlayStateMachine playStateMachine;
-    Cursor cursor;
-    CursorArtist artist;
+#pragma warning disable IDE0052 // Remove unread private members
+        readonly PlayStateMachine playStateMachine;
+#pragma warning restore IDE0052 // Remove unread private members
+        readonly Cursor cursor;
+        readonly CursorArtist artist;
     public float frameTimer = 0.0f;
 
     public CursorState(PlayStateMachine playStateMachine)
@@ -36,8 +38,6 @@ namespace HexStrategyGame.Gameplay
       {
         UpdateCursor(input);
       }
-      //Get rid of this later
-      artist.FrameTimerValue(frameTimer);
     }
 
     public IArtist GetArtist()

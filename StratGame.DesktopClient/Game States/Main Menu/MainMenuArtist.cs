@@ -10,20 +10,18 @@ namespace HexStrategyGame.MainMenu
 {
   class MainMenuArtist: IArtist
   {
-        MainMenuData data;
-        TextureCollection TC;
-        SpriteFont font;
+        readonly MainMenuData data;
+        readonly TextureCollection TC;
 
     public MainMenuArtist(MainMenuData data)
     {
       this.data = data;
-            TC = TextureCollection.Instance;
-      font = TC.GameFont;
+      TC = TextureCollection.Instance;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.DrawString(font, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
+        spriteBatch.DrawString(TC.GameFont, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
     }
   }
 }

@@ -10,14 +10,14 @@ namespace HexStrategyGame.GameSettings
 {
     class GameSettingsArtist : IArtist
     {
-        SpriteFont font;
+        readonly TextureCollection TC;
         public GameSettingsArtist()
         {
-            font = TextureCollection.Instance.GameFont;
+            TC = TextureCollection.Instance;
         }
     public void Draw(SpriteBatch spriteBatch)
     {
-      spriteBatch.DrawString(font, "Game Settings", new Vector2(0, 30), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, "Game Settings", new Vector2(0, 30), Color.Black);
     }
   }
 }
