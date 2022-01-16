@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.GameSettings
 {
-  class GameSettingsArtist : IArtist
-  {
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+    class GameSettingsArtist : IArtist
+    {
+        SpriteFont font;
+        public GameSettingsArtist()
+        {
+            font = TextureCollection.Instance.GameFont;
+        }
+    public void Draw(SpriteBatch spriteBatch)
     {
       spriteBatch.DrawString(font, "Game Settings", new Vector2(0, 30), Color.Black);
-    }
-
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font, Texture2D texture)
-    {
-      Draw(spriteBatch, font);
     }
   }
 }

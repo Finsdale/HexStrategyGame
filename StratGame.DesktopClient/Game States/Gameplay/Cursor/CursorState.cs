@@ -56,7 +56,7 @@ namespace HexStrategyGame.Gameplay
       {
         if(frameTimer >= 2.5f)
         {
-          frameTimer = 1.7f;
+          frameTimer = 2.0f;
           UpdateCursorPosition(input);
         }
         else

@@ -13,13 +13,13 @@ namespace HexStrategyGame
         private SpriteBatch _spriteBatch;
         InputAdapter inputAdapter;
         Input input;
-        SpriteFont gameFont, debugFont;
-        Texture2D terrainTiles;
+        TextureCollection TC;
         GameStateMachine gameStateMachine;
         bool debugInfo, triggered;
 
         public Game1()
         {
+            TC = TextureCollection.Instance;
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -39,9 +39,10 @@ namespace HexStrategyGame
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            gameFont = Content.Load<SpriteFont>("GameFont");
-            debugFont = Content.Load<SpriteFont>("DebugFont");
-            terrainTiles = Content.Load<Texture2D>("test_tiles");
+            TC.LoadContent(Content);
+            //gameFont = Content.Load<SpriteFont>("GameFont");
+            //debugFont = Content.Load<SpriteFont>("DebugFont");
+            //terrainTiles = Content.Load<Texture2D>("test_tiles");
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,17 +70,17 @@ namespace HexStrategyGame
 
             _spriteBatch.Begin();
 
-            gameStateMachine.GetArtist().Draw(_spriteBatch, gameFont, terrainTiles);
+            gameStateMachine.GetArtist().Draw(_spriteBatch);
 
             if (debugInfo)
             {
-                _spriteBatch.DrawString(debugFont, $"Direction: {input.direction}", new Vector2(5, 0), Color.White);
-                _spriteBatch.DrawString(debugFont, $"{gameStateMachine.GameState}", new Vector2(5, 10), Color.White);
-                _spriteBatch.DrawString(debugFont, $"Confirm: {input.confirm}", new Vector2(5, 20), Color.White);
-                _spriteBatch.DrawString(debugFont, $"Cancel: {input.cancel}", new Vector2(5, 30), Color.White);
-                _spriteBatch.DrawString(debugFont, $"Next: {input.next}", new Vector2(5, 40), Color.White);
-                _spriteBatch.DrawString(debugFont, $"Info: {input.info}", new Vector2(5, 50), Color.White);
-                _spriteBatch.DrawString(debugFont, $"Menu: {input.menu}", new Vector2(5, 60), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Direction: {input.direction}", new Vector2(5, 0), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"{gameStateMachine.GameState}", new Vector2(5, 10), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Confirm: {input.confirm}", new Vector2(5, 20), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Cancel: {input.cancel}", new Vector2(5, 30), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Next: {input.next}", new Vector2(5, 40), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Info: {input.info}", new Vector2(5, 50), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Menu: {input.menu}", new Vector2(5, 60), Color.White);
             }
 
             _spriteBatch.End();

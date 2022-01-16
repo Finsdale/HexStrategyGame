@@ -11,19 +11,19 @@ namespace HexStrategyGame.MainMenu
   class MainMenuArtist: IArtist
   {
         MainMenuData data;
+        TextureCollection TC;
+        SpriteFont font;
 
     public MainMenuArtist(MainMenuData data)
     {
       this.data = data;
-    }
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font)
-    {
-      spriteBatch.DrawString(font, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
+            TC = TextureCollection.Instance;
+      font = TC.GameFont;
     }
 
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font, Texture2D texture)
+    public void Draw(SpriteBatch spriteBatch)
     {
-      Draw(spriteBatch, font);
+        spriteBatch.DrawString(font, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
     }
   }
 }

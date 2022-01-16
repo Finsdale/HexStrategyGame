@@ -14,10 +14,15 @@ namespace HexStrategyGame.Gameplay
   {
     public Scenario scenario;
     public string currentState;
+        private SpriteFont font;
+        private Texture2D texture;
 
     public PlayArtist(Scenario scenario)
     {
       this.scenario = scenario;
+            TextureCollection TC = TextureCollection.Instance;
+            font = TC.GameFont;
+            texture = TC.TerrainTiles;
     }
 
     public Cursor Cursor()
@@ -30,13 +35,9 @@ namespace HexStrategyGame.Gameplay
       return this.currentState = currentState;
     }
 
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+    public void Draw(SpriteBatch spriteBatch)
     {
-      spriteBatch.DrawString(font, $"Current State: {currentState}", new Vector2(0, 30), Color.Black);
-    }
-
-    public void Draw(SpriteBatch spriteBatch, SpriteFont font, Texture2D texture)
-    {
+            spriteBatch.DrawString(font, $"Current State: {currentState}", new Vector2(0, 30), Color.Black);
             for (int y = 0; y <= scenario.map.MapHeight(); y++)
             {
                 for (int x = 0; x <= scenario.map.MapLength(); x++)

@@ -9,7 +9,6 @@ namespace HexStrategyGame
 {
   public interface IArtist
   {
-    void Draw(SpriteBatch spriteBatch, SpriteFont font);
-    void Draw(SpriteBatch spriteBatch, SpriteFont font, Texture2D textures);
+    void Draw(SpriteBatch spriteBatch);
   }
 }
