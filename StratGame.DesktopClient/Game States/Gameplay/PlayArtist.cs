@@ -34,7 +34,6 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-            spriteBatch.DrawString(TC.GameFont, $"Current State: {currentState}", new Vector2(0, 30), Color.Black);
             for (int y = 0; y <= scenario.map.MapHeight(); y++)
             {
                 for (int x = 0; x <= scenario.map.MapLength(); x++)
@@ -46,6 +45,7 @@ namespace HexStrategyGame.Gameplay
                         Color.White);
                 }
             }
+            spriteBatch.DrawString(TC.GameFont, $"Current State: {currentState}", new Vector2(0, 30), Color.Black);
+        }
     }
-  }
 }

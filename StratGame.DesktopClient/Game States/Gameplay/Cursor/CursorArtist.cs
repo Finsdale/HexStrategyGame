@@ -32,9 +32,9 @@ namespace HexStrategyGame.Gameplay
             spriteBatch.DrawString(TC.GameFont, $"X:{Cursor().Position.X}", new Vector2(0, 60), Color.Black);
             spriteBatch.DrawString(TC.GameFont, $"Y:{Cursor().Position.Y}", new Vector2(0, 90), Color.Black);
             spriteBatch.Draw(
-                TC.TerrainTiles, 
+                TC.Cursor, 
                 new Rectangle((Cursor().Position.X * TileData.xStep) + (Cursor().Position.Y % 2 * TileData.xHalfStep), Cursor().Position.Y * TileData.yStep, TileData.width, TileData.height), 
-                new Rectangle(0,TileData.height * 2,TileData.width,TileData.height),
+                new Rectangle(0,0,TileData.width,TileData.height),
                 Color.White);
     }
   }
