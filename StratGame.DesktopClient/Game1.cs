@@ -11,10 +11,10 @@ namespace HexStrategyGame
         private readonly GraphicsDeviceManager _graphics;
 #pragma warning restore IDE0052 // Remove unread private members
         private SpriteBatch _spriteBatch;
-        InputAdapter inputAdapter;
-        Input input;
-        TextureCollection TC;
-        GameStateMachine gameStateMachine;
+        readonly InputAdapter p1Control;
+        Input playerOne;
+        readonly TextureCollection TC;
+        readonly GameStateMachine gameStateMachine;
         bool debugInfo, triggered;
 
         public Game1()
@@ -23,8 +23,8 @@ namespace HexStrategyGame
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            inputAdapter = new InputAdapter();
-            input = new Input();
+            p1Control = new InputAdapter();
+            playerOne = new Input();
             gameStateMachine = new GameStateMachine();
             debugInfo = triggered = false;
         }
@@ -40,9 +40,6 @@ namespace HexStrategyGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             TC.LoadContent(Content);
-            //gameFont = Content.Load<SpriteFont>("GameFont");
-            //debugFont = Content.Load<SpriteFont>("DebugFont");
-            //terrainTiles = Content.Load<Texture2D>("test_tiles");
             // TODO: use this.Content to load your game content here
         }
 
@@ -53,9 +50,9 @@ namespace HexStrategyGame
 
             ToggleDebugInfo();
 
-            input = inputAdapter.GetInput();
+            playerOne = p1Control.GetInput();
 
-            gameStateMachine.Update(input);
+            gameStateMachine.Update(playerOne);
 
             if (gameStateMachine.Exit == true) Exit();
 
@@ -74,13 +71,13 @@ namespace HexStrategyGame
 
             if (debugInfo)
             {
-                _spriteBatch.DrawString(TC.DebugFont, $"Direction: {input.direction}", new Vector2(5, 0), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Direction: {playerOne.direction}", new Vector2(5, 0), Color.White);
                 _spriteBatch.DrawString(TC.DebugFont, $"{gameStateMachine.GameState}", new Vector2(5, 10), Color.White);
-                _spriteBatch.DrawString(TC.DebugFont, $"Confirm: {input.confirm}", new Vector2(5, 20), Color.White);
-                _spriteBatch.DrawString(TC.DebugFont, $"Cancel: {input.cancel}", new Vector2(5, 30), Color.White);
-                _spriteBatch.DrawString(TC.DebugFont, $"Next: {input.next}", new Vector2(5, 40), Color.White);
-                _spriteBatch.DrawString(TC.DebugFont, $"Info: {input.info}", new Vector2(5, 50), Color.White);
-                _spriteBatch.DrawString(TC.DebugFont, $"Menu: {input.menu}", new Vector2(5, 60), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Confirm: {playerOne.confirm}", new Vector2(5, 20), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Cancel: {playerOne.cancel}", new Vector2(5, 30), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Next: {playerOne.next}", new Vector2(5, 40), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Info: {playerOne.info}", new Vector2(5, 50), Color.White);
+                _spriteBatch.DrawString(TC.DebugFont, $"Menu: {playerOne.menu}", new Vector2(5, 60), Color.White);
             }
 
             _spriteBatch.End();

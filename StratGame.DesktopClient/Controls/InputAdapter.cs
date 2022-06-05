@@ -13,18 +13,20 @@ namespace HexStrategyGame.Controls
     public GamePadState GS { get; set; }
     public Input CurrentInput { get; set; }
     public Input LastInput { get; set; }
+    readonly PlayerIndex PlayerNum;
 
-    public InputAdapter()
+    public InputAdapter(PlayerIndex playerNum = PlayerIndex.One)
     {
       CurrentInput = new Input();
       LastInput = new Input();
+      PlayerNum = playerNum;
     }
 
     public Input GetInput()
     {
       LastInput = CurrentInput;
       CurrentInput = new Input();
-      GS = GamePad.GetState(PlayerIndex.One);
+      GS = GamePad.GetState(PlayerNum);
       if (GS.Buttons.A == ButtonState.Pressed)
         ButtonPressed(CurrentInput.confirm, LastInput.confirm);
       if (GS.Buttons.B == ButtonState.Pressed)
@@ -45,7 +47,7 @@ namespace HexStrategyGame.Controls
     private void ButtonPressed(InputButton button, InputButton prevButton)
     {
       button.Held = (prevButton.Pressed || prevButton.Held);
-      button.Pressed = button.Held ? false : true; 
+      button.Pressed = !button.Held; 
     }
 
     private Direction GetDirection()
