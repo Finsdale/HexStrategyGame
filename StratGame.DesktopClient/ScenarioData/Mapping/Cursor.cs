@@ -34,6 +34,7 @@ namespace HexStrategyGame.MapData
 
     public void Move(Direction direction)
     {
+            /*
       switch (direction)
       {
         case Direction.Up:
@@ -88,8 +89,42 @@ namespace HexStrategyGame.MapData
           Move(1, 0);
           lastRight = true;
           break;
-      }
+      }*/
+
+    switch (direction)
+    {
+        case Direction.Up:
+            if (0 < Position.Y)
+            {
+                Move(0, -1);
+            }
+            break;
+        case Direction.Down:
+            if (MaxPosition.Y > Position.Y)
+            {
+                Move(0, 1);
+            }
+            break;
+        case Direction.UpLeft:
+            Move(-1, -1);
+            break;
+        case Direction.UpRight:
+            Move(1, -1);
+            break;
+        case Direction.DownLeft:
+            Move(-1, 1);
+            break;
+        case Direction.DownRight:
+            Move(1, 1);
+            break;
+        case Direction.Left:
+            Move(-1, 0);
+            break;
+        case Direction.Right:
+            Move(1, 0);
+            break;
     }
+        }
 
     //public void Move(Point location)
     //{
