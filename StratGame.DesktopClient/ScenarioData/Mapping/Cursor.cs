@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using HexStrategyGame.Controls;
+using ControllerInput;
 
 namespace HexStrategyGame.MapData
 {
@@ -34,7 +34,6 @@ namespace HexStrategyGame.MapData
 
     public void Move(Direction direction)
     {
-            /*
       switch (direction)
       {
         case Direction.Up:
@@ -89,8 +88,9 @@ namespace HexStrategyGame.MapData
           Move(1, 0);
           lastRight = true;
           break;
-      }*/
-
+      }
+/*
+    //This is a variation of the move function for use with square movement.
     switch (direction)
     {
         case Direction.Up:
@@ -123,8 +123,8 @@ namespace HexStrategyGame.MapData
         case Direction.Right:
             Move(1, 0);
             break;
+    }*/
     }
-        }
 
     //public void Move(Point location)
     //{

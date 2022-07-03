@@ -1,4 +1,4 @@
-﻿using HexStrategyGame.Controls;
+﻿using ControllerInput;
 using HexStrategyGame.MainMenu;
 using HexStrategyGame.Gameplay;
 using HexStrategyGame.GameSettings;

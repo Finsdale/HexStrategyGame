@@ -22,7 +22,7 @@ namespace HexStrategyGame.MapData
 
     public int Length()
     {
-      return MapTiles.Count();
+      return MapTiles.Count;
     }
 
         public MapTile MapTile(int xIndex)

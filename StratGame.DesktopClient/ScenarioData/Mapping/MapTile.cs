@@ -9,8 +9,10 @@ namespace HexStrategyGame.MapData
   public class MapTile
   {
     public Terrain TileTerrain { get; set; }
-    bool HasUnit { get; set; }
-    bool HasBuilding { get; set; }
+#pragma warning disable IDE0052 // Remove unread private members
+        private bool HasUnit { get; set; }
+        private bool HasBuilding { get; set; }
+#pragma warning restore IDE0052 // Remove unread private members
 
     public MapTile()
     {
@@ -21,7 +23,7 @@ namespace HexStrategyGame.MapData
 
     public MapTile(int terrainType, bool hasUnit, bool hasBuilding)
     {
-      TileTerrain = Terrain.Sea;
+      TileTerrain = (Terrain)terrainType;
       HasUnit = hasUnit;
       HasBuilding = hasBuilding;
     }

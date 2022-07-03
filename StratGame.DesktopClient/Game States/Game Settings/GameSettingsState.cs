@@ -1,4 +1,4 @@
-﻿using HexStrategyGame.Controls;
+﻿using ControllerInput;
 using HexStrategyGame.MapData;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ namespace HexStrategyGame.GameSettings
 {
   public class GameSettingsState : IGameState
   {
-    GameStateMachine gameStateMachine;
-    IArtist artist;
-    Map map;
+        readonly GameStateMachine gameStateMachine;
+        readonly IArtist artist;
+        readonly Map map;
 
     public GameSettingsState(GameStateMachine gameStateMachine)
     {

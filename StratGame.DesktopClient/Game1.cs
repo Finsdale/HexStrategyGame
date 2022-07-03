@@ -1,4 +1,4 @@
-﻿using HexStrategyGame.Controls;
+﻿using ControllerInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,9 +7,7 @@ namespace HexStrategyGame
 {
     public class Game1 : Game
     {
-#pragma warning disable IDE0052 // Remove unread private members
         private readonly GraphicsDeviceManager _graphics;
-#pragma warning restore IDE0052 // Remove unread private members
         private SpriteBatch _spriteBatch;
         readonly InputAdapter p1Control;
         Input playerOne;

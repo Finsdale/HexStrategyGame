@@ -1,4 +1,4 @@
-﻿using HexStrategyGame.Controls;
+﻿using ControllerInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;

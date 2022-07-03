@@ -22,7 +22,7 @@ namespace HexStrategyGame.MapData
 
     public int MapHeight()
     {
-      return MapRows.Count() - 1;
+      return MapRows.Count - 1;
     }
 
     public int MapLength()

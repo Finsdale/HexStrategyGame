@@ -13,7 +13,7 @@ namespace HexStrategyGame.MapData
       int xMoveResult;
       if(xMove == 0 || xMove > 1 || xMove < -1 || yMove > 1 || yMove < -1)
       {
-        throw new ArgumentException();
+        throw new ArgumentException("Cannot check for X movement if no X movement given.");
       }
       else
       {

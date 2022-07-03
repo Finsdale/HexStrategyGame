@@ -9,7 +9,7 @@ namespace HexStrategyGame.MainMenu
   public class MainMenuData
   {
     private int MMOption { get; set; }
-    private int MMLength { get { return Enum.GetNames(typeof(MainMenuOption)).Length; } }
+    private static int MMLength { get { return Enum.GetNames(typeof(MainMenuOption)).Length; } }
     public string CurrentSelection { get { return Enum.GetName(typeof(MainMenuOption), MMOption); } }
 
     public MainMenuData()

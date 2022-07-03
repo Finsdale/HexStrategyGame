@@ -1,4 +1,4 @@
-﻿using HexStrategyGame.Controls;
+﻿using ControllerInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace HexStrategyGame.MainMenu
 {
   public class MainMenuState : IGameState
   {
-    GameStateMachine gameStateMachine;
-    IArtist artist;
-    MainMenuData data;
+        readonly GameStateMachine gameStateMachine;
+        readonly IArtist artist;
+        readonly MainMenuData data;
 
     public MainMenuState(GameStateMachine gameStateMachine)
     {
