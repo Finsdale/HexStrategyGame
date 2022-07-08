@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame.GameSettings
 {
@@ -14,7 +15,7 @@ namespace HexStrategyGame.GameSettings
         readonly IArtist artist;
         readonly Map map;
 
-    public GameSettingsState(GameStateMachine gameStateMachine)
+        public GameSettingsState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
       artist = new GameSettingsArtist();
@@ -25,17 +26,28 @@ namespace HexStrategyGame.GameSettings
     {
       if(input.cancel.Pressed == true)
       {
-        gameStateMachine.GameState = gameStateMachine.mainMenuState;
+                void shift()
+                {
+                    gameStateMachine.Pop();
+                    gameStateMachine.Push(gameStateMachine.mainMenuState);
+                }
+                shift();
       } else if(input.confirm.Pressed == true)
       {
-        gameStateMachine.Scenario.map = map;
-        gameStateMachine.GameState = gameStateMachine.playStateMachine;
+                gameStateMachine.Scenario.map = map;
+                void shift()
+                {
+                    gameStateMachine.Pop();
+                    gameStateMachine.Push(gameStateMachine.mapStateMachine);
+                    gameStateMachine.Push(gameStateMachine.cursorPlayState);
+                }
+                shift();
       }
     }
 
-    public IArtist GetArtist()
+    public void Draw(SpriteBatch spriteBatch)
     {
-      return artist;
+            artist.Draw(spriteBatch);
     }
   }
 }

@@ -5,23 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame.Gameplay
 {
-  public class CursorState : IGameState
+  public class CursorPlayState : IGameState
   {
 #pragma warning disable IDE0052 // Remove unread private members
-        readonly PlayStateMachine playStateMachine;
+        readonly GameStateMachine gameStateMachine;
 #pragma warning restore IDE0052 // Remove unread private members
         readonly Cursor cursor;
         readonly CursorArtist artist;
     public float frameTimer = 0.0f;
 
-    public CursorState(PlayStateMachine playStateMachine)
+    public CursorPlayState(GameStateMachine gameStateMachine)
     {
-      this.playStateMachine = playStateMachine;
-      artist = new CursorArtist(playStateMachine.artist);
-      cursor = playStateMachine.scenario.cursor;
+      this.gameStateMachine = gameStateMachine;
+      cursor = gameStateMachine.Scenario.cursor;
+      artist = new CursorArtist(cursor);
     }
 
     public void Update(Input input)
@@ -40,9 +41,9 @@ namespace HexStrategyGame.Gameplay
       }
     }
 
-    public IArtist GetArtist()
+    public void Draw(SpriteBatch spriteBatch)
     {
-      return artist;
+      artist.Draw(spriteBatch);
     }
 
     private void UpdateCursor(Input input)

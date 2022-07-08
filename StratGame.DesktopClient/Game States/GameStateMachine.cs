@@ -12,32 +12,53 @@ using HexStrategyGame.ScenarioData;
 
 namespace HexStrategyGame
 {
-  public class GameStateMachine : IGameState
-  {
-    public IGameState GameState { get; set; }
-    public MainMenuState mainMenuState;
-    public GameSettingsState gameSettingsState;
-    public PlayStateMachine playStateMachine;
-    public Scenario Scenario { get; set; }
-    public bool Exit { get; set; } = false;
-
-    public GameStateMachine()
+    public class GameStateMachine
     {
-      Scenario = new Scenario();
-      mainMenuState = new MainMenuState(this);
-      gameSettingsState = new GameSettingsState(this);
-      playStateMachine = new PlayStateMachine(this);
-      GameState = mainMenuState;
-    }
+        public List<IGameState> GameStack = new List<IGameState>();
+        public MainMenuState mainMenuState;
+        public GameSettingsState gameSettingsState;
+        public MapPlayState mapStateMachine;
+        public CursorPlayState cursorPlayState;
+        public Scenario Scenario { get; set; }
+        public bool Exit { get; set; } = false;
 
-    public void Update(Input input)
-    {
-      GameState.Update(input);
-    }
+        public GameStateMachine()
+        {
+            Scenario = new Scenario();
+            mainMenuState = new MainMenuState(this);
+            gameSettingsState = new GameSettingsState(this);
+            mapStateMachine = new MapPlayState(this);
+            cursorPlayState = new CursorPlayState(this);
 
-    public IArtist GetArtist()
-    {
-      return GameState.GetArtist();
-    }
+            Push(mainMenuState); //You could really set this state to whatever you wanted to launch at.
+        }
+
+        public void Clear()
+        {
+            GameStack.Clear();
+        }
+
+        public void Push(IGameState gameState)
+        {
+            GameStack.Add(gameState);
+        }
+
+        public void Pop()
+        {
+            GameStack.RemoveAt(GameStack.Count - 1);
+        }
+
+        public void Update(Input input)
+        {
+                GameStack[^1].Update(input);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            for(int i = 0; i <= GameStack.Count -1; i++)
+            {
+                GameStack[i].Draw(spriteBatch);
+            }
+        }
   }
 }
