@@ -30,7 +30,7 @@ namespace HexStrategyGame
             mapStateMachine = new MapPlayState(this);
             cursorPlayState = new CursorPlayState(this);
 
-            Push(mainMenuState);
+            Push(mainMenuState); //You could really set this state to whatever you wanted to launch at.
         }
 
         public void Clear()
