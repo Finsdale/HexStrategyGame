@@ -17,7 +17,8 @@ namespace HexStrategyGame
         public List<IGameState> GameStack = new List<IGameState>();
         public MainMenuState mainMenuState;
         public GameSettingsState gameSettingsState;
-        public PlayStateMachine playStateMachine;
+        public MapPlayState mapStateMachine;
+        public CursorPlayState cursorPlayState;
         public Scenario Scenario { get; set; }
         public bool Exit { get; set; } = false;
 
@@ -26,7 +27,9 @@ namespace HexStrategyGame
             Scenario = new Scenario();
             mainMenuState = new MainMenuState(this);
             gameSettingsState = new GameSettingsState(this);
-            playStateMachine = new PlayStateMachine(this);
+            mapStateMachine = new MapPlayState(this);
+            cursorPlayState = new CursorPlayState(this);
+
             Push(mainMenuState);
         }
 
@@ -52,7 +55,7 @@ namespace HexStrategyGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for(int i = GameStack.Count -1; i >= 0; i--)
+            for(int i = 0; i <= GameStack.Count -1; i++)
             {
                 GameStack[i].Draw(spriteBatch);
             }

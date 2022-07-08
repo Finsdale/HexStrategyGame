@@ -38,7 +38,8 @@ namespace HexStrategyGame.GameSettings
                 void shift()
                 {
                     gameStateMachine.Pop();
-                    gameStateMachine.Push(gameStateMachine.playStateMachine);
+                    gameStateMachine.Push(gameStateMachine.mapStateMachine);
+                    gameStateMachine.Push(gameStateMachine.cursorPlayState);
                 }
                 shift();
       }

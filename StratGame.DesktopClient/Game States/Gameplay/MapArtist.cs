@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.Gameplay
 {
-  public class PlayArtist: IArtist
+  public class MapArtist: IArtist
   {
     public Scenario scenario;
     public string currentState;
         readonly TextureCollection TC;
 
-    public PlayArtist(Scenario scenario)
+    public MapArtist(Scenario scenario)
     {
       this.scenario = scenario;
       TC = TextureCollection.Instance;
@@ -45,7 +45,6 @@ namespace HexStrategyGame.Gameplay
                         Color.White);
                 }
             }
-            spriteBatch.DrawString(TC.GameFont, $"Current State: {currentState}", new Vector2(0, 30), Color.Black);
         }
     }
 }
