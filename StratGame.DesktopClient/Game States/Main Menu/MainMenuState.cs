@@ -29,12 +29,8 @@ namespace HexStrategyGame.MainMenu
         switch (data.CurrentSelection)
         {
           case "New":
-                        ShiftState shift = delegate ()
-                        {
-                            gameStateMachine.Pop();
-                            gameStateMachine.Push(gameStateMachine.gameSettingsState);
-                        };
-                        shift();
+            gameStateMachine.Pop();
+            gameStateMachine.Push(gameStateMachine.gameSettingsState);
             break;
           case "Exit":
             gameStateMachine.Exit = true;

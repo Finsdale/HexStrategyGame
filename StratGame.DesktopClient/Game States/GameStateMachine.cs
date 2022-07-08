@@ -50,7 +50,7 @@ namespace HexStrategyGame
 
         public void Update(Input input)
         {
-                GameStack[^1].Update(input);
+            GameStack[^1].Update(input);
         }
 
         public void Draw(SpriteBatch spriteBatch)

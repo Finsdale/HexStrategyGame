@@ -25,23 +25,15 @@ namespace HexStrategyGame.GameSettings
     public void Update(Input input)
     {
       if(input.cancel.Pressed == true)
-      {
-                void shift()
-                {
-                    gameStateMachine.Pop();
-                    gameStateMachine.Push(gameStateMachine.mainMenuState);
-                }
-                shift();
+      { 
+        gameStateMachine.Pop();
+        gameStateMachine.Push(gameStateMachine.mainMenuState);
       } else if(input.confirm.Pressed == true)
       {
-                gameStateMachine.Scenario.map = map;
-                void shift()
-                {
-                    gameStateMachine.Pop();
-                    gameStateMachine.Push(gameStateMachine.mapStateMachine);
-                    gameStateMachine.Push(gameStateMachine.cursorPlayState);
-                }
-                shift();
+        gameStateMachine.Scenario.map = map;
+        gameStateMachine.Pop();
+        gameStateMachine.Push(gameStateMachine.mapStateMachine);
+        gameStateMachine.Push(gameStateMachine.cursorPlayState);
       }
     }
 
