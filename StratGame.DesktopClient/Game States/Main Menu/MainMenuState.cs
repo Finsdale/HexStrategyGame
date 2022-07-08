@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame.MainMenu
 {
@@ -12,6 +13,7 @@ namespace HexStrategyGame.MainMenu
         readonly GameStateMachine gameStateMachine;
         readonly IArtist artist;
         readonly MainMenuData data;
+        private delegate void ShiftState();
 
     public MainMenuState(GameStateMachine gameStateMachine)
     {
@@ -27,7 +29,12 @@ namespace HexStrategyGame.MainMenu
         switch (data.CurrentSelection)
         {
           case "New":
-            gameStateMachine.GameState = gameStateMachine.gameSettingsState;
+                        ShiftState shift = delegate ()
+                        {
+                            gameStateMachine.Pop();
+                            gameStateMachine.Push(gameStateMachine.gameSettingsState);
+                        };
+                        shift();
             break;
           case "Exit":
             gameStateMachine.Exit = true;
@@ -57,9 +64,9 @@ namespace HexStrategyGame.MainMenu
       }
     }
 
-    public IArtist GetArtist()
+    public void Draw(SpriteBatch spriteBatch)
     {
-      return artist;
+      artist.Draw(spriteBatch);
     }
   }
 }

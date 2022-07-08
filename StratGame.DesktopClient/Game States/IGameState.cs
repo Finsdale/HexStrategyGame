@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame
 {
@@ -11,6 +12,6 @@ namespace HexStrategyGame
   {
     void Update(Input input);
 
-    IArtist GetArtist();
+    void Draw(SpriteBatch spriteBatch);
   }
 }

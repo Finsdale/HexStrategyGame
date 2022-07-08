@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -34,9 +35,9 @@ namespace HexStrategyGame.Gameplay
       artist.SetCurrentState(PlayState.ToString());
     }
 
-    public IArtist GetArtist()
+    public void Draw(SpriteBatch spriteBatch)
     {
-      return PlayState.GetArtist();
+      artist.Draw(spriteBatch);
     }
   }
 }
