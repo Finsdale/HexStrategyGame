@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.Gameplay
 {
-  public class MapArtist: IArtist
+  public class MapArtist : IArtist
   {
     public Scenario scenario;
     public string currentState;
-        readonly TextureCollection TC;
+    readonly TextureCollection TC;
+    const int SOURCE_WIDTH = 27;
+    const int SOURCE_HEIGHT = 33;
 
     public MapArtist(Scenario scenario)
     {
@@ -34,17 +36,45 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-            for (int y = 0; y <= scenario.map.MapHeight(); y++)
-            {
-                for (int x = 0; x <= scenario.map.MapLength(); x++)
-                {
-                    spriteBatch.Draw(
-                        TC.TerrainTiles, 
-                        new Rectangle((x * TileData.xStep) + (y % 2 * TileData.xHalfStep), y * TileData.yStep, TileData.width, TileData.height), 
-                        new Rectangle(0, TileData.height * scenario.map.TileTerrain(x, y), 27, 33), 
-                        Color.White);
-                }
-            }
+      for (int y = 0; y <= scenario.map.MapHeight(); y++)
+      {
+        for (int x = 0; x <= scenario.map.MapLength(); x++)
+        {
+          spriteBatch.Draw(
+              TC.TerrainTiles,
+              DestinationRectangle(x, y),
+              SourceRectangle(x,y),
+              Color.White);
         }
+      }
     }
+
+    Rectangle DestinationRectangle(int x, int y)
+    {
+      return new Rectangle(XDestination(x,y), YDestination(y), TileData.width, TileData.height);
+    }
+
+    int XDestination(int x, int y)
+    {
+      int stepValue = (x * TileData.xStep);
+      int offsetValue = (y % 2 * TileData.xHalfStep);
+      return stepValue + offsetValue;
+    }
+    
+    int YDestination(int y)
+    {
+      return y * TileData.yStep;
+    }
+
+    //Currently, the source file is a column of terrain types. So Y is always 0
+    Rectangle SourceRectangle(int x, int y)
+    {
+      return new Rectangle(0, XSource(x,y), SOURCE_WIDTH, SOURCE_HEIGHT);
+    }
+
+    int XSource(int x, int y)
+    {
+      return TileData.height * scenario.map.TileTerrain(x, y);
+    }
+  }
 }
