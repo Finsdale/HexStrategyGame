@@ -16,13 +16,13 @@ namespace HexStrategyGame.MapData
     public Cursor()
     {
       Position = Point.Zero;
-      MaxPosition = Point.Zero;
+      MaxPosition = new Point(10,10);
     }
 
     public Cursor(Map map)
     {
       Position = Point.Zero;
-      MaxPosition = new Point(map.MapLength(), map.MapHeight());
+      MaxPosition = new Point(10,10);
     }
 
 

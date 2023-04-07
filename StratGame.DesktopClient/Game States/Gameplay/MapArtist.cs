@@ -36,9 +36,9 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      for (int y = 0; y <= scenario.map.MapHeight(); y++)
+      for (int y = 0; y < 10; y++)
       {
-        for (int x = 0; x <= scenario.map.MapLength(); x++)
+        for (int x = 0 - (y/2); x < 10 - (y/2); x++)
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -57,7 +57,7 @@ namespace HexStrategyGame.Gameplay
     int XDestination(int x, int y)
     {
       int stepValue = (x * TileData.xStep);
-      int offsetValue = (y % 2 * TileData.xHalfStep);
+      int offsetValue = (y * TileData.xHalfStep);
       return stepValue + offsetValue;
     }
     
@@ -66,7 +66,7 @@ namespace HexStrategyGame.Gameplay
       return y * TileData.yStep;
     }
 
-    //Currently, the source file is a column of terrain types. So Y is always 0
+    //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
       return new Rectangle(0, XSource(x,y), SOURCE_WIDTH, SOURCE_HEIGHT);
@@ -74,7 +74,7 @@ namespace HexStrategyGame.Gameplay
 
     int XSource(int x, int y)
     {
-      return TileData.height * scenario.map.TileTerrain(x, y);
+      return TileData.height * scenario.map.GetTerrainAtLocation(new Point(x, y));
     }
   }
 }

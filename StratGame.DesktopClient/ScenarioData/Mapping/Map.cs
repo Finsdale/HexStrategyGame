@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,31 +9,32 @@ namespace HexStrategyGame.MapData
 {
   public class Map
   {
-    List<MapRow> MapRows { get; set; }
+    Dictionary<Point, MapTile> TileCollection;
 
+    //This constructor makes a basic rectangular map grid. Odd-numbered rows are shifted right.
     public Map(int height, int length)
     {
-      MapRows = new List<MapRow>();
-      MapRow mapRow = new MapRow(length);
-      for(int i = 0; i < height; i++)
+      TileCollection = new Dictionary<Point, MapTile>();
+      for (int y = 0; y < height; y++)
       {
-        MapRows.Add(mapRow);
+        for (int x = 0; x < length; x++)
+        {
+          //axial coordinates make our x value smaller as the y value increases
+          TileCollection.Add(new Point(x - (y / 2), y), new MapTile());
+        }
       }
     }
 
-    public int MapHeight()
+    public MapTile GetTileAtLocation(Point location)
     {
-      return MapRows.Count - 1;
+      TileCollection.TryGetValue(location, out MapTile tile);
+      return tile;
     }
 
-    public int MapLength()
+    public int GetTerrainAtLocation(Point location)
     {
-      return MapRows[0].Length() - 1;
+      MapTile tile = GetTileAtLocation(location);
+      return (int)tile.TileTerrain;
     }
-
-    public int TileTerrain(int xIndex, int yIndex)
-        {
-            return (int)MapRows[yIndex].MapTile(xIndex).TileTerrain;
-        }
   }
 }
