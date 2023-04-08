@@ -33,68 +33,44 @@ namespace HexStrategyGame.MapData
           if (lastRight)
           {
             moved = MoveBy(new Point(1, -1));
-            if (moved)
-            {
-              lastRight = false;
-            }
+            if (moved) lastRight = false;
           }
           else
           {
             moved = MoveBy(new Point(0, -1));
-            if (moved)
-            {
-              lastRight = true;
-            }
+            if (moved) lastRight = true;
           }
           break;
         case Direction.Down:
           if (lastRight)
           {
             moved = MoveBy(new Point(0, 1));
-            if (moved)
-            {
-              lastRight = false;
-            }
+            if (moved) lastRight = false;
           }
           else
           {
             moved = MoveBy(new Point(-1, 1));
-            if (moved)
-            {
-              lastRight = true;
-            }
+            if (moved) lastRight = true;
           }
           break;
         case Direction.UpLeft:
           moved = MoveBy(new Point(0, -1));
-          if(!moved)
-          {
-            MoveBy(new Point(-1, 0));
-          }
+          if(!moved) MoveBy(new Point(-1, 0));
           lastRight = false;
           break;
         case Direction.UpRight:
           moved = MoveBy(new Point(1, -1));
-          if (!moved)
-          {
-            MoveBy(new Point(1, 0));
-          }
+          if (!moved) MoveBy(new Point(1, 0));
           lastRight = true;
           break;
         case Direction.DownLeft:
           moved = MoveBy(new Point(-1, 1));
-          if(!moved)
-          {
-            MoveBy(new Point(-1, 0));
-          }
+          if(!moved) MoveBy(new Point(-1, 0));
           lastRight = false;
           break;
         case Direction.DownRight:
           moved = MoveBy(new Point(0, 1));
-          if(!moved)
-          {
-            MoveBy(new Point(1, 0));
-          }
+          if(!moved) MoveBy(new Point(1, 0));
           lastRight = true;
           break;
         case Direction.Left:
