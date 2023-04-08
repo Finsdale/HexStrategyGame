@@ -23,13 +23,40 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-            spriteBatch.DrawString(TC.GameFont, $"X:{Cursor.Position.X}", new Vector2(0, 60), Color.Black);
-            spriteBatch.DrawString(TC.GameFont, $"Y:{Cursor.Position.Y}", new Vector2(0, 90), Color.Black);
+      int x = Cursor.Position.X;
+      int y = Cursor.Position.Y;
+            spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
+            spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
             spriteBatch.Draw(
-                TC.Cursor, 
-                new Rectangle((Cursor.Position.X * TileData.xStep) + (Cursor.Position.Y % 2 * TileData.xHalfStep), Cursor.Position.Y * TileData.yStep, TileData.width, TileData.height), 
-                new Rectangle(0,0,TileData.width,TileData.height),
+                TC.Cursor,
+                CursorDestination(x, y), 
+                CursorSource(),
                 Color.White);
+    }
+    Rectangle CursorDestination(int x, int y)
+    {
+      return new Rectangle(
+        XDestinationPosition(x,y), 
+        YDestinationPosition(y), 
+        TileData.width, 
+        TileData.height);
+    }
+
+    int XDestinationPosition(int x, int y)
+    {
+      int stepValue = x * TileData.xStep;
+      int offsetValue = y * TileData.xHalfStep;
+      return stepValue + offsetValue;
+    }
+
+    int YDestinationPosition(int y)
+    {
+      return y*TileData.yStep;
+    }
+
+    Rectangle CursorSource()
+    {
+      return new Rectangle(0, 0, TileData.width, TileData.height);
     }
   }
 }

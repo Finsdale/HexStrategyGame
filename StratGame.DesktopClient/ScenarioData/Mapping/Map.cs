@@ -20,7 +20,7 @@ namespace HexStrategyGame.MapData
         for (int x = 0; x < length; x++)
         {
           //axial coordinates make our x value smaller as the y value increases
-          TileCollection.Add(new Point(x - (y / 2), y), new MapTile());
+          TileCollection.Add(new Point(x - (y / 2), y), new MapTile(1));
         }
       }
     }
@@ -28,6 +28,7 @@ namespace HexStrategyGame.MapData
     public MapTile GetTileAtLocation(Point location)
     {
       TileCollection.TryGetValue(location, out MapTile tile);
+      tile ??= new MapTile();
       return tile;
     }
 

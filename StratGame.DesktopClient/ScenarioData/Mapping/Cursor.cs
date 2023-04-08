@@ -11,134 +11,114 @@ namespace HexStrategyGame.MapData
   public class Cursor
   {
     public Point Position { get; set; }
-    Point MaxPosition { get; set; }
+    Map Map { get; set; }
     bool lastRight = true;
     public Cursor()
     {
       Position = Point.Zero;
-      MaxPosition = new Point(10,10);
     }
 
     public Cursor(Map map)
     {
       Position = Point.Zero;
-      MaxPosition = new Point(10,10);
-    }
-
-
-
-    public void Move(int xMove, int yMove)
-    {
-      Position = new Point(ClampX(Position.X + xMove), ClampY(Position.Y + yMove));
+      this.Map = map;
     }
 
     public void Move(Direction direction)
     {
+      bool moved;
       switch (direction)
       {
         case Direction.Up:
-          if(0 < Position.Y)
+          if (lastRight)
           {
-            if (lastRight)
+            moved = MoveBy(new Point(1, -1));
+            if (moved)
             {
-              Move(Position.Y % 2, -1);
+              lastRight = false;
             }
-            else
+          }
+          else
+          {
+            moved = MoveBy(new Point(0, -1));
+            if (moved)
             {
-              Move(-(Position.Y + 1) % 2, -1);
+              lastRight = true;
             }
-            lastRight = !lastRight;
           }
           break;
         case Direction.Down:
-          if(MaxPosition.Y > Position.Y)
+          if (lastRight)
           {
-            if (lastRight)
+            moved = MoveBy(new Point(0, 1));
+            if (moved)
             {
-              Move(Position.Y % 2, 1);
+              lastRight = false;
             }
-            else
+          }
+          else
+          {
+            moved = MoveBy(new Point(-1, 1));
+            if (moved)
             {
-              Move(-(Position.Y + 1) % 2, 1);
+              lastRight = true;
             }
-            lastRight = !lastRight;
           }
           break;
         case Direction.UpLeft:
-          Move(-(Position.Y + 1) % 2, -1);
+          moved = MoveBy(new Point(0, -1));
+          if(!moved)
+          {
+            MoveBy(new Point(-1, 0));
+          }
           lastRight = false;
           break;
         case Direction.UpRight:
-          Move(Position.Y % 2, -1);
+          moved = MoveBy(new Point(1, -1));
+          if (!moved)
+          {
+            MoveBy(new Point(1, 0));
+          }
           lastRight = true;
           break;
         case Direction.DownLeft:
-          Move(-(Position.Y + 1) % 2, 1);
+          moved = MoveBy(new Point(-1, 1));
+          if(!moved)
+          {
+            MoveBy(new Point(-1, 0));
+          }
           lastRight = false;
           break;
         case Direction.DownRight:
-          Move(Position.Y % 2, 1);
+          moved = MoveBy(new Point(0, 1));
+          if(!moved)
+          {
+            MoveBy(new Point(1, 0));
+          }
           lastRight = true;
           break;
         case Direction.Left:
-          Move(-1, 0);
+          MoveBy(new Point(-1, 0));
           lastRight = false;
           break;
         case Direction.Right:
-          Move(1, 0);
+          MoveBy(new Point(1, 0));
           lastRight = true;
           break;
       }
-/*
-    //This is a variation of the move function for use with square movement.
-    switch (direction)
-    {
-        case Direction.Up:
-            if (0 < Position.Y)
-            {
-                Move(0, -1);
-            }
-            break;
-        case Direction.Down:
-            if (MaxPosition.Y > Position.Y)
-            {
-                Move(0, 1);
-            }
-            break;
-        case Direction.UpLeft:
-            Move(-1, -1);
-            break;
-        case Direction.UpRight:
-            Move(1, -1);
-            break;
-        case Direction.DownLeft:
-            Move(-1, 1);
-            break;
-        case Direction.DownRight:
-            Move(1, 1);
-            break;
-        case Direction.Left:
-            Move(-1, 0);
-            break;
-        case Direction.Right:
-            Move(1, 0);
-            break;
-    }*/
     }
 
-    //public void Move(Point location)
-    //{
-    //  position.ChangeLocation(ClampX(location.X), ClampY(location.Y));
-    //}
-
-    private int ClampX(int xPos)
+    public bool MoveBy(Point movement)
     {
-      return MathHelper.Clamp(xPos, 0, MaxPosition.X);
-    }
-
-    private int ClampY(int yPos)
-    {
-      return MathHelper.Clamp(yPos, 0, MaxPosition.Y);
+      bool result = false;
+      Point newPos = Position + movement;
+      MapTile mapTile = Map.GetTileAtLocation(newPos);
+      if (mapTile.TileTerrain != Terrain.Empty)
+      {
+        Position = newPos;
+        result = true;
+      }
+      return result;
     }
   }
 }
