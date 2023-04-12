@@ -21,64 +21,82 @@ namespace HexStrategyGame.MapData
     public Cursor(Map map)
     {
       Position = Point.Zero;
-      this.Map = map;
+      Map = map;
     }
 
-    public void Move(Direction direction)
+    public void Step(Direction direction)
     {
       bool moved;
-      switch (direction)
-      {
+      switch (direction) {
         case Direction.Up:
-          if (lastRight)
-          {
-            moved = MoveBy(new Point(1, -1));
-            if (moved) lastRight = false;
+          if (lastRight) {
+            moved = MoveBy(MapConst.NE);
+            if (!moved) MoveBy(MapConst.NW);
+            else lastRight = false;
           }
-          else
-          {
-            moved = MoveBy(new Point(0, -1));
-            if (moved) lastRight = true;
+          else {
+            moved = MoveBy(MapConst.NW);
+            if (!moved) MoveBy(MapConst.NE);
+            else lastRight = true;
           }
           break;
+
         case Direction.Down:
-          if (lastRight)
-          {
-            moved = MoveBy(new Point(0, 1));
-            if (moved) lastRight = false;
+          if (lastRight) {
+            moved = MoveBy(MapConst.SE);
+            if (!moved) MoveBy(MapConst.SW);
+            else lastRight = false;
           }
-          else
-          {
-            moved = MoveBy(new Point(-1, 1));
-            if (moved) lastRight = true;
+          else {
+            moved = MoveBy(MapConst.SW);
+            if (!moved) MoveBy(MapConst.SE);
+            else lastRight = true;
           }
           break;
+
         case Direction.UpLeft:
-          moved = MoveBy(new Point(0, -1));
-          if(!moved) MoveBy(new Point(-1, 0));
+          moved = MoveBy(MapConst.NW);
+          if (!moved) {
+            moved = MoveBy(MapConst.W);
+            if (!moved) MoveBy(MapConst.NE);
+          }
           lastRight = false;
           break;
+
         case Direction.UpRight:
-          moved = MoveBy(new Point(1, -1));
-          if (!moved) MoveBy(new Point(1, 0));
+          moved = MoveBy(MapConst.NE);
+          if (!moved) {
+            moved = MoveBy(MapConst.E);
+            if (!moved) MoveBy(MapConst.NW);
+          }
           lastRight = true;
           break;
+
         case Direction.DownLeft:
-          moved = MoveBy(new Point(-1, 1));
-          if(!moved) MoveBy(new Point(-1, 0));
+          moved = MoveBy(MapConst.SW);
+          if (!moved) {
+            moved = MoveBy(MapConst.W);
+            if (!moved) MoveBy(MapConst.SE);
+          }
           lastRight = false;
           break;
+
         case Direction.DownRight:
-          moved = MoveBy(new Point(0, 1));
-          if(!moved) MoveBy(new Point(1, 0));
+          moved = MoveBy(MapConst.SE);
+          if (!moved) {
+            moved = MoveBy(MapConst.E);
+            if (!moved) MoveBy(MapConst.SW);
+          }
           lastRight = true;
           break;
+
         case Direction.Left:
-          MoveBy(new Point(-1, 0));
+          MoveBy(MapConst.W);
           lastRight = false;
           break;
+
         case Direction.Right:
-          MoveBy(new Point(1, 0));
+          MoveBy(MapConst.E);
           lastRight = true;
           break;
       }
@@ -89,8 +107,7 @@ namespace HexStrategyGame.MapData
       bool result = false;
       Point newPos = Position + movement;
       MapTile mapTile = Map.GetTileAtLocation(newPos);
-      if (mapTile.TileTerrain != Terrain.Empty)
-      {
+      if (mapTile.TileTerrain != Terrain.Empty) {
         Position = newPos;
         result = true;
       }
