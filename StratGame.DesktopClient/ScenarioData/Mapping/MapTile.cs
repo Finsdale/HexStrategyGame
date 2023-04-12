@@ -16,12 +16,12 @@ namespace HexStrategyGame.MapData
 
     public MapTile()
     {
-      TileTerrain = Terrain.Sea;
+      TileTerrain = Terrain.Empty;
       HasUnit = false;
       HasBuilding = false;
     }
 
-    public MapTile(int terrainType, bool hasUnit, bool hasBuilding)
+    public MapTile(int terrainType, bool hasUnit = false, bool hasBuilding = false)
     {
       TileTerrain = (Terrain)terrainType;
       HasUnit = hasUnit;

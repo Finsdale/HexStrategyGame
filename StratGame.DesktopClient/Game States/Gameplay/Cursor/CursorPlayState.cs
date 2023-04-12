@@ -69,7 +69,7 @@ namespace HexStrategyGame.Gameplay
 
     private void UpdateCursorPosition(Input input)
     {
-      cursor.Move(input.direction);
+      cursor.Step(input.direction);
     }
   }
 }
