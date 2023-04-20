@@ -17,10 +17,10 @@ namespace HexStrategyGame.MapData
       TileCollection = new Dictionary<Point, MapTile>();
       for (int y = 0; y < height; y++)
       {
-        for (int x = 0; x < length; x++)
+        for (int x = 0 - (y / 2); x < length - (y / 2); x++)
         {
           //axial coordinates make our x value smaller as the y value increases
-          TileCollection.Add(new Point(x - (y / 2), y), new MapTile(1));
+          TileCollection.Add(new Point(x, y), new MapTile(1));
         }
       }
     }
@@ -36,6 +36,11 @@ namespace HexStrategyGame.MapData
     {
       MapTile tile = GetTileAtLocation(location);
       return (int)tile.TileTerrain;
+    }
+
+    public List<Point> TilePositions()
+    {
+      return TileCollection.Keys.ToList();
     }
   }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -29,6 +30,11 @@ namespace HexStrategyGame.Gameplay
       return scenario.cursor;
     }
 
+    public Camera camera()
+    {
+      return scenario.camera;
+    }
+
     public string SetCurrentState(string currentState)
     {
       return this.currentState = currentState;
@@ -36,9 +42,10 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      for (int y = 0; y < 10; y++)
+      camera().SetScreenValues(spriteBatch.GraphicsDevice.DisplayMode.Width, spriteBatch.GraphicsDevice.DisplayMode.Height);
+      for (int y = 0; y < camera().GetScreenTileHeight(); y++)
       {
-        for (int x = 0 - (y/2); x < 10 - (y/2); x++)
+        for (int x = 0 - (y/2); x < camera().GetScreenTileWidth() - (y/2); x++)
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -47,6 +54,7 @@ namespace HexStrategyGame.Gameplay
               Color.White);
         }
       }
+      spriteBatch.DrawString(TC.GameFont, $"{scenario.map.GetTerrainAtLocation(scenario.cursor.Position)}", new Vector2(0, 120), Color.Black);
     }
 
     Rectangle DestinationRectangle(int x, int y)
@@ -58,7 +66,8 @@ namespace HexStrategyGame.Gameplay
     {
       int stepValue = (x * TileData.xStep);
       int offsetValue = (y * TileData.xHalfStep);
-      return stepValue + offsetValue;
+      int cameraOffset = (camera().Position.Y % 2) * TileData.xHalfStep;
+      return stepValue + offsetValue + cameraOffset;
     }
     
     int YDestination(int y)
@@ -69,7 +78,7 @@ namespace HexStrategyGame.Gameplay
     //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
-      return new Rectangle(0, XSource(x,y), SOURCE_WIDTH, SOURCE_HEIGHT);
+      return new Rectangle(0, XSource(x + camera().Position.X,y + camera().Position.Y), SOURCE_WIDTH, SOURCE_HEIGHT);
     }
 
     int XSource(int x, int y)
