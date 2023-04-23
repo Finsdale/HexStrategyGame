@@ -42,10 +42,10 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      camera().SetScreenValues(spriteBatch.GraphicsDevice.DisplayMode.Width, spriteBatch.GraphicsDevice.DisplayMode.Height);
-      for (int y = 0; y < camera().GetScreenTileHeight(); y++)
+      camera().SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
+      for (int y = -1; y < camera().GetScreenTileHeight(); y++)
       {
-        for (int x = 0 - (y/2); x < camera().GetScreenTileWidth() - (y/2); x++)
+        for (int x = - 1 - (y/2); x < camera().GetScreenTileWidth() - (y/2); x++)
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -54,7 +54,7 @@ namespace HexStrategyGame.Gameplay
               Color.White);
         }
       }
-      spriteBatch.DrawString(TC.GameFont, $"{scenario.map.GetTerrainAtLocation(scenario.cursor.Position)}", new Vector2(0, 120), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"{(Terrain)scenario.map.GetTerrainAtLocation(scenario.cursor.Position)}", new Vector2(0, 120), Color.Black);
     }
 
     Rectangle DestinationRectangle(int x, int y)

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HexStrategyGame.ScenarioData;
 using HexStrategyGame.MapData;
+using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -14,10 +15,12 @@ namespace HexStrategyGame.Gameplay
   {
         readonly TextureCollection TC;
         readonly Cursor Cursor;
+    readonly Camera Camera;
 
-        public CursorArtist(Cursor cursor)
+        public CursorArtist(Cursor cursor, Camera camera)
     {
             Cursor = cursor;
+      Camera = camera;
         TC = TextureCollection.Instance;
     }
 
@@ -44,14 +47,14 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition(int x, int y)
     {
-      int stepValue = x * TileData.xStep;
-      int offsetValue = y * TileData.xHalfStep;
+      int stepValue = (x - Camera.Position.X) * TileData.xStep;
+      int offsetValue = (y - Camera.Position.Y) * TileData.xHalfStep;
       return stepValue + offsetValue;
     }
 
     int YDestinationPosition(int y)
     {
-      return y*TileData.yStep;
+      return (y - Camera.Position.Y) *TileData.yStep;
     }
 
     Rectangle CursorSource()

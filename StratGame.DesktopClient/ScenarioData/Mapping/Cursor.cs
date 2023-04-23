@@ -5,23 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ControllerInput;
+using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.MapData
 {
   public class Cursor
   {
     public Point Position { get; set; }
-    Map Map { get; set; }
-    bool lastRight = true;
-    public Cursor()
-    {
-      Position = Point.Zero;
-    }
+    readonly Map Map;
+    readonly Camera Camera;
 
-    public Cursor(Map map)
+    bool lastRight = true;
+    public int X { get => Position.X; }
+    public int Y { get => Position.Y; }
+
+    public Cursor(Map map, Camera camera)
     {
       Position = Point.Zero;
       Map = map;
+      Camera = camera;
     }
 
     public void Step(Direction direction)
@@ -100,6 +102,7 @@ namespace HexStrategyGame.MapData
           lastRight = true;
           break;
       }
+      Camera.ClampLocationToPoint(Position);
     }
 
     public bool MoveBy(Point movement)

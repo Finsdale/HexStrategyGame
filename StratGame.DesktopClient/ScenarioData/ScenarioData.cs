@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.MapData;
 
@@ -17,8 +18,8 @@ namespace HexStrategyGame.ScenarioData
     public Scenario()
     {
       map = new Map(30, 30);
-      cursor = new Cursor(map);
-      camera = new Camera(map);
+      camera = new Camera(map, new Point(2,2));
+      cursor = new Cursor(map, camera);
     }
   }
 }
