@@ -15,7 +15,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public int X { get => Position.X; }
     public int Y { get => Position.Y; }
     Map Map;
-    int MinY, MaxY, ScreenWidth, ScreenHeight;
+    public int MinY, MaxY, ScreenWidth, ScreenHeight;
     Point MinX, MaxX;
 
     public Camera(Map map)
@@ -37,7 +37,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
 
     public int GetScreenTileWidth()
     {
-      return ScreenWidth/TileData.xStep;
+      return ScreenWidth/TileData.xHalfStep;
     }
 
     public int GetScreenTileHeight()
@@ -47,19 +47,18 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
 
     public void ClampLocationToPoint(Point location)
     {
-      int xResult = X, yResult = Y;
+      int xResult = X, yResult = Y; 
+      int C = 2 * location.X + location.Y ; //This is the doubled position of the cursor.
       int screenwidth = GetScreenTileWidth(), screenheight = GetScreenTileHeight();
-      if(location.Y < Y + 2) {
-        yResult = location.Y - 2;
-        xResult += (yResult & 1);
-      } else if(location.Y > Y + GetScreenTileHeight() - 2) {
-        yResult = location.Y + 2 - GetScreenTileHeight();
-        xResult -= (yResult & 1);
+      if(C < X + 4) {
+        xResult -= 2;
+      } else if (C > X + screenwidth - 4) {
+        xResult += 2;
       }
-      if(location.X < X - ((location.Y - Y) / 2)  + 2) {
-        xResult = location.X + ((location.Y - Y) / 2) - 2;
-      } else if(location.X > X + GetScreenTileWidth() - ((location.Y - Y) / 2) - 2) {
-        xResult = location.X - (GetScreenTileWidth() - ((location.Y - Y) / 2)) + 2;
+      if(location.Y < Y + 2) {
+        yResult -= 1;
+      } else if(location.Y > Y + screenheight - 2) {
+        yResult += 1;
       }
       Position = new Point(xResult, yResult);
     }

@@ -11,6 +11,8 @@ namespace HexStrategyGame.MapData
   {
     Dictionary<Point, MapTile> TileCollection;
 
+
+
     //This constructor makes a basic rectangular map grid. Odd-numbered rows are shifted right.
     public Map(int height, int length)
     {
@@ -20,7 +22,10 @@ namespace HexStrategyGame.MapData
         for (int x = 0 - (y / 2); x < length - (y / 2); x++)
         {
           //axial coordinates make our x value smaller as the y value increases
-          TileCollection.Add(new Point(x, y), new MapTile(1));
+          if(x == 3 && y == 5) {
+            TileCollection.Add(new Point(x,y), new MapTile(2));
+          }
+          else { TileCollection.Add(new Point(x, y), new MapTile(1)); }
         }
       }
     }

@@ -47,9 +47,11 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition(int x, int y)
     {
-      int stepValue = (x - Camera.Position.X) * TileData.xStep;
+      int cameraX = (Camera.Position.X - Camera.Position.Y) / 2;
+      int stepValue = (x - cameraX) * TileData.xStep;
       int offsetValue = (y - Camera.Position.Y) * TileData.xHalfStep;
-      return stepValue + offsetValue;
+      int cameraOffset = (Camera.Position.Y & 1) * TileData.xHalfStep;
+      return stepValue + offsetValue + cameraOffset;
     }
 
     int YDestinationPosition(int y)
