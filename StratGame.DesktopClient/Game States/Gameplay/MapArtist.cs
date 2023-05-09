@@ -45,7 +45,7 @@ namespace HexStrategyGame.Gameplay
       camera().SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
       for (int y = -1; y < camera().GetScreenTileHeight() + 1; y++)
       {
-        for (int x = - 1 - (y/2); x < camera().ScreenWidth/TileData.xStep - (y/2) + 1; x++)
+        for (int x = -2 + ((y + camera().Position.Y) & 1); x < camera().GetScreenTileWidth() + 1; x += 2)
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -66,10 +66,8 @@ namespace HexStrategyGame.Gameplay
 
     int XDestination(int x, int y)
     {
-      int stepValue = (x * TileData.xStep);
-      int offsetValue = (y * TileData.xHalfStep);
-      int cameraOffset = (camera().Position.Y & 1) * TileData.xHalfStep;
-      return stepValue + offsetValue + cameraOffset;
+      int stepValue = (x * TileData.xHalfStep);
+      return stepValue;
     }
     
     int YDestination(int y)
@@ -80,8 +78,8 @@ namespace HexStrategyGame.Gameplay
     //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
-      int cameraX = (camera().Position.X - camera().Position.Y) / 2;
-      return new Rectangle(0, XSource(x + cameraX, y + camera().Position.Y), SOURCE_WIDTH, SOURCE_HEIGHT);
+      int xVal = ((camera().Position.X + x) - (y + camera().Position.Y)) / 2;
+      return new Rectangle(0, XSource(xVal, y + camera().Position.Y), SOURCE_WIDTH, SOURCE_HEIGHT);
     }
 
     int XSource(int x, int y)
