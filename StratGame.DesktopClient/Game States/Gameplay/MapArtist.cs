@@ -13,26 +13,17 @@ namespace HexStrategyGame.Gameplay
 {
   public class MapArtist : IArtist
   {
-    public Scenario scenario;
-    public string currentState;
     readonly TextureCollection TC;
-    const int SOURCE_WIDTH = 27;
-    const int SOURCE_HEIGHT = 33;
-
+    public string currentState;
+    readonly Camera camera;
+    readonly Cursor cursor;
+    readonly Map map;
     public MapArtist(Scenario scenario)
     {
-      this.scenario = scenario;
       TC = TextureCollection.Instance;
-    }
-
-    public Cursor Cursor()
-    {
-      return scenario.cursor;
-    }
-
-    public Camera camera()
-    {
-      return scenario.camera;
+      camera = scenario.camera;
+      cursor = scenario.cursor;
+      map = scenario.map;
     }
 
     public string SetCurrentState(string currentState)
@@ -42,10 +33,10 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      camera().SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
-      for (int y = -1; y < camera().GetScreenTileHeight() + 1; y++)
+      camera.SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
+      for (int y = -1; y < camera.GetScreenTileHeight() + 1; y++)
       {
-        for (int x = -2 + ((y + camera().Position.Y) & 1); x < camera().GetScreenTileWidth() + 1; x += 2)
+        for (int x = -2 + ((y + camera.Position.Y) & 1); x < camera.GetScreenTileWidth() + 1; x += 2) //camera is based on doubled coordinates, so each step right is 2
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -54,23 +45,25 @@ namespace HexStrategyGame.Gameplay
               Color.White);
         }
       }
-      spriteBatch.DrawString(TC.GameFont, $"{(Terrain)scenario.map.GetTerrainAtLocation(scenario.cursor.Position)}", new Vector2(0, 120), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"CameraX: {camera().Position.X}", new Vector2(0, 150), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"CameraY: {camera().Position.Y}", new Vector2(0, 180), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"{(Terrain)map.GetTerrainAtLocation(cursor.Position)}", new Vector2(0, 120), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"CameraX: {camera.Position.X}", new Vector2(0, 150), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"CameraY: {camera.Position.Y}", new Vector2(0, 180), Color.Black);
     }
 
-    Rectangle DestinationRectangle(int x, int y)
+
+
+    static Rectangle DestinationRectangle(int x, int y)
     {
-      return new Rectangle(XDestination(x,y), YDestination(y), TileData.width, TileData.height);
+      return new Rectangle(XDestination(x), YDestination(y), TileData.width, TileData.height);
     }
 
-    int XDestination(int x, int y)
+    static int XDestination(int x)
     {
       int stepValue = (x * TileData.xHalfStep);
       return stepValue;
     }
     
-    int YDestination(int y)
+    static int YDestination(int y)
     {
       return y * TileData.yStep;
     }
@@ -78,13 +71,14 @@ namespace HexStrategyGame.Gameplay
     //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
-      int xVal = ((camera().Position.X + x) - (y + camera().Position.Y)) / 2;
-      return new Rectangle(0, XSource(xVal, y + camera().Position.Y), SOURCE_WIDTH, SOURCE_HEIGHT);
+      int yVal = y + camera.Y;
+      int xVal = (camera.Position.X + x - yVal) / 2; //conversion for axial so we can find the terrain
+      return new Rectangle(0, XSource(xVal, yVal), TileData.width, TileData.height);
     }
 
     int XSource(int x, int y)
     {
-      return TileData.height * scenario.map.GetTerrainAtLocation(new Point(x, y));
+      return TileData.height * map.GetTerrainAtLocation(new Point(x, y));
     }
   }
 }

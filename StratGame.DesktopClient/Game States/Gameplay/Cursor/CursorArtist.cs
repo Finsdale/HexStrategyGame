@@ -11,58 +11,53 @@ using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.Gameplay
 {
-  class CursorArtist: IArtist
+  class CursorArtist : IArtist
   {
-        readonly TextureCollection TC;
-        readonly Cursor Cursor;
+    readonly TextureCollection TC;
+    readonly Cursor Cursor;
     readonly Camera Camera;
 
-        public CursorArtist(Cursor cursor, Camera camera)
+    public CursorArtist(Cursor cursor, Camera camera)
     {
-            Cursor = cursor;
+      Cursor = cursor;
       Camera = camera;
-        TC = TextureCollection.Instance;
+      TC = TextureCollection.Instance;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      int x = Cursor.Position.X;
-      int y = Cursor.Position.Y;
-            spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
-            spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
-            spriteBatch.Draw(
-                TC.Cursor,
-                CursorDestination(x, y), 
-                CursorSource(),
-                Color.White);
+      int x = Cursor.X;
+      int y = Cursor.Y;
+      spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
+      spriteBatch.Draw(
+          TC.Cursor,
+          CursorDestination(),
+          CursorSource(),
+          Color.White);
     }
-    Rectangle CursorDestination(int x, int y)
+    Rectangle CursorDestination()
     {
       return new Rectangle(
-        XDestinationPosition(x,y), 
-        YDestinationPosition(y), 
-        TileData.width, 
+        XDestinationPosition(),
+        YDestinationPosition(),
+        TileData.width,
         TileData.height);
     }
 
-    int XDestinationPosition(int x, int y)
+    int XDestinationPosition()
     {
-      int xVal = 2 * x + y;
-
-      //int cameraX = (Camera.Position.X - Camera.Position.Y) / 2;
-      //int stepValue = (x - cameraX) * TileData.xStep;
-      //int offsetValue = (y - Camera.Position.Y) * TileData.xHalfStep;
-      //int cameraOffset = (Camera.Position.Y & 1) * TileData.xHalfStep;
-      //return stepValue + offsetValue + cameraOffset;
-      return (xVal - Camera.Position.X) * TileData.xHalfStep;
+      int halfStepsRight = Cursor.DoubledXPosition - Camera.Position.X;
+      return halfStepsRight * TileData.xHalfStep;
     }
 
-    int YDestinationPosition(int y)
+    int YDestinationPosition()
     {
-      return (y - Camera.Position.Y) *TileData.yStep;
+      int stepsDown = Cursor.Y - Camera.Position.Y;
+      return stepsDown * TileData.yStep;
     }
 
-    Rectangle CursorSource()
+    static Rectangle CursorSource()
     {
       return new Rectangle(0, 0, TileData.width, TileData.height);
     }

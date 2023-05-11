@@ -12,12 +12,20 @@ namespace HexStrategyGame.MapData
   public class Cursor
   {
     public Point Position { get; set; }
+    public int X { get => Position.X; }
+    public int Y { get => Position.Y; }
+    public int DoubledXPosition
+    {
+      get
+      {
+        return 2 * Position.X + Position.Y;
+      }
+    }
+    
     readonly Map Map;
     readonly Camera Camera;
 
     bool lastRight = true;
-    public int X { get => Position.X; }
-    public int Y { get => Position.Y; }
 
     public Cursor(Map map, Camera camera)
     {

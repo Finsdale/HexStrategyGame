@@ -15,8 +15,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public int X { get => Position.X; }
     public int Y { get => Position.Y; }
     Map Map;
-    public int MinY, MaxY, ScreenWidth, ScreenHeight;
-    Point MinX, MaxX;
+    public int ScreenWidth, ScreenHeight;
 
     public Camera(Map map)
     {
@@ -48,16 +47,15 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public void ClampLocationToPoint(Point location)
     {
       int xResult = X, yResult = Y; 
-      int C = 2 * location.X + location.Y ; //This is the doubled position of the cursor.
-      int screenwidth = GetScreenTileWidth(), screenheight = GetScreenTileHeight();
+      int C = 2 * location.X + location.Y; //This is the doubled position of the location we are clamping to.
       if(C < X + 4) {
         xResult -= 2;
-      } else if (C > X + screenwidth - 4) {
+      } else if (C > X + GetScreenTileWidth() - 4) {
         xResult += 2;
       }
       if(location.Y < Y + 2) {
         yResult -= 1;
-      } else if(location.Y > Y + screenheight - 2) {
+      } else if(location.Y > Y + GetScreenTileHeight() - 2) {
         yResult += 1;
       }
       Position = new Point(xResult, yResult);
