@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -16,13 +17,15 @@ namespace HexStrategyGame.Gameplay
 #pragma warning restore IDE0052 // Remove unread private members
         readonly Cursor cursor;
         readonly CursorArtist artist;
+    readonly Camera camera;
     public float frameTimer = 0.0f;
 
     public CursorPlayState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
       cursor = gameStateMachine.Scenario.cursor;
-      artist = new CursorArtist(cursor);
+      camera = gameStateMachine.Scenario.camera;
+      artist = new CursorArtist(cursor, camera);
     }
 
     public void Update(Input input)

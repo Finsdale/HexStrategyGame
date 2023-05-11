@@ -19,7 +19,6 @@ namespace HexStrategyGame.GameSettings
     {
       this.gameStateMachine = gameStateMachine;
       artist = new GameSettingsArtist();
-      map = new Map(10, 10);
     }
 
     public void Update(Input input)
@@ -30,7 +29,6 @@ namespace HexStrategyGame.GameSettings
         gameStateMachine.Push(gameStateMachine.mainMenuState);
       } else if(input.confirm.Pressed == true)
       {
-        gameStateMachine.Scenario.map = map;
         gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.mapStateMachine);
         gameStateMachine.Push(gameStateMachine.cursorPlayState);
