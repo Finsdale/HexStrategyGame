@@ -47,14 +47,16 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int halfStepsRight = Cursor.DoubledXPosition - Camera.Position.X;
-      return halfStepsRight * TileData.xHalfStep;
+      int halfStepsRight = Cursor.DoubledXPosition - Camera.X;
+      int stepValue = halfStepsRight * TileData.xHalfStep;
+      return stepValue + Camera.Offset.X;
     }
 
     int YDestinationPosition()
     {
-      int stepsDown = Cursor.Y - Camera.Position.Y;
-      return stepsDown * TileData.yStep;
+      int stepsDown = Cursor.Y - Camera.Y;
+      int stepValue = stepsDown * TileData.yStep;
+      return stepValue + Camera.Offset.Y;
     }
 
     static Rectangle CursorSource()

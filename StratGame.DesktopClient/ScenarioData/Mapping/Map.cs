@@ -9,7 +9,7 @@ namespace HexStrategyGame.MapData
 {
   public class Map
   {
-    Dictionary<Point, MapTile> TileCollection;
+    readonly Dictionary<Point, MapTile> TileCollection;
 
 
 

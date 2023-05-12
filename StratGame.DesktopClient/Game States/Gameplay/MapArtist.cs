@@ -14,29 +14,29 @@ namespace HexStrategyGame.Gameplay
   public class MapArtist : IArtist
   {
     readonly TextureCollection TC;
-    public string currentState;
-    readonly Camera camera;
-    readonly Cursor cursor;
-    readonly Map map;
+    public string CurrentState;
+    readonly Camera Camera;
+    readonly Cursor Cursor;
+    readonly Map Map;
     public MapArtist(Scenario scenario)
     {
       TC = TextureCollection.Instance;
-      camera = scenario.camera;
-      cursor = scenario.cursor;
-      map = scenario.map;
+      Camera = scenario.camera;
+      Cursor = scenario.cursor;
+      Map = scenario.map;
     }
 
     public string SetCurrentState(string currentState)
     {
-      return this.currentState = currentState;
+      return this.CurrentState = currentState;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      camera.SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
-      for (int y = -1; y < camera.GetScreenTileHeight() + 1; y++)
+      Camera.SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
+      for (int y = -1; y < Camera.GetScreenTileHeight() + 1; y++)
       {
-        for (int x = -2 + ((y + camera.Position.Y) & 1); x < camera.GetScreenTileWidth() + 1; x += 2) //camera is based on doubled coordinates, so each step right is 2
+        for (int x = -2 + ((y + Camera.Y) & 1); x < Camera.GetScreenTileWidth() + 1; x += 2) //camera is based on doubled coordinates, so each step right is 2
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -45,40 +45,41 @@ namespace HexStrategyGame.Gameplay
               Color.White);
         }
       }
-      spriteBatch.DrawString(TC.GameFont, $"{(Terrain)map.GetTerrainAtLocation(cursor.Position)}", new Vector2(0, 120), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"CameraX: {camera.Position.X}", new Vector2(0, 150), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"CameraY: {camera.Position.Y}", new Vector2(0, 180), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"{(Terrain)Map.GetTerrainAtLocation(Cursor.Position)}", new Vector2(0, 120), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"CameraX: {Camera.X}", new Vector2(0, 150), Color.Black);
+      spriteBatch.DrawString(TC.GameFont, $"CameraY: {Camera.Y}", new Vector2(0, 180), Color.Black);
     }
 
 
 
-    static Rectangle DestinationRectangle(int x, int y)
+    Rectangle DestinationRectangle(int x, int y)
     {
       return new Rectangle(XDestination(x), YDestination(y), TileData.width, TileData.height);
     }
 
-    static int XDestination(int x)
+    int XDestination(int x)
     {
       int stepValue = (x * TileData.xHalfStep);
-      return stepValue;
+      return stepValue + Camera.Offset.X;
     }
     
-    static int YDestination(int y)
+    int YDestination(int y)
     {
-      return y * TileData.yStep;
+      int stepValue = y * TileData.yStep;
+      return stepValue + Camera.Offset.Y;
     }
 
     //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
-      int yVal = y + camera.Y;
-      int xVal = (camera.Position.X + x - yVal) / 2; //conversion for axial so we can find the terrain
-      return new Rectangle(0, XSource(xVal, yVal), TileData.width, TileData.height);
+      int yPos = y + Camera.Y;
+      int xPos = (Camera.X + x - yPos) / 2; //conversion to axial so we can find the terrain
+      return new Rectangle(0, TerrainXPosition(xPos, yPos), TileData.width, TileData.height);
     }
 
-    int XSource(int x, int y)
+    int TerrainXPosition(int x, int y)
     {
-      return TileData.height * map.GetTerrainAtLocation(new Point(x, y));
+      return TileData.height * Map.GetTerrainAtLocation(new Point(x, y));
     }
   }
 }
