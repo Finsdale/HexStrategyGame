@@ -49,21 +49,26 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       int xOffset, yOffset;
       ScreenWidth = width;
       ScreenHeight = height;
-      xOffset = ScreenWidth % TileData.xStep;
-      yOffset = (ScreenHeight % TileData.yStep / 2) - ((TileData.height - TileData.yStep) /2);
+      xOffset = ScreenWidth % TileData.xStep; //2
+      int yStepRemainder = ScreenHeight % TileData.yStep;
+      int yTileOverlap = TileData.height - TileData.yStep;
+      int yBottomOffset = yStepRemainder - yTileOverlap;
+      yOffset = (yBottomOffset / 2) + (yBottomOffset & 1); //9
       Offset = new Point(xOffset, yOffset);
       CenterSmallMap();
     }
 
     void CenterSmallMap()
     {
-      int xDiff = MaxPos.X - MinPos.X;
-      int yDiff = MaxPos.Y - MinPos.Y;
-      if (xDiff < ScreenWidth / TileData.xStep && yDiff < ScreenHeight / TileData.yStep) {
+      int xDiff = 1 + MaxPos.X - MinPos.X; //56
+      int yDiff = 1 + MaxPos.Y - MinPos.Y; //18
+      int ScreenWidthInTiles = (ScreenWidth / TileData.xStep) + 1;
+      int ScreenHeightInTiles = ScreenHeight / TileData.yStep;
+      if (xDiff <= ScreenWidthInTiles && yDiff <= ScreenHeightInTiles) {
         Locked = true;
       }
       if (Locked) {
-        int xPos = (ScreenWidth / TileData.xStep - xDiff) / 2;
+        int xPos = ((ScreenWidth / TileData.xStep) - xDiff) / 2;
         int yPos = (ScreenHeight / TileData.yStep - yDiff) / 2;
         Position = new Point(MinPos.X - xPos,MinPos.Y - yPos);
       }

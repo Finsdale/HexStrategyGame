@@ -28,8 +28,8 @@ namespace HexStrategyGame.Gameplay
     {
       int x = Cursor.X;
       int y = Cursor.Y;
-      spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
+      //spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
+      //spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
       spriteBatch.Draw(
           TC.Cursor,
           CursorDestination(),
