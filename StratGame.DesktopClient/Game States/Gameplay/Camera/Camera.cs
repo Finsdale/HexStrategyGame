@@ -49,7 +49,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       int xOffset, yOffset;
       ScreenWidth = width;
       ScreenHeight = height;
-      xOffset = ScreenWidth % TileData.xStep / 2;
+      xOffset = ScreenWidth % TileData.xStep;
       yOffset = (ScreenHeight % TileData.yStep / 2) - ((TileData.height - TileData.yStep) /2);
       Offset = new Point(xOffset, yOffset);
       CenterSmallMap();
@@ -59,24 +59,22 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     {
       int xDiff = MaxPos.X - MinPos.X;
       int yDiff = MaxPos.Y - MinPos.Y;
-      if (xDiff < ScreenWidth / TileData.xHalfStep && yDiff < ScreenHeight / TileData.yStep) {
+      if (xDiff < ScreenWidth / TileData.xStep && yDiff < ScreenHeight / TileData.yStep) {
         Locked = true;
       }
       if (Locked) {
-        int widthInHalfTiles = ScreenWidth / TileData.xHalfStep;
-        int heightInTiles = ScreenHeight / TileData.yStep;
-        int xPos = (ScreenWidth / TileData.xHalfStep - xDiff) / 2;
+        int xPos = (ScreenWidth / TileData.xStep - xDiff) / 2;
         int yPos = (ScreenHeight / TileData.yStep - yDiff) / 2;
         Position = new Point(MinPos.X - xPos,MinPos.Y - yPos);
       }
     }
 
-    public int GetScreenTileWidth()
+    public int GetScreenWidthInTiles()
     {
-      return ScreenWidth/TileData.xHalfStep;
+      return ScreenWidth/TileData.xStep;
     }
 
-    public int GetScreenTileHeight()
+    public int GetScreenHeightInTiles()
     {
       return ScreenHeight/TileData.yStep;
     }
@@ -89,13 +87,13 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
         if (C < X + 4) {
           xResult -= 2;
         }
-        else if (C > X + GetScreenTileWidth() - 6) {
+        else if (C > X + GetScreenWidthInTiles() - 6) {
           xResult += 2;
         }
         if (location.Y < Y + 2) {
           yResult -= 1;
         }
-        else if (location.Y > Y + GetScreenTileHeight() - 3) {
+        else if (location.Y > Y + GetScreenHeightInTiles() - 3) {
           yResult += 1;
         }
         Position = new Point(xResult, yResult);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.Game_States;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -34,9 +35,10 @@ namespace HexStrategyGame.Gameplay
     public void Draw(SpriteBatch spriteBatch)
     {
       Camera.SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
-      for (int y = -1; y < Camera.GetScreenTileHeight() + 1; y++)
+      for (int y = -1; y < Camera.GetScreenHeightInTiles() + 1; y++)
       {
-        for (int x = -2 + ((y + Camera.Y) & 1); x < Camera.GetScreenTileWidth() + 1; x += 2) //camera is based on doubled coordinates, so each step right is 2
+        //camera is based on doubled coordinates, so each step right is 2
+        for (int x = -2 + ((y + Camera.Y) & 1); x < Camera.GetScreenWidthInTiles() + 1; x += 2) 
         {
           spriteBatch.Draw(
               TC.TerrainTiles,
@@ -59,7 +61,7 @@ namespace HexStrategyGame.Gameplay
 
     int XDestination(int x)
     {
-      int stepValue = (x * TileData.xHalfStep);
+      int stepValue = (x * TileData.xStep);
       return stepValue + Camera.Offset.X;
     }
     
@@ -72,11 +74,16 @@ namespace HexStrategyGame.Gameplay
     //Currently, the source file is a single column of different terrain. So Y is always 0
     Rectangle SourceRectangle(int x, int y)
     {
-      int yPos = y + Camera.Y;
-      int xPos = (Camera.X + x - yPos) / 2; //conversion to axial so we can find the terrain
-      return new Rectangle(0, TerrainXPosition(xPos, yPos), TileData.width, TileData.height);
+      Point convertedCamera = ArtistHelper.DoubledToAxial(Camera.X, Camera.Y);
+      Point convertedPosition = ArtistHelper.DoubledToAxial(x, y);
+      Point screenPosition = convertedPosition + convertedCamera;
+      return new Rectangle(0, TerrainXPosition(screenPosition), TileData.width, TileData.height);
     }
 
+    int TerrainXPosition(Point point)
+    {
+      return TileData.height * Map.GetTerrainAtLocation(point);
+    }
     int TerrainXPosition(int x, int y)
     {
       return TileData.height * Map.GetTerrainAtLocation(new Point(x, y));

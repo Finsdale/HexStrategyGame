@@ -13,7 +13,6 @@ namespace HexStrategyGame.GameSettings
   {
         readonly GameStateMachine gameStateMachine;
         readonly IArtist artist;
-        readonly Map map;
 
         public GameSettingsState(GameStateMachine gameStateMachine)
     {

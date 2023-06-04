@@ -48,7 +48,7 @@ namespace HexStrategyGame.Gameplay
     int XDestinationPosition()
     {
       int halfStepsRight = Cursor.DoubledXPosition - Camera.X;
-      int stepValue = halfStepsRight * TileData.xHalfStep;
+      int stepValue = halfStepsRight * TileData.xStep;
       return stepValue + Camera.Offset.X;
     }
 
