@@ -15,6 +15,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public int Y { get => Position.Y; }
     public int ScreenWidth, ScreenHeight;
     public Point Offset, MinPos, MaxPos;
+    readonly int YTileOverlap = TileData.height - TileData.yStep;
     bool Locked = false;
 
     public Camera(Map map)
@@ -31,15 +32,11 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public void SetCameraLimits(Map map)
     {
       int MaxX, MaxY, MinX, MinY;
-      List<Point> tiles = map.TilePositions();
-      List<Point> points = new List<Point>();
-      foreach (Point position in tiles) {
-        points.Add(new Point(2 * position.X + position.Y, position.Y));
-      }
-      MinX = points.Min(pos => pos.X);
-      MaxX = points.Max(pos => pos.X);
-      MinY = points.Min(pos => pos.Y);
-      MaxY = points.Max(pos => pos.Y);
+      List<Point> tiles = map.TilePositionsDoubled();
+      MinX = tiles.Min(pos => pos.X);
+      MaxX = tiles.Max(pos => pos.X);
+      MinY = tiles.Min(pos => pos.Y);
+      MaxY = tiles.Max(pos => pos.Y);
       MinPos = new Point(MinX, MinY);
       MaxPos = new Point(MaxX, MaxY);
     }
@@ -50,10 +47,8 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       ScreenWidth = width;
       ScreenHeight = height;
       xOffset = ScreenWidth % TileData.xStep; //2
-      int yStepRemainder = ScreenHeight % TileData.yStep;
-      int yTileOverlap = TileData.height - TileData.yStep;
-      int yBottomOffset = yStepRemainder - yTileOverlap;
-      yOffset = (yBottomOffset / 2) + (yBottomOffset & 1); //9
+      int yStepRemainder = (ScreenHeight - YTileOverlap) % TileData.yStep;
+      yOffset = (yStepRemainder / 2) + (yStepRemainder & 1); //9
       Offset = new Point(xOffset, yOffset);
       CenterSmallMap();
     }
@@ -62,8 +57,8 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     {
       int xDiff = 1 + MaxPos.X - MinPos.X; //56
       int yDiff = 1 + MaxPos.Y - MinPos.Y; //18
-      int ScreenWidthInTiles = (ScreenWidth / TileData.xStep) + 1;
-      int ScreenHeightInTiles = ScreenHeight / TileData.yStep;
+      int ScreenWidthInTiles = (ScreenWidth - TileData.xStep) / TileData.xStep;
+      int ScreenHeightInTiles = (ScreenHeight - YTileOverlap) / TileData.yStep;
       if (xDiff <= ScreenWidthInTiles && yDiff <= ScreenHeightInTiles) {
         Locked = true;
       }
@@ -103,6 +98,17 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
         }
         Position = new Point(xResult, yResult);
       }
+    }
+
+    public List<Point> VisibleTiles(Map map)
+    {
+      int minX, maxX, minY, maxY;
+      minX = X - 2;
+      maxX = ((ScreenWidth - TileData.xStep) / (TileData.xStep)) + X + 2;
+      minY = Y - 1;
+      maxY = ((ScreenHeight - YTileOverlap) / TileData.yStep) + Y + 1;
+      List<Point> tiles = map.TilePositionsDoubled().FindAll(x => x.X >= minX && x.X <= maxX && x.Y >= minY && x.Y <= maxY).ToList();
+      return tiles;
     }
   }
 }

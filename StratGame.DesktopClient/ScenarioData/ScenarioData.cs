@@ -17,7 +17,7 @@ namespace HexStrategyGame.ScenarioData
 
     public Scenario()
     {
-      map = new Map(18, 28);
+      map = new Map(28, 18);
       camera = new Camera(map, new Point(2,2));
       cursor = new Cursor(map, camera);
     }
