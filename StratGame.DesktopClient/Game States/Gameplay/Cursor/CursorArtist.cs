@@ -28,8 +28,8 @@ namespace HexStrategyGame.Gameplay
     {
       int x = Cursor.X;
       int y = Cursor.Y;
-      spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
-      spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
+      //spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
+      //spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
       spriteBatch.Draw(
           TC.Cursor,
           CursorDestination(),
@@ -47,14 +47,16 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int halfStepsRight = Cursor.DoubledXPosition - Camera.Position.X;
-      return halfStepsRight * TileData.xHalfStep;
+      int halfStepsRight = Cursor.DoubledXPosition - Camera.X;
+      int stepValue = halfStepsRight * TileData.xStep;
+      return stepValue + Camera.Offset.X;
     }
 
     int YDestinationPosition()
     {
-      int stepsDown = Cursor.Y - Camera.Position.Y;
-      return stepsDown * TileData.yStep;
+      int stepsDown = Cursor.Y - Camera.Y;
+      int stepValue = stepsDown * TileData.yStep;
+      return stepValue + Camera.Offset.Y;
     }
 
     static Rectangle CursorSource()
