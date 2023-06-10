@@ -26,6 +26,7 @@ namespace HexStrategyGame.Gameplay
       cursor = gameStateMachine.Scenario.cursor;
       camera = gameStateMachine.Scenario.camera;
       artist = new CursorArtist(cursor, camera);
+
     }
 
     public void Update(Input input)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.MainMenu
 {
-  class MainMenuArtist: IArtist
+  class MainMenuArtist: IPatron
   {
         readonly MainMenuData data;
         readonly TextureCollection TC;

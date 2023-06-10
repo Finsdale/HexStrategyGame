@@ -26,8 +26,6 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(SpriteBatch spriteBatch)
     {
-      int x = Cursor.X;
-      int y = Cursor.Y;
       //spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
       spriteBatch.Draw(
@@ -47,21 +45,20 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int halfStepsRight = Cursor.DoubledXPosition - Camera.X;
-      int stepValue = halfStepsRight * TileData.xStep;
-      return stepValue + Camera.Offset.X;
+      int result = (Cursor.DoubledXPosition - Camera.X) * TileData.xStep + Camera.Offset.X;
+      return result;
     }
 
     int YDestinationPosition()
     {
-      int stepsDown = Cursor.Y - Camera.Y;
-      int stepValue = stepsDown * TileData.yStep;
-      return stepValue + Camera.Offset.Y;
+      int result = ((Cursor.Y - Camera.Y) * TileData.yStep) + Camera.Offset.Y;
+      return result;
     }
 
-    static Rectangle CursorSource()
+    internal static Rectangle CursorSource()
     {
-      return new Rectangle(0, 0, TileData.width, TileData.height);
+      Rectangle result = new Rectangle(0, 0, TileData.width, TileData.height);
+      return result;
     }
   }
 }

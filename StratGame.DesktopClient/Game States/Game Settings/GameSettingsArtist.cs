@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.GameSettings
 {
-    class GameSettingsArtist : IArtist
+    class GameSettingsArtist : IPatron
     {
         readonly TextureCollection TC;
         public GameSettingsArtist()

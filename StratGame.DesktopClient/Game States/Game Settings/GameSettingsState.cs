@@ -12,7 +12,7 @@ namespace HexStrategyGame.GameSettings
   public class GameSettingsState : IGameState
   {
         readonly GameStateMachine gameStateMachine;
-        readonly IArtist artist;
+        readonly IPatron artist;
 
         public GameSettingsState(GameStateMachine gameStateMachine)
     {

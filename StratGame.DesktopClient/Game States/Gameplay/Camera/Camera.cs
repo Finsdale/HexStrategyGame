@@ -46,17 +46,17 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       int xOffset, yOffset;
       ScreenWidth = width;
       ScreenHeight = height;
-      xOffset = ScreenWidth % TileData.xStep; //2
+      xOffset = ScreenWidth % TileData.xStep;
       int yStepRemainder = (ScreenHeight - YTileOverlap) % TileData.yStep;
-      yOffset = (yStepRemainder / 2) + (yStepRemainder & 1); //9
+      yOffset = (yStepRemainder / 2) + (yStepRemainder & 1);
       Offset = new Point(xOffset, yOffset);
       CenterSmallMap();
     }
 
     void CenterSmallMap()
     {
-      int xDiff = 1 + MaxPos.X - MinPos.X; //56
-      int yDiff = 1 + MaxPos.Y - MinPos.Y; //18
+      int xDiff = 1 + MaxPos.X - MinPos.X;
+      int yDiff = 1 + MaxPos.Y - MinPos.Y;
       int ScreenWidthInTiles = (ScreenWidth - TileData.xStep) / TileData.xStep;
       int ScreenHeightInTiles = (ScreenHeight - YTileOverlap) / TileData.yStep;
       if (xDiff <= ScreenWidthInTiles && yDiff <= ScreenHeightInTiles) {

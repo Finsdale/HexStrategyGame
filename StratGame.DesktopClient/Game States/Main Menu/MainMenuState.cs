@@ -11,7 +11,7 @@ namespace HexStrategyGame.MainMenu
   public class MainMenuState : IGameState
   {
         readonly GameStateMachine gameStateMachine;
-        readonly IArtist artist;
+        readonly IPatron artist;
         readonly MainMenuData data;
         private delegate void ShiftState();
 

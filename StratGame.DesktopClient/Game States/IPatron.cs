@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HexStrategyGame
 {
-  public interface IArtist
+  public interface IPatron
   {
     void Draw(SpriteBatch spriteBatch);
   }
