@@ -11,7 +11,7 @@ using HexStrategyGame.Game_States.Gameplay.Camera;
 
 namespace HexStrategyGame.Gameplay
 {
-  class CursorArtist : IArtist
+  class CursorArtist : IPatron
   {
     readonly TextureCollection TC;
     readonly Cursor Cursor;
