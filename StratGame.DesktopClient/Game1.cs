@@ -1,4 +1,5 @@
 ﻿using ControllerInput;
+using HexStrategyGame.Artists;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +14,7 @@ namespace HexStrategyGame
         Input playerOne;
         readonly TextureCollection TC;
         readonly GameStateMachine gameStateMachine;
+        IArtist artist;
         bool debugInfo, triggered;
 
         public Game1()
@@ -25,6 +27,7 @@ namespace HexStrategyGame
             playerOne = new Input();
             gameStateMachine = new GameStateMachine();
             debugInfo = triggered = false;
+            artist = new ConcreteArtist();
         }
 
         protected override void Initialize()

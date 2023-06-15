@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.Game_States;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -32,12 +33,12 @@ namespace HexStrategyGame.Gameplay
       return this.CurrentState = currentState;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      Camera.SetScreenValues(spriteBatch.GraphicsDevice.Viewport.Width, spriteBatch.GraphicsDevice.Viewport.Height);
+      Camera.SetScreenValues(artist.GraphicsDevice.Viewport.Width, artist.GraphicsDevice.Viewport.Height);
 
       foreach(Point tile in Camera.VisibleTiles(Map)) {
-        spriteBatch.Draw(TC.TerrainTiles,
+        artist.Draw(TC.TerrainTiles,
           DestinationRectangle(tile),
           SourceRectangle(tile),
           Color.White);

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexStrategyGame
+namespace HexStrategyGame.Artists
 {
-  internal class TestArtist:IArtist
-  {
-    public void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color) { }
-  }
+    public interface IArtist
+    {
+        void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color);
+    }
 }
