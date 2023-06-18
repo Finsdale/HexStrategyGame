@@ -35,7 +35,7 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(IArtist artist)
     {
-      Camera.SetScreenValues(artist.GraphicsDevice.Viewport.Width, artist.GraphicsDevice.Viewport.Height);
+      Camera.SetScreenValues(artist.ScreenWidth(), artist.ScreenHeight());
 
       foreach(Point tile in Camera.VisibleTiles(Map)) {
         artist.Draw(TC.TerrainTiles,

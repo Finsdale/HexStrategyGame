@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexStrategyGame.Artists;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace HexStrategyGame.GameSettings
         {
             TC = TextureCollection.Instance;
         }
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      spriteBatch.DrawString(TC.GameFont, "Game Settings", new Vector2(0, 30), Color.Black);
+      artist.DrawString(TC.GameFont, "Game Settings", new Vector2(0, 30), Color.Black);
     }
   }
 }

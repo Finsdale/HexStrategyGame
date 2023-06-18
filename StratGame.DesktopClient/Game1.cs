@@ -14,7 +14,7 @@ namespace HexStrategyGame
         Input playerOne;
         readonly TextureCollection TC;
         readonly GameStateMachine gameStateMachine;
-        IArtist artist;
+        ConcreteArtist artist;
         bool debugInfo, triggered;
 
         public Game1()
@@ -68,7 +68,8 @@ namespace HexStrategyGame
 
             spriteBatch.Begin();
 
-            gameStateMachine.Draw(spriteBatch);
+            artist.SpriteBatch = spriteBatch;
+            gameStateMachine.Draw(artist);
 
             if (debugInfo)
             {

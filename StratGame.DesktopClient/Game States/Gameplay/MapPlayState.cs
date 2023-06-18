@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -29,9 +30,9 @@ namespace HexStrategyGame.Gameplay
         //Nothing happens
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      artist.Draw(spriteBatch);
+      this.artist.Draw(artist);
     }
   }
 }

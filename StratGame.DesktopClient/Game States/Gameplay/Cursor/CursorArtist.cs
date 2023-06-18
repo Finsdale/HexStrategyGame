@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using HexStrategyGame.ScenarioData;
 using HexStrategyGame.MapData;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -24,11 +25,11 @@ namespace HexStrategyGame.Gameplay
       TC = TextureCollection.Instance;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
       //spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
-      spriteBatch.Draw(
+      artist.Draw(
           TC.Cursor,
           CursorDestination(),
           CursorSource(),

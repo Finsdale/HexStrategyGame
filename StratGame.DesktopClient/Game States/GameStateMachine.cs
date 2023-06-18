@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HexStrategyGame.ScenarioData;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame
 {
@@ -53,11 +54,11 @@ namespace HexStrategyGame
             GameStack[^1].Update(input);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(IArtist artist)
         {
             for(int i = 0; i <= GameStack.Count -1; i++)
             {
-                GameStack[i].Draw(spriteBatch);
+                GameStack[i].Draw(artist);
             }
         }
   }
