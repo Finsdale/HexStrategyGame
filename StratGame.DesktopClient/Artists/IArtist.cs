@@ -10,11 +10,9 @@ namespace HexStrategyGame.Artists
 {
     public interface IArtist
     {
-        void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color);
-
-    void DrawString(SpriteFont font, string text, Vector2 position, Color color);
-
-    int ScreenWidth();
-    int ScreenHeight();
+      void Draw(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color);
+      void DrawString(SpriteFont font, string text, Vector2 position, Color color);
+      int ScreenWidth();
+      int ScreenHeight();
     }
 }

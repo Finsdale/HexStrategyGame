@@ -14,7 +14,7 @@ namespace HexStrategyGame
         Input playerOne;
         readonly TextureCollection TC;
         readonly GameStateMachine gameStateMachine;
-        ConcreteArtist artist;
+        readonly ConcreteArtist artist;
         bool debugInfo, triggered;
 
         public Game1()
