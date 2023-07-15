@@ -13,9 +13,7 @@ namespace HexStrategyGame.Gameplay
 {
   public class CursorPlayState : IGameState
   {
-#pragma warning disable IDE0052 // Remove unread private members
         readonly GameStateMachine gameStateMachine;
-#pragma warning restore IDE0052 // Remove unread private members
         readonly Cursor cursor;
         readonly CursorArtist artist;
     readonly Camera camera;
@@ -34,7 +32,7 @@ namespace HexStrategyGame.Gameplay
     {
       if (input.confirm.Pressed)
       {
-
+        gameStateMachine.Push(new GameMenuState(gameStateMachine));
       }
       else if (input.cancel.Pressed)
       {
