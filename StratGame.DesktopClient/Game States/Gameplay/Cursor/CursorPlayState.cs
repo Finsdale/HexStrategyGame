@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -26,6 +27,7 @@ namespace HexStrategyGame.Gameplay
       cursor = gameStateMachine.Scenario.cursor;
       camera = gameStateMachine.Scenario.camera;
       artist = new CursorArtist(cursor, camera);
+
     }
 
     public void Update(Input input)
@@ -44,9 +46,9 @@ namespace HexStrategyGame.Gameplay
       }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      artist.Draw(spriteBatch);
+      this.artist.Draw(artist);
     }
 
     private void UpdateCursor(Input input)

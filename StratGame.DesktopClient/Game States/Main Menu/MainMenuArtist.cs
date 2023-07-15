@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexStrategyGame.Artists;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.MainMenu
 {
-  class MainMenuArtist: IArtist
+  class MainMenuArtist: IPatron
   {
         readonly MainMenuData data;
         readonly TextureCollection TC;
@@ -19,9 +20,9 @@ namespace HexStrategyGame.MainMenu
       TC = TextureCollection.Instance;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-        spriteBatch.DrawString(TC.GameFont, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
+        artist.DrawString(TC.GameFont, $"{data.CurrentSelection}", new Vector2(0, 30), Color.Black);
     }
   }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.Game_States
 {
-  internal static class ArtistHelper
+  internal static class PatronHelper
   {
     static public Point AxialToDoubled(Point point)
     {

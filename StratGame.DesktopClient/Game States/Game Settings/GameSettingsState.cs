@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.GameSettings
 {
   public class GameSettingsState : IGameState
   {
         readonly GameStateMachine gameStateMachine;
-        readonly IArtist artist;
+        readonly IPatron artist;
 
         public GameSettingsState(GameStateMachine gameStateMachine)
     {
@@ -34,9 +35,9 @@ namespace HexStrategyGame.GameSettings
       }
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-            artist.Draw(spriteBatch);
+            this.artist.Draw(artist);
     }
   }
 }

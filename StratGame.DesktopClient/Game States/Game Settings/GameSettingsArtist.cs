@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexStrategyGame.Artists;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.GameSettings
 {
-    class GameSettingsArtist : IArtist
+    class GameSettingsArtist : IPatron
     {
         readonly TextureCollection TC;
         public GameSettingsArtist()
         {
             TC = TextureCollection.Instance;
         }
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      spriteBatch.DrawString(TC.GameFont, "Game Settings", new Vector2(0, 30), Color.Black);
+      artist.DrawString(TC.GameFont, "Game Settings", new Vector2(0, 30), Color.Black);
     }
   }
 }

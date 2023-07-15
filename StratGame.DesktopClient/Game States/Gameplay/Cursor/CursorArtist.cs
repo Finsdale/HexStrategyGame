@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using HexStrategyGame.ScenarioData;
 using HexStrategyGame.MapData;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
-  class CursorArtist : IArtist
+  class CursorArtist : IPatron
   {
     readonly TextureCollection TC;
     readonly Cursor Cursor;
@@ -24,13 +25,11 @@ namespace HexStrategyGame.Gameplay
       TC = TextureCollection.Instance;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Draw(IArtist artist)
     {
-      int x = Cursor.X;
-      int y = Cursor.Y;
       //spriteBatch.DrawString(TC.GameFont, $"X:{x}", new Vector2(0, 60), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"Y:{y}", new Vector2(0, 90), Color.Black);
-      spriteBatch.Draw(
+      artist.Draw(
           TC.Cursor,
           CursorDestination(),
           CursorSource(),
@@ -47,21 +46,20 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int halfStepsRight = Cursor.DoubledXPosition - Camera.X;
-      int stepValue = halfStepsRight * TileData.xStep;
-      return stepValue + Camera.Offset.X;
+      int result = (Cursor.DoubledXPosition - Camera.X) * TileData.xStep + Camera.Offset.X;
+      return result;
     }
 
     int YDestinationPosition()
     {
-      int stepsDown = Cursor.Y - Camera.Y;
-      int stepValue = stepsDown * TileData.yStep;
-      return stepValue + Camera.Offset.Y;
+      int result = ((Cursor.Y - Camera.Y) * TileData.yStep) + Camera.Offset.Y;
+      return result;
     }
 
-    static Rectangle CursorSource()
+    internal static Rectangle CursorSource()
     {
-      return new Rectangle(0, 0, TileData.width, TileData.height);
+      Rectangle result = new Rectangle(0, 0, TileData.width, TileData.height);
+      return result;
     }
   }
 }
