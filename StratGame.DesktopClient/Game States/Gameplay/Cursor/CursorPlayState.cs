@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.Artists;
+using HexStrategyGame.ScenarioData.Players;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -16,6 +17,7 @@ namespace HexStrategyGame.Gameplay
         readonly GameStateMachine gameStateMachine;
         readonly Cursor cursor;
         readonly CursorArtist artist;
+    readonly List<Player> players;
     readonly Camera camera;
     public float frameTimer = 0.0f;
 
@@ -25,13 +27,14 @@ namespace HexStrategyGame.Gameplay
       cursor = gameStateMachine.Scenario.cursor;
       camera = gameStateMachine.Scenario.camera;
       artist = new CursorArtist(cursor, camera);
-
+      players = gameStateMachine.Scenario.Players;
     }
 
     public void Update(Input input)
     {
       if (input.confirm.Pressed)
       {
+        
         gameStateMachine.Push(new GameMenuState(gameStateMachine));
       }
       else if (input.cancel.Pressed)

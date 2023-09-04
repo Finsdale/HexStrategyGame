@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.ScenarioData
 {
-  internal class Unit
+  public class Unit
   {
     public Point Location { get; set; }
     public bool Selected { get; set; }

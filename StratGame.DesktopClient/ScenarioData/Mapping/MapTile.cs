@@ -10,7 +10,7 @@ namespace HexStrategyGame.MapData
   {
     public Terrain TileTerrain { get; set; }
 #pragma warning disable IDE0052 // Remove unread private members
-        private bool HasUnit { get; set; }
+        public bool HasUnit { get; set; }
         private bool HasBuilding { get; set; }
 #pragma warning restore IDE0052 // Remove unread private members
 

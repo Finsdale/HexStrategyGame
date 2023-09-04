@@ -19,7 +19,9 @@ namespace HexStrategyGame.Gameplay
     }
     public void Update(Input input)
     {
-
+      if (input.cancel.Pressed) {
+        gameStateMachine.Pop();
+      }
     }
     public void Draw(IArtist artist)
     {
