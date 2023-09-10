@@ -12,6 +12,7 @@ namespace HexStrategyGame.ScenarioData
     public Map map;
     public Cursor cursor;
     public List<Player> Players;
+    public string ActivePlayer;
 
     public Scenario()
     {
@@ -23,8 +24,7 @@ namespace HexStrategyGame.ScenarioData
         new Player("Player1"),
         new Player("Player2")
       };
-      Players[0].AddUnit(new Unit(new Point(5, 5)));
-      map.GetTileAtLocation(new Point(5, 5)).HasUnit = true;
+      ActivePlayer = Players[0].Name;
     }
   }
 }

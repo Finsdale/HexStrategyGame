@@ -11,10 +11,13 @@ namespace HexStrategyGame.ScenarioData
   {
     public Point Location { get; set; }
     public bool Selected { get; set; }
+    public string Player { get; set; }
     public Unit() { }
-    public Unit(Point location)
+    public Unit(Point location, string player)
     {
       Location = location;
+      Selected = false;
+      Player = player;
     }
   }
 }

@@ -24,7 +24,7 @@ namespace HexStrategyGame.MapData
         {
           //axial coordinates make our x value smaller as the y value increases
           if(x == 2 && y == 5) {
-            TileCollection.Add(new Point(x,y), new MapTile(2));
+            TileCollection.Add(new Point(x,y), new MapTile(2, new Unit(new Point(x, y), "Player1")));
           }
           else { TileCollection.Add(new Point(x, y), new MapTile(1)); }
         }

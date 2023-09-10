@@ -37,8 +37,17 @@ namespace HexStrategyGame.Gameplay
     {
       if (input.confirm.Pressed)
       {
-        
-        gameStateMachine.Push(new GameMenuState(gameStateMachine));
+        if (IsUnitAtCursorLocation()) {
+          if (gameStateMachine.Scenario.ActivePlayer == UnitAtCursorLocation().Player) {
+            gameStateMachine.Push(gameStateMachine.unitSelectedState);
+          }
+          else {
+
+          }
+        }
+        else {
+          gameStateMachine.Push(new GameMenuState(gameStateMachine));
+        }
       }
       else if (input.cancel.Pressed)
       {
@@ -48,6 +57,16 @@ namespace HexStrategyGame.Gameplay
       {
         UpdateCursor(input);
       }
+    }
+
+    public bool IsUnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit != null;
+    }
+
+    public Unit UnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit;
     }
 
     public void Draw(IArtist artist)
