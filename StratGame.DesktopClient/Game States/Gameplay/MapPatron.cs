@@ -42,6 +42,9 @@ namespace HexStrategyGame.Gameplay
           DestinationRectangle(tile),
           SourceRectangle(tile),
           Color.White);
+        if(Map.GetTileAtLocation(PatronHelper.DoubledToAxial(tile)).Unit != null) {
+          artist.Draw(TC.UnitSprites, DestinationRectangle(tile), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
+        }
       }
       artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"CameraX: {Camera.X}", new Vector2(0, 150), Color.Black);
