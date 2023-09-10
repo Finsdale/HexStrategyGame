@@ -13,18 +13,18 @@ using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
-  public class MapArtist : IPatron
+  public class MapPatron : IPatron
   {
     readonly TextureCollection TC;
     public string CurrentState;
     readonly Camera Camera;
-    //readonly Cursor Cursor;
+    readonly Cursor Cursor;
     readonly Map Map;
-    public MapArtist(Scenario scenario)
+    public MapPatron(Scenario scenario)
     {
       TC = TextureCollection.Instance;
       Camera = scenario.camera;
-      //Cursor = scenario.cursor;
+      Cursor = scenario.cursor;
       Map = scenario.map;
     }
 
@@ -43,7 +43,7 @@ namespace HexStrategyGame.Gameplay
           SourceRectangle(tile),
           Color.White);
       }
-      //spriteBatch.DrawString(TC.GameFont, $"{(Terrain)Map.GetTerrainAtLocation(Cursor.Position)}", new Vector2(0, 120), Color.Black);
+      artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"CameraX: {Camera.X}", new Vector2(0, 150), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"CameraY: {Camera.Y}", new Vector2(0, 180), Color.Black);
     }

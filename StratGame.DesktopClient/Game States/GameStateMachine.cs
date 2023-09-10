@@ -18,8 +18,10 @@ namespace HexStrategyGame
         public List<IGameState> GameStack = new List<IGameState>();
         public MainMenuState mainMenuState;
         public GameSettingsState gameSettingsState;
-        public MapPlayState mapStateMachine;
+        public MapPlayState mapPlayState;
         public CursorPlayState cursorPlayState;
+    public GameMenuState gameMenuState;
+    public UnitSelectedState unitSelectedState;
         public Scenario Scenario { get; set; }
         public bool Exit { get; set; } = false;
 
@@ -28,8 +30,9 @@ namespace HexStrategyGame
             Scenario = new Scenario();
             mainMenuState = new MainMenuState(this);
             gameSettingsState = new GameSettingsState(this);
-            mapStateMachine = new MapPlayState(this);
+            mapPlayState = new MapPlayState(this);
             cursorPlayState = new CursorPlayState(this);
+      gameMenuState = new GameMenuState(this);
 
             Push(mainMenuState); //You could really set this state to whatever you wanted to launch at.
         }

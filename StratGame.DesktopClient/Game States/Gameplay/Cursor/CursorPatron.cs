@@ -12,13 +12,13 @@ using HexStrategyGame.Artists;
 
 namespace HexStrategyGame.Gameplay
 {
-  class CursorArtist : IPatron
+  class CursorPatron : IPatron
   {
     readonly TextureCollection TC;
     readonly Cursor Cursor;
     readonly Camera Camera;
 
-    public CursorArtist(Cursor cursor, Camera camera)
+    public CursorPatron(Cursor cursor, Camera camera)
     {
       Cursor = cursor;
       Camera = camera;

@@ -12,7 +12,7 @@ namespace HexStrategyGame.MainMenu
   public class MainMenuState : IGameState
   {
         readonly GameStateMachine gameStateMachine;
-        readonly IPatron artist;
+        readonly IPatron patron;
         readonly MainMenuData data;
         private delegate void ShiftState();
 
@@ -20,7 +20,7 @@ namespace HexStrategyGame.MainMenu
     {
       this.gameStateMachine = gameStateMachine;
       data = new MainMenuData();
-      artist = new MainMenuArtist(data);
+      patron = new MainMenuArtist(data);
     }
 
     public void Update(Input input)
@@ -63,7 +63,7 @@ namespace HexStrategyGame.MainMenu
 
     public void Draw(IArtist artist)
     {
-      this.artist.Draw(artist);
+      patron.Draw(artist);
     }
   }
 }

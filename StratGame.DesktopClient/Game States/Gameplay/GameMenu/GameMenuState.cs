@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.Gameplay
 {
-  internal class GameMenuState: IGameState
+  public class GameMenuState: IGameState
   {
     readonly GameStateMachine gameStateMachine;
-    readonly GameMenuArtist artist;
+    readonly GameMenuPatron patron;
     public GameMenuState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
-      this.artist = new GameMenuArtist();
+      patron = new GameMenuPatron();
     }
     public void Update(Input input)
     {
@@ -25,7 +25,7 @@ namespace HexStrategyGame.Gameplay
     }
     public void Draw(IArtist artist)
     {
-      this.artist.Draw(artist);
+      patron.Draw(artist);
     }
   }
 }

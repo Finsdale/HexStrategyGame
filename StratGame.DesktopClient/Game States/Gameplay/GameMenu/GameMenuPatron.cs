@@ -8,10 +8,10 @@ using Microsoft.Xna.Framework;
 
 namespace HexStrategyGame.Gameplay
 {
-  internal class GameMenuArtist : IPatron
+  internal class GameMenuPatron : IPatron
   {
     readonly TextureCollection TC;
-    public GameMenuArtist()
+    public GameMenuPatron()
     {
       TC = TextureCollection.Instance;
     }

@@ -13,12 +13,12 @@ namespace HexStrategyGame.GameSettings
   public class GameSettingsState : IGameState
   {
         readonly GameStateMachine gameStateMachine;
-        readonly IPatron artist;
+        readonly IPatron patron;
 
         public GameSettingsState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
-      artist = new GameSettingsArtist();
+      patron = new GameSettingsPatron();
     }
 
     public void Update(Input input)
@@ -30,14 +30,14 @@ namespace HexStrategyGame.GameSettings
       } else if(input.confirm.Pressed == true)
       {
         gameStateMachine.Pop();
-        gameStateMachine.Push(gameStateMachine.mapStateMachine);
+        gameStateMachine.Push(gameStateMachine.mapPlayState);
         gameStateMachine.Push(gameStateMachine.cursorPlayState);
       }
     }
 
     public void Draw(IArtist artist)
     {
-            this.artist.Draw(artist);
+            patron.Draw(artist);
     }
   }
 }
