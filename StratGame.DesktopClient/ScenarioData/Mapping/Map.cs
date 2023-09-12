@@ -11,8 +11,7 @@ namespace HexStrategyGame.MapData
   public class Map
   {
     readonly Dictionary<Point, MapTile> TileCollection;
-
-
+    List<Point> directions = new List<Point> { new Point(1, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1) };
 
     //This constructor makes a basic rectangular map grid. Odd-numbered rows are shifted right.
     public Map(int length, int height)
@@ -24,9 +23,9 @@ namespace HexStrategyGame.MapData
         {
           //axial coordinates make our x value smaller as the y value increases
           if(x == 2 && y == 5) {
-            TileCollection.Add(new Point(x,y), new MapTile(2, new Unit(new Point(x, y), "Player1")));
+            TileCollection.Add(new Point(x,y), new MapTile(2, new Point(x,y), new Unit(new Point(x, y), "Player1")));
           }
-          else { TileCollection.Add(new Point(x, y), new MapTile(1)); }
+          else { TileCollection.Add(new Point(x, y), new MapTile(1, new Point(x,y))); }
         }
       }
     }
@@ -57,6 +56,21 @@ namespace HexStrategyGame.MapData
         points.Add(new Point(2 * position.X + position.Y, position.Y));
       }    
       return points;
+    }
+
+    public List<MapTile> GetNeighbors(Point tilePosition)
+    {
+      return GetNeighbors(GetTileAtLocation(tilePosition));
+    }
+
+    public List<MapTile> GetNeighbors(MapTile tile)
+    {
+      List<MapTile> neighbors = new List<MapTile>();
+      foreach (Point direction in directions) {
+        MapTile neighbor = GetTileAtLocation(tile.Position + direction);
+        if (neighbor.TileTerrain != Terrain.Empty) neighbors.Add(neighbor);
+      }
+      return neighbors;
     }
   }
 }

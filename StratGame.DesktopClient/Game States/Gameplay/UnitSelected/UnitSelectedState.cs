@@ -1,6 +1,7 @@
 ﻿using ControllerInput;
 using HexStrategyGame.Artists;
 using HexStrategyGame.Game_States.Gameplay.UnitSelected;
+using HexStrategyGame.MapData;
 using HexStrategyGame.ScenarioData;
 using Microsoft.Xna.Framework;
 using System;
@@ -16,23 +17,22 @@ namespace HexStrategyGame.Gameplay
   {
     readonly GameStateMachine gameStateMachine;
     readonly UnitSelectedPatron patron;
-    Point UnitLocation;
     bool Active;
-    Dictionary<Point, int> cost_to_location = new Dictionary<Point, int>();
+    UnitRange MovementOptions;
 
     public UnitSelectedState(GameStateMachine gameStateMachine) {
       this.gameStateMachine = gameStateMachine;
       patron = new UnitSelectedPatron();
-      UnitLocation = new Point();
       Active = false;
+      MovementOptions = new UnitRange();
     }
      
     public void Update(Input input)
     {
       if (Active) {
-
         if (input.cancel.Pressed) {
-          gameStateMachine.Pop();
+            Active = false;
+            gameStateMachine.Pop();
         }
       }
     }
@@ -41,14 +41,35 @@ namespace HexStrategyGame.Gameplay
       patron.Draw(artist);
     }
 
-    public bool SelectUnit(Point unitLocation)
+    public bool SelectUnit(MapTile mapTile)
     {
-      Unit unit = gameStateMachine.Scenario.map.GetTileAtLocation(unitLocation).Unit;
+      Unit unit = mapTile.Unit;
       if (unit != null) {
-        UnitLocation = unitLocation;
         Active = true;
+        MovementOptions = SetMovementOptions(mapTile);
       }
       return Active;
+    }
+
+    UnitRange SetMovementOptions(MapTile mapTile)
+    {
+      UnitRange movementOptions = new UnitRange();
+      PriorityQueue<MapTile, int> steps = new PriorityQueue<MapTile, int>();
+      steps.Enqueue(mapTile, 0);
+      do {
+        MapTile current = steps.Dequeue();
+        List<MapTile> neighbors = gameStateMachine.Scenario.map.GetNeighbors(current);
+        foreach (MapTile step in neighbors) {
+          int newCost = movementOptions.CostToMove[current] + step.Cost;
+          if (!movementOptions.CostToMove.ContainsKey(step) || newCost < movementOptions.CostToMove[step]) {
+            movementOptions.CostToMove[step] = newCost;
+            int priority = newCost;
+            steps.Enqueue(step, priority);
+            movementOptions.PreviousStep[step] = current;
+          }
+        }
+      } while (steps.Count > 0);
+      return movementOptions;
     }
   }
 }
