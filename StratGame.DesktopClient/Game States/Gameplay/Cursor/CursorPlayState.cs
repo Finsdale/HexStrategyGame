@@ -8,16 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.Artists;
+using HexStrategyGame.ScenarioData.Players;
+using HexStrategyGame.ScenarioData;
 
 namespace HexStrategyGame.Gameplay
 {
   public class CursorPlayState : IGameState
   {
-#pragma warning disable IDE0052 // Remove unread private members
         readonly GameStateMachine gameStateMachine;
-#pragma warning restore IDE0052 // Remove unread private members
         readonly Cursor cursor;
-        readonly CursorArtist artist;
+        readonly CursorPatron patron;
+    readonly Map map;
+    readonly List<Player> players;
     readonly Camera camera;
     public float frameTimer = 0.0f;
 
@@ -26,15 +28,27 @@ namespace HexStrategyGame.Gameplay
       this.gameStateMachine = gameStateMachine;
       cursor = gameStateMachine.Scenario.cursor;
       camera = gameStateMachine.Scenario.camera;
-      artist = new CursorArtist(cursor, camera);
-
+      patron = new CursorPatron(cursor, camera);
+      players = gameStateMachine.Scenario.Players;
+      map = gameStateMachine.Scenario.map;
     }
 
     public void Update(Input input)
     {
       if (input.confirm.Pressed)
       {
+        if (IsUnitAtCursorLocation()) {
+          if (gameStateMachine.Scenario.ActivePlayer == UnitAtCursorLocation().Player) {
+            bool updateGameState = gameStateMachine.unitSelectedState.SelectUnit(map.GetTileAtLocation(cursor.Position));
+            if(updateGameState) gameStateMachine.Push(gameStateMachine.unitSelectedState);
+          }
+          else {
 
+          }
+        }
+        else {
+          gameStateMachine.Push(new GameMenuState(gameStateMachine));
+        }
       }
       else if (input.cancel.Pressed)
       {
@@ -46,9 +60,19 @@ namespace HexStrategyGame.Gameplay
       }
     }
 
+    public bool IsUnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit != null;
+    }
+
+    public Unit UnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit;
+    }
+
     public void Draw(IArtist artist)
     {
-      this.artist.Draw(artist);
+      patron.Draw(artist);
     }
 
     private void UpdateCursor(Input input)

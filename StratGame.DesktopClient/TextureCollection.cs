@@ -12,6 +12,7 @@ namespace HexStrategyGame
     public SpriteFont GameFont { get; set; }
     public SpriteFont DebugFont { get; set; }
     public Texture2D TerrainTiles { get; set; }
+    public Texture2D UnitSprites { get; set; }
     public Texture2D Cursor { get; set; }
 
     private TextureCollection() { }
@@ -29,6 +30,7 @@ namespace HexStrategyGame
       DebugFont = content.Load<SpriteFont>("DebugFont");
       Cursor = content.Load<Texture2D>("cursor");
       TerrainTiles = content.Load<Texture2D>("test_tiles");
+      UnitSprites = content.Load<Texture2D>("Unit");
     }
   }
 }

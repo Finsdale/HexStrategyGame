@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.ScenarioData
 {
-  internal class Unit
+  public class Unit
   {
     public Point Location { get; set; }
-    public bool Selected { get; set; }
+    public string Player { get; set; }
     public Unit() { }
-    public Unit(Point location)
+    public Unit(Point location, string player)
     {
       Location = location;
+      Player = player;
     }
   }
 }

@@ -15,14 +15,14 @@ namespace HexStrategyGame.Gameplay
   {
     public GameStateMachine gameStateMachine;
     public Scenario scenario;
-    public MapArtist artist;
+    public MapPatron patron;
     public Map map;
 
     public MapPlayState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
       scenario = gameStateMachine.Scenario;
-      artist = new MapArtist(scenario);
+      patron = new MapPatron(scenario);
     }
 
     public void Update(Input input)
@@ -32,7 +32,7 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(IArtist artist)
     {
-      this.artist.Draw(artist);
+      patron.Draw(artist);
     }
   }
 }

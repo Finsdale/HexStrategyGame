@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.GameSettings
 {
-    class GameSettingsArtist : IPatron
+    class GameSettingsPatron : IPatron
     {
         readonly TextureCollection TC;
-        public GameSettingsArtist()
+        public GameSettingsPatron()
         {
             TC = TextureCollection.Instance;
         }
