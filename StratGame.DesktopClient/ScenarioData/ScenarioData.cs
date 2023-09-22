@@ -26,5 +26,20 @@ namespace HexStrategyGame.ScenarioData
       };
       ActivePlayer = Players[0].Name;
     }
+
+    public List<Point> VisibleTilePositions()
+    {
+      return camera.VisibleTiles(map);
+    }
+
+    public void DefineCameraValues(int width, int height)
+    {
+      camera.SetScreenValues(width, height);
+    }
+
+    public MapTile GetTileAtMapLocation(Point location)
+    {
+      return map.GetTileAtLocation(location);
+    }
   }
 }

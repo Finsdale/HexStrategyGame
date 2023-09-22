@@ -51,11 +51,11 @@ namespace HexStrategyGame.MapData
     public List<Point> TilePositionsDoubled()
     {
       List<Point> tiles = TileCollection.Keys.ToList();
-      List<Point> points = new List<Point>();
+      List<Point> doubledTiles = new List<Point>();
       foreach (Point position in tiles) {
-        points.Add(new Point(2 * position.X + position.Y, position.Y));
+        doubledTiles.Add(new Point(2 * position.X + position.Y, position.Y));
       }    
-      return points;
+      return doubledTiles;
     }
 
     public List<MapTile> GetNeighbors(Point tilePosition)
