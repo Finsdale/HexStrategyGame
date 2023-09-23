@@ -29,6 +29,7 @@ namespace HexStrategyGame.MapData
     public MapTile(int terrainType, Point position, Unit unit = null, bool hasBuilding = false)
     {
       TileTerrain = (Terrain)terrainType;
+      Position = position;
       Unit = unit;
       HasBuilding = hasBuilding;
     }

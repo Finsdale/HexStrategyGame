@@ -11,7 +11,7 @@ namespace HexStrategyGame.MapData
   public class Map
   {
     readonly Dictionary<Point, MapTile> TileCollection;
-    List<Point> directions = new List<Point> { new Point(1, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1) };
+    readonly List<Point> directions = new List<Point> { new Point(1, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1) };
 
     //This constructor makes a basic rectangular map grid. Odd-numbered rows are shifted right.
     public Map(int length, int height)

@@ -21,7 +21,8 @@ namespace HexStrategyGame.MapData
         return 2 * Position.X + Position.Y;
       }
     }
-    
+    float frameTimer = 0.0f;
+
     readonly Map Map;
     readonly Camera Camera;
 
@@ -32,6 +33,23 @@ namespace HexStrategyGame.MapData
       Position = Point.Zero;
       Map = map;
       Camera = camera;
+    }
+
+    public void Update(Input input)
+    {
+      if (!input.DirectionHeld()) {
+        frameTimer = 0.0f;
+        Step(input.direction);
+      }
+      else if (input.direction != Direction.None) {
+        if (frameTimer >= 2.5f) {
+          frameTimer = 2.0f;
+          Step(input.direction);
+        }
+        else {
+          frameTimer += 0.1f;
+        }
+      }
     }
 
     public void Step(Direction direction)

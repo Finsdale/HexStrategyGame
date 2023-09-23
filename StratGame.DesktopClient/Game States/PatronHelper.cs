@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HexStrategyGame.Game_States.Gameplay.Camera;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace HexStrategyGame.Game_States
     static public Point DoubledToAxial(int x, int y)
     {
       return new Point((x - y) / 2, y);
+    }
+
+    static public int DestinationXPosition(Point tile, Camera camera)
+    {
+      int result = ((tile.X - camera.X) * TileData.xStep) + camera.Offset.X;
+      return result;
+    }
+
+    static public int DestinationYPosition(Point tile, Camera camera)
+    {
+      int result = ((tile.Y - camera.Y) * TileData.yStep) + camera.Offset.Y;
+      return result;
     }
   }
 }

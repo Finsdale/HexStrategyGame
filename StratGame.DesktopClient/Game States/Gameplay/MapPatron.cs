@@ -18,12 +18,10 @@ namespace HexStrategyGame.Gameplay
     readonly TextureCollection TC;
     public string CurrentState;
     readonly Scenario Scenario;
-    readonly Map Map;
     public MapPatron(Scenario scenario)
     {
       TC = TextureCollection.Instance;
       Scenario = scenario;
-      Map = scenario.map;
     }
 
     public string SetCurrentState(string currentState)
@@ -54,37 +52,33 @@ namespace HexStrategyGame.Gameplay
 
     internal Rectangle DestinationRectangle(Point tile)
     {
-      Rectangle result = new Rectangle(DestinationXPosition(tile, Scenario.camera), DestinationYPosition(tile, Scenario.camera), TileData.width, TileData.height);
-      return result;
-    }
-
-    int DestinationXPosition(Point tile, Camera camera)
-    {
-      int result = ((tile.X - camera.X) * TileData.xStep) + camera.Offset.X;
-      return result;
-    }
-
-    int DestinationYPosition(Point tile, Camera camera)
-    {
-      int result = ((tile.Y - camera.Y) * TileData.yStep) + camera.Offset.Y;
+      Rectangle result = new Rectangle(
+        PatronHelper.DestinationXPosition(tile, Scenario.camera), 
+        PatronHelper.DestinationYPosition(tile, Scenario.camera), 
+        TileData.width, 
+        TileData.height);
       return result;
     }
 
     internal Rectangle SourceRectangle(Point tile)
     {
-      Rectangle result = new Rectangle(0, TerrainXPosition(tile), TileData.width, TileData.height);
+      Rectangle result = new Rectangle(
+        0, 
+        TerrainXPosition(tile), 
+        TileData.width, 
+        TileData.height);
       return result;
     }
     
     int TerrainXPosition(Point point)
     {
       Point mapPosition = PatronHelper.DoubledToAxial(point);
-      int result = TileData.height * Map.GetTerrainAtLocation(mapPosition);
+      int result = TileData.height * (int)Scenario.GetTileAtMapLocation(mapPosition).TileTerrain;
       return result;
     }
     int TerrainXPosition(int x, int y)
     {
-      int result = TileData.height * Map.GetTerrainAtLocation(new Point(x, y));
+      int result = TerrainXPosition(new Point(x, y));
       return result;
     }
   }

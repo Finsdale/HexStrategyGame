@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.MapData;
 using HexStrategyGame.ScenarioData.Players;
+using ControllerInput;
 
 namespace HexStrategyGame.ScenarioData
 {
@@ -40,6 +41,26 @@ namespace HexStrategyGame.ScenarioData
     public MapTile GetTileAtMapLocation(Point location)
     {
       return map.GetTileAtLocation(location);
+    }
+
+    public bool IsUnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit != null;
+    }
+
+    public Unit UnitAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position).Unit;
+    }
+
+    public void UpdateCursor(Input input)
+    {
+      cursor.Update(input);
+    }
+
+    public MapTile GetTileAtCursorLocation()
+    {
+      return map.GetTileAtLocation(cursor.Position);
     }
   }
 }
