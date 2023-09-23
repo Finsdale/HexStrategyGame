@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.Artists;
-using HexStrategyGame.ScenarioData.Players;
 using HexStrategyGame.ScenarioData;
 
 namespace HexStrategyGame.Gameplay
@@ -18,8 +17,8 @@ namespace HexStrategyGame.Gameplay
         readonly GameStateMachine gameStateMachine;
         readonly Cursor cursor;
         readonly CursorPatron patron;
+    readonly Scenario scenario;
     readonly Map map;
-    readonly List<Player> players;
     readonly Camera camera;
     public float frameTimer = 0.0f;
 
@@ -29,7 +28,6 @@ namespace HexStrategyGame.Gameplay
       cursor = gameStateMachine.Scenario.cursor;
       camera = gameStateMachine.Scenario.camera;
       patron = new CursorPatron(cursor, camera);
-      players = gameStateMachine.Scenario.Players;
       map = gameStateMachine.Scenario.map;
     }
 
@@ -37,8 +35,8 @@ namespace HexStrategyGame.Gameplay
     {
       if (input.confirm.Pressed)
       {
-        if (IsUnitAtCursorLocation()) {
-          if (gameStateMachine.Scenario.ActivePlayer == UnitAtCursorLocation().Player) {
+        if (scenario.IsUnitAtCursorLocation()) {
+          if (gameStateMachine.Scenario.ActivePlayer == scenario.UnitAtCursorLocation().Player) {
             bool updateGameState = gameStateMachine.unitSelectedState.SelectUnit(map.GetTileAtLocation(cursor.Position));
             if(updateGameState) gameStateMachine.Push(gameStateMachine.unitSelectedState);
           }
@@ -60,16 +58,6 @@ namespace HexStrategyGame.Gameplay
       }
     }
 
-    public bool IsUnitAtCursorLocation()
-    {
-      return map.GetTileAtLocation(cursor.Position).Unit != null;
-    }
-
-    public Unit UnitAtCursorLocation()
-    {
-      return map.GetTileAtLocation(cursor.Position).Unit;
-    }
-
     public void Draw(IArtist artist)
     {
       patron.Draw(artist);
@@ -80,14 +68,14 @@ namespace HexStrategyGame.Gameplay
       if (!input.DirectionHeld())
       {
         frameTimer = 0.0f;
-        UpdateCursorPosition(input);
+        UpdateCursorPosition(input.direction);
       }
       else if (input.direction != Direction.None)
       {
         if(frameTimer >= 2.5f)
         {
           frameTimer = 2.0f;
-          UpdateCursorPosition(input);
+          UpdateCursorPosition(input.direction);
         }
         else
         {
@@ -96,9 +84,9 @@ namespace HexStrategyGame.Gameplay
       }
     }
 
-    private void UpdateCursorPosition(Input input)
+    private void UpdateCursorPosition(Direction direction)
     {
-      cursor.Step(input.direction);
+      cursor.Step(direction.direction);
     }
   }
 }
