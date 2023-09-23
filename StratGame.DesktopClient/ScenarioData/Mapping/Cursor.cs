@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ControllerInput;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.ScenarioData;
 
 namespace HexStrategyGame.MapData
 {
@@ -23,16 +24,14 @@ namespace HexStrategyGame.MapData
     }
     float frameTimer = 0.0f;
 
-    readonly Map Map;
-    readonly Camera Camera;
+    readonly Scenario scenario;
 
     bool lastRight = true;
 
-    public Cursor(Map map, Camera camera)
+    public Cursor(Scenario scenario)
     {
       Position = Point.Zero;
-      Map = map;
-      Camera = camera;
+      this.scenario = scenario;
     }
 
     public void Update(Input input)
@@ -128,14 +127,14 @@ namespace HexStrategyGame.MapData
           lastRight = true;
           break;
       }
-      Camera.ClampLocationToPoint(Position);
+      scenario.ClampCameraToPosition(Position);
     }
 
     public bool MoveBy(Point movement)
     {
       bool result = false;
       Point newPos = Position + movement;
-      MapTile mapTile = Map.GetTileAtLocation(newPos);
+      MapTile mapTile = scenario.GetTileAtMapLocation(newPos);
       if (mapTile.TileTerrain != Terrain.Empty) {
         Position = newPos;
         result = true;

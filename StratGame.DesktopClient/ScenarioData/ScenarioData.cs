@@ -18,8 +18,8 @@ namespace HexStrategyGame.ScenarioData
     public Scenario()
     {
       map = new Map(28, 18);
-      camera = new Camera(map, new Point(2,2));
-      cursor = new Cursor(map, camera);
+      camera = new Camera(this, new Point(2,2));
+      cursor = new Cursor(this);
       Players = new List<Player>
       {
         new Player("Player1"),
@@ -61,6 +61,10 @@ namespace HexStrategyGame.ScenarioData
     public MapTile GetTileAtCursorLocation()
     {
       return map.GetTileAtLocation(cursor.Position);
+    }
+
+    public void ClampCameraToPosition(Point point){
+      camera.ClampToPosition(point);
     }
   }
 }

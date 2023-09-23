@@ -16,7 +16,6 @@ namespace HexStrategyGame.Gameplay
     public GameStateMachine gameStateMachine;
     public Scenario scenario;
     public MapPatron patron;
-    public Map map;
 
     public MapPlayState(GameStateMachine gameStateMachine)
     {

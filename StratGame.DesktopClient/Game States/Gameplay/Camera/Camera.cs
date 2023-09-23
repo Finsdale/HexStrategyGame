@@ -1,4 +1,5 @@
 ﻿using HexStrategyGame.MapData;
+using HexStrategyGame.ScenarioData;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,15 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     readonly int YTileOverlap = TileData.height - TileData.yStep;
     bool Locked = false;
 
-    public Camera(Map map)
+    public Camera(Scenario scenario)
     {
       Position = Point.Zero;
-      SetCameraLimits(map);
+      SetCameraLimits(scenario.map);
     }
-    public Camera(Map map, Point position)
+    public Camera(Scenario scenario, Point position)
     {
       Position = position;
-      SetCameraLimits(map);
+      SetCameraLimits(scenario.map);
     }
 
     public void SetCameraLimits(Map map)
@@ -79,21 +80,21 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       return ScreenHeight/TileData.yStep;
     }
 
-    public void ClampLocationToPoint(Point location)
+    public void ClampToPosition(Point position)
     {
       if (!Locked) {
         int xResult = X, yResult = Y;
-        int C = 2 * location.X + location.Y; //This is the doubled position of the location we are clamping to.
+        int C = 2 * position.X + position.Y; //This is the doubled position of the location we are clamping to.
         if (C < X + 4) {
           xResult -= 2;
         }
         else if (C > X + GetScreenWidthInTiles() - 6) {
           xResult += 2;
         }
-        if (location.Y < Y + 2) {
+        if (position.Y < Y + 2) {
           yResult -= 1;
         }
-        else if (location.Y > Y + GetScreenHeightInTiles() - 3) {
+        else if (position.Y > Y + GetScreenHeightInTiles() - 3) {
           yResult += 1;
         }
         Position = new Point(xResult, yResult);
