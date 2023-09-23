@@ -9,6 +9,7 @@ using HexStrategyGame.ScenarioData;
 using HexStrategyGame.MapData;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.Artists;
+using HexStrategyGame.Game_States;
 
 namespace HexStrategyGame.Gameplay
 {
@@ -46,13 +47,13 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int result = (Cursor.DoubledXPosition - Camera.X) * TileData.xStep + Camera.Offset.X;
+      int result = PatronHelper.DestinationXPosition(Cursor.DoubledPosition, Camera);
       return result;
     }
 
     int YDestinationPosition()
     {
-      int result = ((Cursor.Y - Camera.Y) * TileData.yStep) + Camera.Offset.Y;
+      int result = PatronHelper.DestinationYPosition(Cursor.Position, Camera);
       return result;
     }
 

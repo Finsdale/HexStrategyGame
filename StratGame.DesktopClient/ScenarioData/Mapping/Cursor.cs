@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using ControllerInput;
 using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.ScenarioData;
+using HexStrategyGame.Game_States;
 
 namespace HexStrategyGame.MapData
 {
@@ -15,13 +16,15 @@ namespace HexStrategyGame.MapData
     public Point Position { get; set; }
     public int X { get => Position.X; }
     public int Y { get => Position.Y; }
-    public int DoubledXPosition
+
+    public Point DoubledPosition 
     {
       get
       {
-        return 2 * Position.X + Position.Y;
-      }
+        return PatronHelper.AxialToDoubled(Position);
+      }  
     }
+
     float frameTimer = 0.0f;
 
     readonly Scenario scenario;
