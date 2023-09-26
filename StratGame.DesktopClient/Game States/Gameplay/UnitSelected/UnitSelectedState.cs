@@ -59,6 +59,7 @@ namespace HexStrategyGame.Gameplay
       do {
         MapTile current = steps.Dequeue();
         List<MapTile> neighbors = gameStateMachine.Scenario.map.GetNeighbors(current);
+        if (!movementOptions.CostToMove.ContainsKey(current)) movementOptions.CostToMove[current] = 0; 
         foreach (MapTile step in neighbors) {
           int newCost = movementOptions.CostToMove[current] + step.Cost;
           if (!movementOptions.CostToMove.ContainsKey(step) || newCost < movementOptions.CostToMove[step]) {

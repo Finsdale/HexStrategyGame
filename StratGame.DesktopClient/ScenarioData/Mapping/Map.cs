@@ -10,55 +10,45 @@ namespace HexStrategyGame.MapData
 {
   public class Map
   {
-    readonly Dictionary<Point, MapTile> TileCollection;
-    List<Point> directions = new List<Point> { new Point(1, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1) };
+    readonly Dictionary<Position, MapTile> TileCollection;
+    readonly List<Position> directions = new List<Position> { new Position(1, -1, 0), new Position(1, 0, -1), new Position(0, 1, -1), new Position(-1, 1, 0), new Position(-1, 0, 1), new Position(0, -1, 1) };
 
     //This constructor makes a basic rectangular map grid. Odd-numbered rows are shifted right.
     public Map(int length, int height)
     {
-      TileCollection = new Dictionary<Point, MapTile>();
-      for (int y = 0; y < height; y++)
+      TileCollection = new Dictionary<Position, MapTile>();
+      for (int r = 0; r < height; r++)
       {
-        for (int x = 0 - (y / 2); x < length - (y / 2); x++)
+        for (int q = 0 - (r / 2); q < length - (r / 2); q++)
         {
           //axial coordinates make our x value smaller as the y value increases
-          if(x == 2 && y == 5) {
-            TileCollection.Add(new Point(x,y), new MapTile(2, new Point(x,y), new Unit(new Point(x, y), "Player1")));
+          if(q == 2 && r == 5) {
+            TileCollection.Add(new Position(q, r, -q-r), new MapTile(2, new Position(q,r, -q-r), new Unit(new Position(q, r, -q-r), "Player1")));
           }
-          else { TileCollection.Add(new Point(x, y), new MapTile(1, new Point(x,y))); }
+          else { TileCollection.Add(new Position(q, r, -q-r), new MapTile(1, new Position(q,r, -q-r))); }
         }
       }
     }
 
-    public MapTile GetTileAtLocation(Point location)
+    public MapTile GetTileAtLocation(Position position)
     {
-      TileCollection.TryGetValue(location, out MapTile tile);
+      TileCollection.TryGetValue(position, out MapTile tile);
       tile ??= new MapTile();
       return tile;
     }
 
-    public int GetTerrainAtLocation(Point location)
+    public int GetTerrainAtLocation(Position location)
     {
       MapTile tile = GetTileAtLocation(location);
       return (int)tile.TileTerrain;
     }
 
-    public List<Point> TilePositions()
+    public List<Position> TilePositions()
     {
       return TileCollection.Keys.ToList();
     }
 
-    public List<Point> TilePositionsDoubled()
-    {
-      List<Point> tiles = TileCollection.Keys.ToList();
-      List<Point> points = new List<Point>();
-      foreach (Point position in tiles) {
-        points.Add(new Point(2 * position.X + position.Y, position.Y));
-      }    
-      return points;
-    }
-
-    public List<MapTile> GetNeighbors(Point tilePosition)
+    public List<MapTile> GetNeighbors(Position tilePosition)
     {
       return GetNeighbors(GetTileAtLocation(tilePosition));
     }
@@ -66,7 +56,7 @@ namespace HexStrategyGame.MapData
     public List<MapTile> GetNeighbors(MapTile tile)
     {
       List<MapTile> neighbors = new List<MapTile>();
-      foreach (Point direction in directions) {
+      foreach (Position direction in directions) {
         MapTile neighbor = GetTileAtLocation(tile.Position + direction);
         if (neighbor.TileTerrain != Terrain.Empty) neighbors.Add(neighbor);
       }

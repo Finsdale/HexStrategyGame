@@ -1,4 +1,5 @@
 ﻿using HexStrategyGame.MapData;
+using HexStrategyGame.ScenarioData;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,21 +19,21 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     readonly int YTileOverlap = TileData.height - TileData.yStep;
     bool Locked = false;
 
-    public Camera(Map map)
+    public Camera(Scenario scenario)
     {
       Position = Point.Zero;
-      SetCameraLimits(map);
+      SetCameraLimits(scenario.map);
     }
-    public Camera(Map map, Point position)
+    public Camera(Scenario scenario, Point position)
     {
       Position = position;
-      SetCameraLimits(map);
+      SetCameraLimits(scenario.map);
     }
 
     public void SetCameraLimits(Map map)
     {
       int MaxX, MaxY, MinX, MinY;
-      List<Point> tiles = map.TilePositionsDoubled();
+      List<Position> tiles = map.TilePositions();
       MinX = tiles.Min(pos => pos.X);
       MaxX = tiles.Max(pos => pos.X);
       MinY = tiles.Min(pos => pos.Y);
@@ -40,7 +41,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       MinPos = new Point(MinX, MinY);
       MaxPos = new Point(MaxX, MaxY);
     }
-    
+
     public void SetScreenValues(int width, int height)
     {
       int xOffset, yOffset;
@@ -65,50 +66,59 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       if (Locked) {
         int xPos = ((ScreenWidth / TileData.xStep) - xDiff) / 2;
         int yPos = (ScreenHeight / TileData.yStep - yDiff) / 2;
-        Position = new Point(MinPos.X - xPos,MinPos.Y - yPos);
+        Position = new Point(MinPos.X - xPos, MinPos.Y - yPos);
       }
     }
 
     public int GetScreenWidthInTiles()
     {
-      return ScreenWidth/TileData.xStep;
+      return ScreenWidth / TileData.xStep;
     }
 
     public int GetScreenHeightInTiles()
     {
-      return ScreenHeight/TileData.yStep;
+      return ScreenHeight / TileData.yStep;
     }
 
-    public void ClampLocationToPoint(Point location)
+    public void ClampToPosition(Position position)
     {
       if (!Locked) {
         int xResult = X, yResult = Y;
-        int C = 2 * location.X + location.Y; //This is the doubled position of the location we are clamping to.
+        int C = 2 * position.X + position.Y; //This is the doubled position of the location we are clamping to.
         if (C < X + 4) {
           xResult -= 2;
         }
         else if (C > X + GetScreenWidthInTiles() - 6) {
           xResult += 2;
         }
-        if (location.Y < Y + 2) {
+        if (position.Y < Y + 2) {
           yResult -= 1;
         }
-        else if (location.Y > Y + GetScreenHeightInTiles() - 3) {
+        else if (position.Y > Y + GetScreenHeightInTiles() - 3) {
           yResult += 1;
         }
         Position = new Point(xResult, yResult);
       }
     }
 
-    public List<Point> VisibleTiles(Map map)
+    public List<Position> VisibleTiles(Map map)
     {
       int minX, maxX, minY, maxY;
       minX = X - 2;
       maxX = ((ScreenWidth - TileData.xStep) / (TileData.xStep)) + X + 2;
       minY = Y - 1;
       maxY = ((ScreenHeight - YTileOverlap) / TileData.yStep) + Y + 1;
-      List<Point> tiles = map.TilePositionsDoubled().FindAll(x => x.X >= minX && x.X <= maxX && x.Y >= minY && x.Y <= maxY).ToList();
+      List<Position> tiles = map.TilePositions().FindAll(x => x.X >= minX && x.X <= maxX && x.Y >= minY && x.Y <= maxY).ToList();
       return tiles;
+    }
+
+    public Rectangle DestinationRectangleForPosition(Position position)
+    {
+      return new Rectangle(
+        ((position.X - X) * TileData.xStep) + Offset.X,
+        ((position.Y - Y) * TileData.yStep) + Offset.Y,
+        TileData.width,
+        TileData.height);
     }
   }
 }

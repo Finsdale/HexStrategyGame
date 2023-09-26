@@ -9,12 +9,12 @@ namespace HexStrategyGame.ScenarioData
 {
   public class Unit
   {
-    public Point Location { get; set; }
+    public Position Position { get; set; }
     public string Player { get; set; }
     public Unit() { }
-    public Unit(Point location, string player)
+    public Unit(Position position, string player)
     {
-      Location = location;
+      Position = position;
       Player = player;
     }
   }

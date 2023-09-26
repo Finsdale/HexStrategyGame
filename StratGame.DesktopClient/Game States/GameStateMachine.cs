@@ -32,8 +32,8 @@ namespace HexStrategyGame
             gameSettingsState = new GameSettingsState(this);
             mapPlayState = new MapPlayState(this);
             cursorPlayState = new CursorPlayState(this);
-      gameMenuState = new GameMenuState(this);
-      unitSelectedState = new UnitSelectedState(this);
+            gameMenuState = new GameMenuState(this);
+            unitSelectedState = new UnitSelectedState(this);
 
             Push(mainMenuState); //You could really set this state to whatever you wanted to launch at.
         }

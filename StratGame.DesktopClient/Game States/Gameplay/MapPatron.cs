@@ -17,72 +17,62 @@ namespace HexStrategyGame.Gameplay
   {
     readonly TextureCollection TC;
     public string CurrentState;
-    readonly Camera Camera;
-    readonly Cursor Cursor;
-    readonly Map Map;
+    readonly Scenario Scenario;
     public MapPatron(Scenario scenario)
     {
       TC = TextureCollection.Instance;
-      Camera = scenario.camera;
-      Cursor = scenario.cursor;
-      Map = scenario.map;
+      Scenario = scenario;
     }
 
     public string SetCurrentState(string currentState)
     {
-      return this.CurrentState = currentState;
+      return CurrentState = currentState;
     }
 
     public void Draw(IArtist artist)
     {
-      Camera.SetScreenValues(artist.ScreenWidth(), artist.ScreenHeight());
+      Scenario.DefineCameraValues(artist.ScreenWidth(), artist.ScreenHeight());
 
-      foreach(Point tile in Camera.VisibleTiles(Map)) {
+      //Something important to note: The Camera Position is 
+      foreach(Position position in Scenario.VisibleTilePositions()) {
         artist.Draw(TC.TerrainTiles,
-          DestinationRectangle(tile),
-          SourceRectangle(tile),
+          DestinationRectangle(position),
+          SourceRectangle(position),
           Color.White);
-        if(Map.GetTileAtLocation(PatronHelper.DoubledToAxial(tile)).Unit != null) {
-          artist.Draw(TC.UnitSprites, DestinationRectangle(tile), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
+        if(Scenario.GetTileAtMapLocation(position).Unit != null) {
+          artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }
       }
-      artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
+      //artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"CameraX: {Camera.X}", new Vector2(0, 150), Color.Black);
       //spriteBatch.DrawString(TC.GameFont, $"CameraY: {Camera.Y}", new Vector2(0, 180), Color.Black);
     }
 
-    internal Rectangle DestinationRectangle(Point tile)
+
+
+    internal Rectangle DestinationRectangle(Position position)
     {
-      Rectangle result = new Rectangle(DestinationXPosition(tile), DestinationYPosition(tile), TileData.width, TileData.height);
-      return result;
+      return Scenario.DestinationRectangleForPosition(position);
     }
 
-    int DestinationXPosition(Point tile)
+    internal Rectangle SourceRectangle(Position position)
     {
-      int result = ((tile.X - Camera.X) * TileData.xStep) + Camera.Offset.X;
-      return result;
-    }
-
-    int DestinationYPosition(Point tile)
-    {
-      int result = ((tile.Y - Camera.Y) * TileData.yStep) + Camera.Offset.Y;
-      return result;
-    }
-
-    internal Rectangle SourceRectangle(Point tile)
-    {
-      Rectangle result = new Rectangle(0, TerrainXPosition(PatronHelper.DoubledToAxial(tile)), TileData.width, TileData.height);
+      Rectangle result = new Rectangle(
+        0, 
+        TerrainXPosition(position), 
+        TileData.width, 
+        TileData.height);
       return result;
     }
     
-    int TerrainXPosition(Point point)
+    int TerrainXPosition(Position position)
     {
-      int result = TileData.height * Map.GetTerrainAtLocation(point);
+      int result = TileData.height * (int)Scenario.GetTileAtMapLocation(position).TileTerrain;
       return result;
     }
     int TerrainXPosition(int x, int y)
     {
-      int result = TileData.height * Map.GetTerrainAtLocation(new Point(x, y));
+      int result = TerrainXPosition(new Position(x, y));
       return result;
     }
   }

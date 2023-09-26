@@ -6,32 +6,42 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using ControllerInput;
 using HexStrategyGame.Game_States.Gameplay.Camera;
+using HexStrategyGame.ScenarioData;
+using HexStrategyGame.Game_States;
 
 namespace HexStrategyGame.MapData
 {
   public class Cursor
   {
-    public Point Position { get; set; }
-    public int X { get => Position.X; }
-    public int Y { get => Position.Y; }
-    public int DoubledXPosition
-    {
-      get
-      {
-        return 2 * Position.X + Position.Y;
-      }
-    }
-    
-    readonly Map Map;
-    readonly Camera Camera;
+    public Position Position { get; set; }
+
+    float frameTimer = 0.0f;
+
+    readonly Scenario scenario;
 
     bool lastRight = true;
 
-    public Cursor(Map map, Camera camera)
+    public Cursor(Scenario scenario)
     {
-      Position = Point.Zero;
-      Map = map;
-      Camera = camera;
+      Position = new Position(new Point());
+      this.scenario = scenario;
+    }
+
+    public void Update(Input input)
+    {
+      if (!input.DirectionHeld()) {
+        frameTimer = 0.0f;
+        Step(input.direction);
+      }
+      else if (input.direction != Direction.None) {
+        if (frameTimer >= 2.5f) {
+          frameTimer = 2.0f;
+          Step(input.direction);
+        }
+        else {
+          frameTimer += 0.1f;
+        }
+      }
     }
 
     public void Step(Direction direction)
@@ -110,14 +120,14 @@ namespace HexStrategyGame.MapData
           lastRight = true;
           break;
       }
-      Camera.ClampLocationToPoint(Position);
+      scenario.ClampCameraToPosition(Position);
     }
 
-    public bool MoveBy(Point movement)
+    public bool MoveBy(Position movement)
     {
       bool result = false;
-      Point newPos = Position + movement;
-      MapTile mapTile = Map.GetTileAtLocation(newPos);
+      Position newPos = Position + movement;
+      MapTile mapTile = scenario.GetTileAtMapLocation(newPos);
       if (mapTile.TileTerrain != Terrain.Empty) {
         Position = newPos;
         result = true;
