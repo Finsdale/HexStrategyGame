@@ -33,7 +33,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public void SetCameraLimits(Map map)
     {
       int MaxX, MaxY, MinX, MinY;
-      List<Point> tiles = map.TilePositionsDoubled();
+      List<Position> tiles = map.TilePositions();
       MinX = tiles.Min(pos => pos.X);
       MaxX = tiles.Max(pos => pos.X);
       MinY = tiles.Min(pos => pos.Y);
@@ -41,7 +41,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       MinPos = new Point(MinX, MinY);
       MaxPos = new Point(MaxX, MaxY);
     }
-    
+
     public void SetScreenValues(int width, int height)
     {
       int xOffset, yOffset;
@@ -66,21 +66,21 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       if (Locked) {
         int xPos = ((ScreenWidth / TileData.xStep) - xDiff) / 2;
         int yPos = (ScreenHeight / TileData.yStep - yDiff) / 2;
-        Position = new Point(MinPos.X - xPos,MinPos.Y - yPos);
+        Position = new Point(MinPos.X - xPos, MinPos.Y - yPos);
       }
     }
 
     public int GetScreenWidthInTiles()
     {
-      return ScreenWidth/TileData.xStep;
+      return ScreenWidth / TileData.xStep;
     }
 
     public int GetScreenHeightInTiles()
     {
-      return ScreenHeight/TileData.yStep;
+      return ScreenHeight / TileData.yStep;
     }
 
-    public void ClampToPosition(Point position)
+    public void ClampToPosition(Position position)
     {
       if (!Locked) {
         int xResult = X, yResult = Y;
@@ -101,15 +101,24 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
       }
     }
 
-    public List<Point> VisibleTiles(Map map)
+    public List<Position> VisibleTiles(Map map)
     {
       int minX, maxX, minY, maxY;
       minX = X - 2;
       maxX = ((ScreenWidth - TileData.xStep) / (TileData.xStep)) + X + 2;
       minY = Y - 1;
       maxY = ((ScreenHeight - YTileOverlap) / TileData.yStep) + Y + 1;
-      List<Point> tiles = map.TilePositionsDoubled().FindAll(x => x.X >= minX && x.X <= maxX && x.Y >= minY && x.Y <= maxY).ToList();
+      List<Position> tiles = map.TilePositions().FindAll(x => x.X >= minX && x.X <= maxX && x.Y >= minY && x.Y <= maxY).ToList();
       return tiles;
+    }
+
+    public Rectangle DestinationRectangleForPosition(Position position)
+    {
+      return new Rectangle(
+        ((position.X - X) * TileData.xStep) + Offset.X,
+        ((position.Y - Y) * TileData.yStep) + Offset.Y,
+        TileData.width,
+        TileData.height);
     }
   }
 }

@@ -34,13 +34,13 @@ namespace HexStrategyGame.Gameplay
       Scenario.DefineCameraValues(artist.ScreenWidth(), artist.ScreenHeight());
 
       //Something important to note: The Camera Position is 
-      foreach(Point tile in Scenario.VisibleTilePositions()) {
+      foreach(Position position in Scenario.VisibleTilePositions()) {
         artist.Draw(TC.TerrainTiles,
-          DestinationRectangle(tile),
-          SourceRectangle(tile),
+          DestinationRectangle(position),
+          SourceRectangle(position),
           Color.White);
-        if(Scenario.GetTileAtMapLocation(PatronHelper.DoubledToAxial(tile)).Unit != null) {
-          artist.Draw(TC.UnitSprites, DestinationRectangle(tile), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
+        if(Scenario.GetTileAtMapLocation(position).Unit != null) {
+          artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }
       }
       //artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
@@ -50,35 +50,29 @@ namespace HexStrategyGame.Gameplay
 
 
 
-    internal Rectangle DestinationRectangle(Point tile)
+    internal Rectangle DestinationRectangle(Position position)
     {
-      Rectangle result = new Rectangle(
-        PatronHelper.DestinationXPosition(tile, Scenario.camera), 
-        PatronHelper.DestinationYPosition(tile, Scenario.camera), 
-        TileData.width, 
-        TileData.height);
-      return result;
+      return Scenario.DestinationRectangleForPosition(position);
     }
 
-    internal Rectangle SourceRectangle(Point tile)
+    internal Rectangle SourceRectangle(Position position)
     {
       Rectangle result = new Rectangle(
         0, 
-        TerrainXPosition(tile), 
+        TerrainXPosition(position), 
         TileData.width, 
         TileData.height);
       return result;
     }
     
-    int TerrainXPosition(Point point)
+    int TerrainXPosition(Position position)
     {
-      Point mapPosition = PatronHelper.DoubledToAxial(point);
-      int result = TileData.height * (int)Scenario.GetTileAtMapLocation(mapPosition).TileTerrain;
+      int result = TileData.height * (int)Scenario.GetTileAtMapLocation(position).TileTerrain;
       return result;
     }
     int TerrainXPosition(int x, int y)
     {
-      int result = TerrainXPosition(new Point(x, y));
+      int result = TerrainXPosition(new Position(x, y));
       return result;
     }
   }

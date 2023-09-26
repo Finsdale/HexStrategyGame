@@ -14,19 +14,19 @@ namespace HexStrategyGame.MapData
 #pragma warning disable IDE0052 // Remove unread private members
         public Unit Unit { get; set; }
         private bool HasBuilding { get; set; }
-        public Point Position { get; }
+        public Position Position { get; }
         public int Cost { get; set; }
 #pragma warning restore IDE0052 // Remove unread private members
 
     public MapTile()
     {
       TileTerrain = Terrain.Empty;
-      Position = new Point();
+      Position = new Position();
       Unit = null;
       HasBuilding = false;
     }
 
-    public MapTile(int terrainType, Point position, Unit unit = null, bool hasBuilding = false)
+    public MapTile(int terrainType, Position position, Unit unit = null, bool hasBuilding = false)
     {
       TileTerrain = (Terrain)terrainType;
       Position = position;

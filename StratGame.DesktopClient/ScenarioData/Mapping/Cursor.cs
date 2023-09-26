@@ -13,17 +13,7 @@ namespace HexStrategyGame.MapData
 {
   public class Cursor
   {
-    public Point Position { get; set; }
-    public int X { get => Position.X; }
-    public int Y { get => Position.Y; }
-
-    public Point DoubledPosition 
-    {
-      get
-      {
-        return PatronHelper.AxialToDoubled(Position);
-      }  
-    }
+    public Position Position { get; set; }
 
     float frameTimer = 0.0f;
 
@@ -33,7 +23,7 @@ namespace HexStrategyGame.MapData
 
     public Cursor(Scenario scenario)
     {
-      Position = Point.Zero;
+      Position = new Position(new Point());
       this.scenario = scenario;
     }
 
@@ -133,10 +123,10 @@ namespace HexStrategyGame.MapData
       scenario.ClampCameraToPosition(Position);
     }
 
-    public bool MoveBy(Point movement)
+    public bool MoveBy(Position movement)
     {
       bool result = false;
-      Point newPos = Position + movement;
+      Position newPos = Position + movement;
       MapTile mapTile = scenario.GetTileAtMapLocation(newPos);
       if (mapTile.TileTerrain != Terrain.Empty) {
         Position = newPos;

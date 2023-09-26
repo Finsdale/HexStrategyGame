@@ -28,7 +28,7 @@ namespace HexStrategyGame.ScenarioData
       ActivePlayer = Players[0].Name;
     }
 
-    public List<Point> VisibleTilePositions()
+    public List<Position> VisibleTilePositions()
     {
       return camera.VisibleTiles(map);
     }
@@ -38,7 +38,7 @@ namespace HexStrategyGame.ScenarioData
       camera.SetScreenValues(width, height);
     }
 
-    public MapTile GetTileAtMapLocation(Point location)
+    public MapTile GetTileAtMapLocation(Position location)
     {
       return map.GetTileAtLocation(location);
     }
@@ -63,8 +63,13 @@ namespace HexStrategyGame.ScenarioData
       return map.GetTileAtLocation(cursor.Position);
     }
 
-    public void ClampCameraToPosition(Point point){
+    public void ClampCameraToPosition(Position point){
       camera.ClampToPosition(point);
+    }
+
+    public Rectangle DestinationRectangleForPosition(Position position)
+    {
+      return camera.DestinationRectangleForPosition(position);
     }
   }
 }

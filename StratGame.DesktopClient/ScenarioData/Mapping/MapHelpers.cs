@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HexStrategyGame.ScenarioData;
 using Microsoft.Xna.Framework;
 
 namespace HexStrategyGame.MapData
@@ -19,11 +20,11 @@ namespace HexStrategyGame.MapData
 
   public static class MapConst
   {
-    public readonly static Point NE = new Point(1, -1);
-    public readonly static Point E = new Point(1, 0);
-    public readonly static Point SE = new Point(0, 1);
-    public readonly static Point SW = new Point(-1,1);
-    public readonly static Point W = new Point(-1, 0);
-    public readonly static Point NW = new Point(0, -1);
+    public readonly static Position NE = new Position(1, -1, 0);
+    public readonly static Position E = new Position(1, 0, -1);
+    public readonly static Position SE = new Position(0, 1, -1);
+    public readonly static Position SW = new Position(-1, 1, 0);
+    public readonly static Position W = new Position(-1, 0, 1);
+    public readonly static Position NW = new Position(0, -1, 1);
   }
 }

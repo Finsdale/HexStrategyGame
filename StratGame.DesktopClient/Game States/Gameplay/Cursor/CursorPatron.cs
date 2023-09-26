@@ -47,13 +47,13 @@ namespace HexStrategyGame.Gameplay
 
     int XDestinationPosition()
     {
-      int result = PatronHelper.DestinationXPosition(Cursor.DoubledPosition, Camera);
+      int result = ((Cursor.Position.X - Camera.X) * TileData.xStep) + Camera.Offset.X;
       return result;
     }
 
     int YDestinationPosition()
     {
-      int result = PatronHelper.DestinationYPosition(Cursor.Position, Camera);
+      int result = ((Cursor.Position.Y - Camera.Y) * TileData.yStep) + Camera.Offset.Y;
       return result;
     }
 
