@@ -13,6 +13,7 @@ namespace HexStrategyGame.ScenarioData
     public Map map;
     public Cursor cursor;
     public List<Player> Players;
+    public UnitList Units;
     public string ActivePlayer;
 
     public Scenario()
@@ -20,12 +21,14 @@ namespace HexStrategyGame.ScenarioData
       map = new Map(28, 18);
       camera = new Camera(this, new Point(2,2));
       cursor = new Cursor(this);
+      Units = new UnitList();
       Players = new List<Player>
       {
         new Player("Player1"),
         new Player("Player2")
       };
       ActivePlayer = Players[0].Name;
+      Units.AddUnit(new Position(2, 5, -7), new Unit(new Position(2, 5, -7), Players[0].Name));
     }
 
     public List<Position> VisibleTilePositions()
@@ -45,12 +48,22 @@ namespace HexStrategyGame.ScenarioData
 
     public bool IsUnitAtCursorLocation()
     {
-      return map.GetTileAtLocation(cursor.Position).Unit != null;
+      return Units.GetUnitAtLocation(cursor.Position) != null;
     }
 
-    public Unit UnitAtCursorLocation()
+    public bool IsUnitAtLocation(Position location)
     {
-      return map.GetTileAtLocation(cursor.Position).Unit;
+      return Units.GetUnitAtLocation(location) != null;
+    }
+
+    public Unit GetUnitAtCursorLocation()
+    {
+      return Units.GetUnitAtLocation(cursor.Position);
+    }
+
+    public Unit GetUnitAtLocation(Position position)
+    {
+      return Units.GetUnitAtLocation(position);
     }
 
     public void UpdateCursor(Input input)

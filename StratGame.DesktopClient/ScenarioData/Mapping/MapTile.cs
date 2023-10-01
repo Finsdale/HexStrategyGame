@@ -12,7 +12,6 @@ namespace HexStrategyGame.MapData
   {
     public Terrain TileTerrain { get; set; }
 #pragma warning disable IDE0052 // Remove unread private members
-        public Unit Unit { get; set; }
         private bool HasBuilding { get; set; }
         public Position Position { get; }
         public int Cost { get; set; }
@@ -22,15 +21,13 @@ namespace HexStrategyGame.MapData
     {
       TileTerrain = Terrain.Empty;
       Position = new Position();
-      Unit = null;
       HasBuilding = false;
     }
 
-    public MapTile(int terrainType, Position position, Unit unit = null, bool hasBuilding = false)
+    public MapTile(int terrainType, Position position, bool hasBuilding = false)
     {
       TileTerrain = (Terrain)terrainType;
       Position = position;
-      Unit = unit;
       HasBuilding = hasBuilding;
     }
   }

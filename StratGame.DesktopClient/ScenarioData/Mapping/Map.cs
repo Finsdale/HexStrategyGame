@@ -23,7 +23,7 @@ namespace HexStrategyGame.MapData
         {
           //axial coordinates make our x value smaller as the y value increases
           if(q == 2 && r == 5) {
-            TileCollection.Add(new Position(q, r, -q-r), new MapTile(2, new Position(q,r, -q-r), new Unit(new Position(q, r, -q-r), "Player1")));
+            TileCollection.Add(new Position(q, r, -q-r), new MapTile(2, new Position(q,r, -q-r)));
           }
           else { TileCollection.Add(new Position(q, r, -q-r), new MapTile(1, new Position(q,r, -q-r))); }
         }

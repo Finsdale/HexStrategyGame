@@ -17,11 +17,13 @@ namespace HexStrategyGame.Gameplay
   {
     readonly GameStateMachine gameStateMachine;
     readonly UnitSelectedPatron patron;
+    readonly Scenario scenario;
     bool Active;
     UnitRange MovementOptions;
 
     public UnitSelectedState(GameStateMachine gameStateMachine) {
       this.gameStateMachine = gameStateMachine;
+      scenario = gameStateMachine.Scenario;
       patron = new UnitSelectedPatron();
       Active = false;
       MovementOptions = new UnitRange();
@@ -41,11 +43,11 @@ namespace HexStrategyGame.Gameplay
       patron.Draw(artist);
     }
 
-    public bool SelectUnit(MapTile mapTile)
+    public bool SelectUnit(Unit unit)
     {
-      Unit unit = mapTile.Unit;
       if (unit != null) {
         Active = true;
+        MapTile mapTile = scenario.GetTileAtMapLocation(unit.Position);
         MovementOptions = SetMovementOptions(mapTile);
       }
       return Active;
@@ -62,7 +64,7 @@ namespace HexStrategyGame.Gameplay
         if (!movementOptions.CostToMove.ContainsKey(current)) movementOptions.CostToMove[current] = 0; 
         foreach (MapTile step in neighbors) {
           int newCost = movementOptions.CostToMove[current] + step.Cost;
-          if (!movementOptions.CostToMove.ContainsKey(step) || newCost < movementOptions.CostToMove[step]) {
+          if ((!movementOptions.CostToMove.ContainsKey(step) || newCost < movementOptions.CostToMove[step]) && newCost <= gameStateMachine.Scenario.GetUnitAtLocation(mapTile.Position).movement) {
             movementOptions.CostToMove[step] = newCost;
             int priority = newCost;
             steps.Enqueue(step, priority);

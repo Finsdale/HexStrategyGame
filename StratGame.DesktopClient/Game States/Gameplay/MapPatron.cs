@@ -39,7 +39,7 @@ namespace HexStrategyGame.Gameplay
           DestinationRectangle(position),
           SourceRectangle(position),
           Color.White);
-        if(Scenario.GetTileAtMapLocation(position).Unit != null) {
+        if(Scenario.IsUnitAtLocation(position)) {
           artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }
       }
