@@ -14,9 +14,15 @@ namespace HexStrategyGame.ScenarioData
       Units = new Dictionary<Position, Unit>();
     }
 
-    public void AddUnit(Position position, Unit unit)
+    public void AddUnit(Unit unit)
     {
-      Units.Add(position, unit);
+      Units.Add(unit.Position, unit);
+    }
+
+    public Unit RemoveUnit(Position position)
+    {
+      Units.Remove(position, out Unit removedUnit);
+      return removedUnit;
     }
 
     public Unit GetUnitAtLocation(Position position)

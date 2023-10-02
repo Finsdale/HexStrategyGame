@@ -31,7 +31,6 @@ namespace HexStrategyGame.GameSettings
       {
         gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.mapPlayState);
-        gameStateMachine.Push(gameStateMachine.cursorPlayState);
       }
     }
 

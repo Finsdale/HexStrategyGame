@@ -26,7 +26,7 @@ namespace HexStrategyGame.Gameplay
 
     public void Update(Input input)
     {
-        //Nothing happens
+      gameStateMachine.Push(gameStateMachine.cursorPlayState);
     }
 
     public void Draw(IArtist artist)

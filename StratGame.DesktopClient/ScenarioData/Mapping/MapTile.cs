@@ -22,6 +22,7 @@ namespace HexStrategyGame.MapData
       TileTerrain = Terrain.Empty;
       Position = new Position();
       HasBuilding = false;
+      Cost = 1;
     }
 
     public MapTile(int terrainType, Position position, bool hasBuilding = false)
@@ -29,6 +30,7 @@ namespace HexStrategyGame.MapData
       TileTerrain = (Terrain)terrainType;
       Position = position;
       HasBuilding = hasBuilding;
+      Cost = 1;
     }
   }
 }

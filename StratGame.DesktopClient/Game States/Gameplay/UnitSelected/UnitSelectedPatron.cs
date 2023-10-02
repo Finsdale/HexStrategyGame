@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HexStrategyGame.Game_States.Gameplay.UnitSelected
+namespace HexStrategyGame.Gameplay
 {
   internal class UnitSelectedPatron : IPatron
   {

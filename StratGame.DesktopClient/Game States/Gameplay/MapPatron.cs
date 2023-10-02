@@ -16,17 +16,11 @@ namespace HexStrategyGame.Gameplay
   public class MapPatron : IPatron
   {
     readonly TextureCollection TC;
-    public string CurrentState;
     readonly Scenario Scenario;
     public MapPatron(Scenario scenario)
     {
       TC = TextureCollection.Instance;
       Scenario = scenario;
-    }
-
-    public string SetCurrentState(string currentState)
-    {
-      return CurrentState = currentState;
     }
 
     public void Draw(IArtist artist)
@@ -38,7 +32,7 @@ namespace HexStrategyGame.Gameplay
         artist.Draw(TC.TerrainTiles,
           DestinationRectangle(position),
           SourceRectangle(position),
-          Color.White);
+          Scenario.UnitRange.CostToMove.ContainsKey(Scenario.GetTileAtMapLocation(position)) ? Color.Tan : Color.White);
         if(Scenario.IsUnitAtLocation(position)) {
           artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }

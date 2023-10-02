@@ -7,13 +7,14 @@ using ControllerInput;
 
 namespace HexStrategyGame.ScenarioData
 {
-  public class Scenario
+    public class Scenario
   {
     public Camera camera;
     public Map map;
     public Cursor cursor;
     public List<Player> Players;
     public UnitList Units;
+    public UnitMovementWrapper UnitRange;
     public string ActivePlayer;
 
     public Scenario()
@@ -28,7 +29,8 @@ namespace HexStrategyGame.ScenarioData
         new Player("Player2")
       };
       ActivePlayer = Players[0].Name;
-      Units.AddUnit(new Position(2, 5, -7), new Unit(new Position(2, 5, -7), Players[0].Name));
+      UnitRange = new UnitMovementWrapper();
+      Units.AddUnit(new Unit(new Position(2, 5, -7), Players[0].Name));
     }
 
     public List<Position> VisibleTilePositions()
@@ -83,6 +85,26 @@ namespace HexStrategyGame.ScenarioData
     public Rectangle DestinationRectangleForPosition(Position position)
     {
       return camera.DestinationRectangleForPosition(position);
+    }
+
+    public void SetMovementOptions()
+    {
+      Unit selectedUnit = Units.RemoveUnit(cursor.Position);
+      UnitRange.SetMovementOptions(map, selectedUnit);
+    }
+
+    public void CancelMovementOptions()
+    {
+      Units.AddUnit(UnitRange.ActiveUnit);
+      UnitRange.Clear();
+    }
+    public void SetUnitDestinationToCursorLocation()
+    {
+      UnitRange.destination = cursor.Position;
+    }
+    public void CompleteUnitMovement()
+    {
+      Units.AddUnit(UnitRange.CompleteMovement());
     }
   }
 }

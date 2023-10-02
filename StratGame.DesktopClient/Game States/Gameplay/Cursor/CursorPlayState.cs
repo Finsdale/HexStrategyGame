@@ -31,8 +31,7 @@ namespace HexStrategyGame.Gameplay
       {
         if (scenario.IsUnitAtCursorLocation()) {
           if (gameStateMachine.Scenario.ActivePlayer == scenario.GetUnitAtCursorLocation().Player) {
-            bool updateGameState = gameStateMachine.unitSelectedState.SelectUnit(scenario.GetUnitAtCursorLocation());
-            if(updateGameState) gameStateMachine.Push(gameStateMachine.unitSelectedState);
+            gameStateMachine.Push(gameStateMachine.unitSelectedState);
           }
           else {
 
