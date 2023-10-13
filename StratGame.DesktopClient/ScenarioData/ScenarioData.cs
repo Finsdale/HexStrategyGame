@@ -106,5 +106,14 @@ namespace HexStrategyGame.ScenarioData
     {
       Units.AddUnit(UnitRange.CompleteMovement());
     }
+
+    public Position GetActiveUnitPosition()
+    {
+      return UnitRange.origin;
+    }
+    public Position GetActiveUnitDestination()
+    {
+      return UnitRange.destination;
+    }
   }
 }

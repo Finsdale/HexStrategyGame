@@ -25,12 +25,12 @@ namespace HexStrategyGame.Gameplay
     {
       if (input.cancel.Pressed) {
         gameStateMachine.Pop();
+        gameStateMachine.Push(gameStateMachine.unitSelectedState);
       }
       else if (input.confirm.Pressed){
         //I guess we're just waiting for now.
         scenario.CompleteUnitMovement();
         gameStateMachine.Pop();
-        gameStateMachine.Pop(); //To also pop off the UnitSelectedState
       }
     }
     public void Draw(IArtist artist) 

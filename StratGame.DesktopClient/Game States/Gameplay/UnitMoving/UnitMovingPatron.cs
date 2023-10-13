@@ -21,6 +21,7 @@ namespace HexStrategyGame.Gameplay
     public void Draw(IArtist artist)
     {
       artist.DrawString(TC.GameFont, "Moving", new Vector2(120, 60), Color.Black);
+      artist.Draw(TC.UnitSprites, scenario.DestinationRectangleForPosition(scenario.GetActiveUnitPosition()), new Rectangle(0, 0, TileData.width, TileData.height), Color.White);
     }
   }
 }

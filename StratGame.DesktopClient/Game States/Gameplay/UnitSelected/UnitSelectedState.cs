@@ -17,28 +17,22 @@ namespace HexStrategyGame.Gameplay
     readonly GameStateMachine gameStateMachine;
     readonly UnitSelectedPatron patron;
     readonly Scenario scenario;
-    bool Active;
 
     public UnitSelectedState(GameStateMachine gameStateMachine) {
       this.gameStateMachine = gameStateMachine;
       scenario = gameStateMachine.Scenario;
-      patron = new UnitSelectedPatron();
-      Active = false;
+      patron = new UnitSelectedPatron(scenario);
     }
      
     public void Update(Input input)
     {
-      if(!Active) {
-        Active = true;
-        scenario.SetMovementOptions();
-      }
       if (input.cancel.Pressed) {
-        Active = false;
         scenario.CancelMovementOptions();
         gameStateMachine.Pop();
       } 
       if (input.confirm.Pressed) {
         scenario.SetUnitDestinationToCursorLocation();
+        gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.unitMovingState);
       }
     }

@@ -28,6 +28,7 @@ namespace HexStrategyGame.Gameplay
       if(input.cancel.Pressed) {
         movementDelay = 0.0f;
         gameStateMachine.Pop();
+        gameStateMachine.Push(gameStateMachine.unitSelectedState);
       }
       else {
         if(movementDelay >= 1.0f) {

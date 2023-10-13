@@ -24,8 +24,8 @@ namespace HexStrategyGame.ScenarioData
     public void SetMovementOptions(Map map, Unit selectedUnit)
     {
       ActiveUnit = selectedUnit;
-      Position position = selectedUnit.Position;
-      MapTile mapTile = map.GetTileAtLocation(position);
+      origin = selectedUnit.Position;
+      MapTile mapTile = map.GetTileAtLocation(origin);
       PriorityQueue<MapTile, int> steps = new PriorityQueue<MapTile, int>();
       steps.Enqueue(mapTile, 0);
       do {
