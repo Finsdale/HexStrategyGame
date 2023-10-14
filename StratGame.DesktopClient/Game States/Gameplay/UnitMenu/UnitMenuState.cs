@@ -11,9 +11,9 @@ namespace HexStrategyGame.Gameplay
 {
   public class UnitMenuState : IGameState
   {
-    GameStateMachine gameStateMachine;
-    UnitMenuPatron patron;
-    Scenario scenario;
+    readonly GameStateMachine gameStateMachine;
+    readonly UnitMenuPatron patron;
+    readonly Scenario scenario;
 
     public UnitMenuState(GameStateMachine gameStateMachine)
     {

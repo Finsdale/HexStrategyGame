@@ -4,6 +4,7 @@ using HexStrategyGame.Game_States.Gameplay.Camera;
 using HexStrategyGame.MapData;
 using HexStrategyGame.ScenarioData.Players;
 using ControllerInput;
+using System.Linq;
 
 namespace HexStrategyGame.ScenarioData
 {
@@ -114,6 +115,26 @@ namespace HexStrategyGame.ScenarioData
     public Position GetActiveUnitDestination()
     {
       return UnitRange.destination;
+    }
+
+    public bool PositionIsWithinUnitRange(Position position)
+    {
+      return UnitRange.IsInMovementRange(position);
+    }
+
+    public Position GetCursorPosition()
+    {
+      return cursor.Position;
+    }
+
+    public void UpdateUnitRangePath()
+    {
+      UnitRange.UpdatePath(GetTileAtCursorLocation());
+    }
+
+    public void ResetCursorPositionToUnitOrigin()
+    {
+      cursor.Position = UnitRange.origin;
     }
   }
 }

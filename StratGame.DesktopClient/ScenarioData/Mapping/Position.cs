@@ -107,14 +107,13 @@ namespace HexStrategyGame.ScenarioData
   
     public static Position operator + (Position left, Position right)
     {
-      if(ReferenceEquals(null, left)) {
-        if (ReferenceEquals(null, right)) {
+      if(left is null) {
+        if (right is null) {
           return null;
         }
         return right;
       }
       return new Position(left.X + right.X, left.Y + right.Y);
     }
-    
   }
 }

@@ -14,11 +14,13 @@ namespace HexStrategyGame.ScenarioData
     public Position origin, leg, destination;
     public Dictionary<MapTile, int> CostToMove { get; set; }
     public Dictionary<MapTile, MapTile> PreviousStep { get; set; }
+    public List<MapTile> UnitPath { get; set; }
 
     public UnitMovementWrapper()
     {
       CostToMove = new Dictionary<MapTile, int>();
       PreviousStep = new Dictionary<MapTile, MapTile>();
+      UnitPath = new List<MapTile>();
     }
 
     public void SetMovementOptions(Map map, Unit selectedUnit)
@@ -47,6 +49,7 @@ namespace HexStrategyGame.ScenarioData
     {
       CostToMove.Clear();
       PreviousStep.Clear();
+      UnitPath.Clear();
     }
 
     public Unit CompleteMovement()
@@ -54,6 +57,38 @@ namespace HexStrategyGame.ScenarioData
       Clear();
       ActiveUnit.Position = destination;
       return ActiveUnit;
+    }
+
+    public void UpdatePath(MapTile nextStep)
+    {
+      if (CostToMove.ContainsKey(nextStep)) {
+        if (UnitPath.Contains(nextStep)) {
+          int nextStepIndex = UnitPath.IndexOf(nextStep);
+          UnitPath.RemoveRange(nextStepIndex + 1, UnitPath.Count - (nextStepIndex + 1));
+        }
+        else {
+          UnitPath.Add(nextStep);
+          int movementTotal = UnitPath.Sum(x => x.Cost);
+          if(movementTotal > ActiveUnit.movement) {
+            UnitPath = ShortestPathTo(nextStep);
+          }
+        }
+      }
+    }
+
+    private List<MapTile> ShortestPathTo(MapTile nextStep)
+    {
+      List<MapTile> result = new List<MapTile>();
+      if(PreviousStep.ContainsKey(nextStep)) {
+        result = ShortestPathTo(PreviousStep[nextStep]);
+      }
+      result.Add(nextStep);
+      return result;
+    }
+
+    public bool IsInMovementRange(Position position)
+    {
+      return CostToMove.Any(x => x.Key.Position == position);
     }
   }
 }
