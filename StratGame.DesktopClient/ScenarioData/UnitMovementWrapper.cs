@@ -1,4 +1,5 @@
 ﻿using HexStrategyGame.MapData;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,13 @@ namespace HexStrategyGame.ScenarioData
   public class UnitMovementWrapper
   {
     public Unit ActiveUnit;
-    public Position origin, leg, destination;
+    public Position origin, destination;
+    public Position Leg { get { return UnitPath[PositionIndex].Position; } }
     public Dictionary<MapTile, int> CostToMove { get; set; }
     public Dictionary<MapTile, MapTile> PreviousStep { get; set; }
     public List<MapTile> UnitPath { get; set; }
+    public float Movement = 0.0f;
+    public int PositionIndex = 0;
 
     public UnitMovementWrapper()
     {
@@ -50,6 +54,7 @@ namespace HexStrategyGame.ScenarioData
       CostToMove.Clear();
       PreviousStep.Clear();
       UnitPath.Clear();
+      ClearMovement();
     }
 
     public Unit CompleteMovement()
@@ -69,6 +74,7 @@ namespace HexStrategyGame.ScenarioData
         else {
           UnitPath.Add(nextStep);
           int movementTotal = UnitPath.Sum(x => x.Cost);
+          movementTotal -= UnitPath[0].Cost;
           if(movementTotal > ActiveUnit.movement) {
             UnitPath = ShortestPathTo(nextStep);
           }
@@ -89,6 +95,49 @@ namespace HexStrategyGame.ScenarioData
     public bool IsInMovementRange(Position position)
     {
       return CostToMove.Any(x => x.Key.Position == position);
+    }
+
+    public void UpdateMovement()
+    {
+      if(!IsUnitAtDestination()) {
+        Movement += 0.1f;
+        if(Movement >= 1) {
+          Movement = 0.0f;
+          PositionIndex++;
+        }
+      }
+    }
+
+    public bool IsUnitAtDestination()
+    {
+      return (UnitPath.Count == PositionIndex + 1); 
+    }
+
+    public int XMovementOffset()
+    {
+      if (!IsUnitAtDestination()) {
+        int result = (int)((UnitPath[PositionIndex + 1].Position.X - Leg.X) * Movement * TileData.xStep);
+        return result;
+      }
+      else {
+        return 0;
+      }
+    }
+    public int YMovementOffset()
+    {
+      if (!IsUnitAtDestination()) {
+        int result = (int)((UnitPath[PositionIndex + 1].Position.Y - Leg.Y) * Movement * TileData.yStep);
+        return result;
+      }
+      else {
+        return 0;
+      }
+    }
+
+    public void ClearMovement()
+    {
+      Movement = 0.0f;
+      PositionIndex = 0;
     }
   }
 }

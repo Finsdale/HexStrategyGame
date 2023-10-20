@@ -27,20 +27,18 @@ namespace HexStrategyGame.Gameplay
     public void Update(Input input)
     {
       if (input.cancel.Pressed) {
-        scenario.ResetCursorPositionToUnitOrigin();
-        scenario.CancelMovementOptions();
+        scenario.UnitSelectedCancel();
         gameStateMachine.Pop();
       } 
       else if (input.confirm.Pressed) {
-        if (scenario.PositionIsWithinUnitRange(scenario.GetCursorPosition())) {
+        if (scenario.CursorPositionIsWithinUnitRange()) {
           scenario.SetUnitDestinationToCursorLocation();
           gameStateMachine.Pop();
           gameStateMachine.Push(gameStateMachine.unitMovingState);
         }
       }
       else {
-        scenario.UpdateCursor(input);
-        scenario.UpdateUnitRangePath();
+        scenario.UnitSelectedCursorMovement(input);
       }
     }
 

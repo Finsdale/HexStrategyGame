@@ -24,6 +24,7 @@ namespace HexStrategyGame.Gameplay
     public void Update(Input input)
     {
       if (input.cancel.Pressed) {
+        scenario.ClearUnitMovement();
         gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.unitSelectedState);
       }

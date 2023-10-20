@@ -14,30 +14,25 @@ namespace HexStrategyGame.Gameplay
     GameStateMachine gameStateMachine;
     UnitMovingPatron patron;
     Scenario scenario;
-    float movementDelay; // using this to pretend to move the unit to its destination
 
     public UnitMovingState(GameStateMachine gameStateMachine)
     {
       this.gameStateMachine = gameStateMachine;
       scenario = gameStateMachine.Scenario;
       patron = new UnitMovingPatron(scenario);
-      movementDelay = 0.0f;
     }
     public void Update(Input input)
     {
       if(input.cancel.Pressed) {
-        movementDelay = 0.0f;
+        scenario.ClearUnitMovement();
         gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.unitSelectedState);
       }
       else {
-        if(movementDelay >= 1.0f) {
-          movementDelay = 0.0f;
+        scenario.UpdateUnitMovement();
+        if(scenario.IsUnitMovementComplete()) {
           gameStateMachine.Pop();
           gameStateMachine.Push(gameStateMachine.unitMenuState);
-        }
-        else {
-          movementDelay += 0.1f;
         }
       }
     }
