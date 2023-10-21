@@ -48,7 +48,7 @@ namespace HexStrategyGame.Gameplay
       }
       else
       {
-        scenario.UpdateCursor(input);
+        scenario.MoveCursor(input);
       }
     }
 

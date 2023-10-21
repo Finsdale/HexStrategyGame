@@ -11,14 +11,14 @@ namespace HexStrategyGame.ScenarioData
   {
     public Position Position { get; set; }
     public string Player { get; set; }
-    public int movement;
+    public int MovementRange;
 
     public Unit() { }
     public Unit(Position position, string player)
     {
       Position = position;
       Player = player;
-      movement = 7;
+      MovementRange = 7;
     }
   }
 }

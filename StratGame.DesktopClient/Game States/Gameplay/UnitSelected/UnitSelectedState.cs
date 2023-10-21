@@ -27,7 +27,7 @@ namespace HexStrategyGame.Gameplay
     public void Update(Input input)
     {
       if (input.cancel.Pressed) {
-        scenario.UnitSelectedCancel();
+        scenario.UnitSelectedStateCancelAction();
         gameStateMachine.Pop();
       } 
       else if (input.confirm.Pressed) {
@@ -38,7 +38,7 @@ namespace HexStrategyGame.Gameplay
         }
       }
       else {
-        scenario.UnitSelectedCursorMovement(input);
+        scenario.UnitSelectedStateCursorMovement(input);
       }
     }
 

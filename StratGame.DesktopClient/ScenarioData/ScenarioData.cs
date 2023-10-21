@@ -69,7 +69,7 @@ namespace HexStrategyGame.ScenarioData
       return Units.GetUnitAtLocation(position);
     }
 
-    public void UpdateCursor(Input input)
+    public void MoveCursor(Input input)
     {
       cursor.Update(input);
     }
@@ -136,7 +136,7 @@ namespace HexStrategyGame.ScenarioData
       UnitRange.UpdatePath(GetTileAtCursorLocation());
     }
 
-    public void UnitSelectedCancel()
+    public void UnitSelectedStateCancelAction()
     {
       cursor.Position = UnitRange.origin;
       Units.AddUnit(UnitRange.ActiveUnit);
@@ -148,9 +148,9 @@ namespace HexStrategyGame.ScenarioData
       return PositionIsWithinUnitRange(GetCursorPosition());
     }
 
-    public void UnitSelectedCursorMovement(Input input)
+    public void UnitSelectedStateCursorMovement(Input input)
     {
-      UpdateCursor(input);
+      MoveCursor(input);
       UpdateUnitRangePath();
     }
 

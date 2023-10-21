@@ -30,23 +30,38 @@ namespace HexStrategyGame.ScenarioData
     public void SetMovementOptions(Map map, Unit selectedUnit)
     {
       ActiveUnit = selectedUnit;
-      origin = selectedUnit.Position;
-      MapTile mapTile = map.GetTileAtLocation(origin);
+      origin = ActiveUnit.Position;
+      MapTile UnitOrigin = map.GetTileAtLocation(origin);
+      CostToMove[UnitOrigin] = 0;
       PriorityQueue<MapTile, int> steps = new PriorityQueue<MapTile, int>();
-      steps.Enqueue(mapTile, 0);
+      steps.Enqueue(UnitOrigin, 0);
+      GenerateStepValues(map, steps);
+    }
+
+    private void GenerateStepValues(Map map, PriorityQueue<MapTile, int> steps)
+    {
       do {
-        MapTile current = steps.Dequeue();
-        List<MapTile> neighbors = map.GetNeighbors(current);
-        if (!CostToMove.ContainsKey(current)) CostToMove[current] = 0;
-        foreach (MapTile step in neighbors) {
-          int newCost = CostToMove[current] + step.Cost;
-          if ((!CostToMove.ContainsKey(step) || newCost < CostToMove[step]) && newCost <= selectedUnit.movement) {
-            CostToMove[step] = newCost;
-            steps.Enqueue(step, newCost);
-            PreviousStep[step] = current;
+        MapTile currentStep = steps.Dequeue();
+        List<MapTile> neighbors = map.GetNeighbors(currentStep);
+        foreach (MapTile nextStep in neighbors) {
+          int newCost = CostToMove[currentStep] + nextStep.Cost;
+          if (IsCostToMoveImproved(nextStep, newCost) && IsWithinMovementRange(newCost)) {
+            CostToMove[nextStep] = newCost;
+            steps.Enqueue(nextStep, newCost);
+            PreviousStep[nextStep] = currentStep;
           }
         }
       } while (steps.Count > 0);
+    }
+
+    private bool IsCostToMoveImproved(MapTile nextStep, int newCost)
+    {
+      return !CostToMove.ContainsKey(nextStep) || newCost < CostToMove[nextStep];
+    }
+
+    private bool IsWithinMovementRange(int cost)
+    {
+      return cost <= ActiveUnit.MovementRange;
     }
 
     public void Clear()
@@ -75,7 +90,7 @@ namespace HexStrategyGame.ScenarioData
           UnitPath.Add(nextStep);
           int movementTotal = UnitPath.Sum(x => x.Cost);
           movementTotal -= UnitPath[0].Cost;
-          if(movementTotal > ActiveUnit.movement) {
+          if(movementTotal > ActiveUnit.MovementRange) {
             UnitPath = ShortestPathTo(nextStep);
           }
         }
