@@ -5,6 +5,7 @@ using HexStrategyGame.MapData;
 using HexStrategyGame.ScenarioData.Players;
 using ControllerInput;
 using System.Linq;
+using NUnit.Framework.Interfaces;
 
 namespace HexStrategyGame.ScenarioData
 {
@@ -15,7 +16,7 @@ namespace HexStrategyGame.ScenarioData
     public Cursor cursor;
     public List<Player> Players;
     public UnitList Units;
-    public UnitMovementWrapper UnitRange;
+    //public UnitMovementWrapper UnitRange;
     public string ActivePlayer;
 
     public Scenario()
@@ -30,7 +31,7 @@ namespace HexStrategyGame.ScenarioData
         new Player("Player2")
       };
       ActivePlayer = Players[0].Name;
-      UnitRange = new UnitMovementWrapper();
+      //UnitRange = new UnitMovementWrapper();
       Units.AddUnit(new Unit(new Position(2, 5, -7), Players[0].Name));
     }
 
@@ -88,64 +89,53 @@ namespace HexStrategyGame.ScenarioData
       return camera.DestinationRectangleForPosition(position);
     }
 
-    public Rectangle DestinationRectangleForMovingUnit()
-    {
-      return new Rectangle(
-        ((UnitRange.Leg.X - camera.X) * TileData.xStep) + camera.Offset.X + UnitRange.XMovementOffset(),
-        ((UnitRange.Leg.Y - camera.Y) * TileData.yStep) + camera.Offset.Y + UnitRange.YMovementOffset(),
-        TileData.width,
-        TileData.height);
-    }
-
-    public void SetMovementOptions()
-    {
-      Unit selectedUnit = Units.RemoveUnit(cursor.Position);
-      UnitRange.SetMovementOptions(map, selectedUnit);
-    }
-
-    public void SetUnitDestinationToCursorLocation()
-    {
-      UnitRange.destination = cursor.Position;
-    }
-    public void CompleteUnitMovement()
-    {
-      Units.AddUnit(UnitRange.CompleteMovement());
-    }
-
-    public Position GetActiveUnitPosition()
-    {
-      return UnitRange.origin;
-    }
-    public Position GetActiveUnitDestination()
-    {
-      return UnitRange.destination;
-    }
-
-    public bool PositionIsWithinUnitRange(Position position)
-    {
-      return UnitRange.IsInMovementRange(position);
-    }
-
     public Position GetCursorPosition()
     {
       return cursor.Position;
     }
 
-    public void UpdateUnitRangePath()
+    public void SetMovementOptionsForUnitAtCursor()
     {
-      UnitRange.UpdatePath(GetTileAtCursorLocation());
+      Unit selectedUnit = GetUnitAtCursorLocation();
+      selectedUnit.SetMovementOptions(map);
     }
 
     public void UnitSelectedStateCancelAction()
     {
-      cursor.Position = UnitRange.origin;
-      Units.AddUnit(UnitRange.ActiveUnit);
-      UnitRange.Clear();
+      List<Unit> activeUnits = CancelUnitMovementForActiveUnits();
+      cursor.Position = activeUnits.First().Position;
     }
 
-    public bool CursorPositionIsWithinUnitRange()
+    private List<Unit> CancelUnitMovementForActiveUnits()
     {
-      return PositionIsWithinUnitRange(GetCursorPosition());
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.ClearMovementData();
+      }
+      return activeUnits;
+    }
+
+    public bool CursorPositionIsWithinActiveUnitRange()
+    {
+      return PositionIsWithinActiveUnitRange(GetCursorPosition());
+    }
+
+    public bool PositionIsWithinActiveUnitRange(Position position)
+    {
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      bool result = activeUnits.Count > 0;
+      foreach (Unit unit in activeUnits) {
+        result &= unit.HasPositionInRange(position);
+      }
+      return result;
+    }
+
+    public void SetActiveUnitDestinationToCursorLocation()
+    {
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.SetMovementDestination(cursor.Position);
+      }
     }
 
     public void UnitSelectedStateCursorMovement(Input input)
@@ -154,18 +144,67 @@ namespace HexStrategyGame.ScenarioData
       UpdateUnitRangePath();
     }
 
-    public void UpdateUnitMovement() 
+    public void UpdateUnitRangePath()
     {
-      UnitRange.UpdateMovement();
-    }
-    public bool IsUnitMovementComplete()
-    {
-      return UnitRange.IsUnitAtDestination();
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.UpdateMovementPath(GetTileAtCursorLocation());
+      }
     }
 
-    public void ClearUnitMovement()
+    public void ResetActiveUnitMovement()
     {
-      UnitRange.ClearMovement();
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.ResetMovement();
+      }
     }
+
+    public void MoveActiveUnits()
+    {
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.Move();
+      }
+    }
+
+    public bool HaveActiveUnitsCompletedMovement()
+    {
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      bool result = activeUnits.Count > 0;
+      foreach (Unit unit in activeUnits) {
+        result &= unit.IsUnitAtDestination();
+      }
+      return result;
+    }
+
+    public void CompleteUnitMovement()
+    {
+      List<Unit> activeUnits = Units.GetActiveUnits();
+      foreach (Unit unit in activeUnits) {
+        unit.CompleteMovement();
+      }
+    }
+
+    /*public Rectangle DestinationRectangleForMovingUnit()
+    {
+      return new Rectangle(
+        ((UnitRange.Leg.X - camera.X) * TileData.xStep) + camera.Offset.X + UnitRange.XMovementOffset(),
+        ((UnitRange.Leg.Y - camera.Y) * TileData.yStep) + camera.Offset.Y + UnitRange.YMovementOffset(),
+        TileData.width,
+        TileData.height);
+    }
+
+    public Position GetActiveUnitDestination()
+    {
+      return UnitRange.destination;
+    }
+
+    public Position GetActiveUnitPosition()
+    {
+      return Units.GetActiveUnits;
+    }
+
+*/
   }
 }

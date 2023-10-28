@@ -8,26 +8,32 @@ namespace HexStrategyGame.ScenarioData
 {
   public class UnitList
   {
-    Dictionary<Position, Unit> Units;
+    List<Unit> Units;
     public UnitList()
     {
-      Units = new Dictionary<Position, Unit>();
+      Units = new List<Unit>();
     }
 
     public void AddUnit(Unit unit)
     {
-      Units.Add(unit.Position, unit);
+      Units.Add(unit);
     }
 
     public Unit RemoveUnit(Position position)
     {
-      Units.Remove(position, out Unit removedUnit);
+      Unit removedUnit = GetUnitAtLocation(position);
+      if (removedUnit is not null) Units.Remove(removedUnit);
       return removedUnit;
     }
 
     public Unit GetUnitAtLocation(Position position)
     {
-      return Units.TryGetValue(position, out Unit unit) ? unit : null;
+      return Units.Find(unit => unit.Position == position);
+    }
+
+    public List<Unit> GetActiveUnits()
+    {
+      return Units.FindAll(unit => unit.Active == true);
     }
   }
 }

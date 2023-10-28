@@ -31,8 +31,8 @@ namespace HexStrategyGame.Gameplay
         gameStateMachine.Pop();
       } 
       else if (input.confirm.Pressed) {
-        if (scenario.CursorPositionIsWithinUnitRange()) {
-          scenario.SetUnitDestinationToCursorLocation();
+        if (scenario.CursorPositionIsWithinActiveUnitRange()) {
+          scenario.SetActiveUnitDestinationToCursorLocation();
           gameStateMachine.Pop();
           gameStateMachine.Push(gameStateMachine.unitMovingState);
         }

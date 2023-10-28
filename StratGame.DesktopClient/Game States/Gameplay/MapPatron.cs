@@ -27,12 +27,11 @@ namespace HexStrategyGame.Gameplay
     {
       Scenario.DefineCameraValues(artist.ScreenWidth(), artist.ScreenHeight());
 
-      //Something important to note: The Camera Position is 
       foreach(Position position in Scenario.VisibleTilePositions()) {
         artist.Draw(TC.TerrainTiles,
           DestinationRectangle(position),
           SourceRectangle(position),
-          Scenario.UnitRange.CostToMove.ContainsKey(Scenario.GetTileAtMapLocation(position)) ? Color.Tan : Color.White);
+          Scenario.PositionIsWithinActiveUnitRange(position) ? Color.Tan : Color.White);
         if(Scenario.IsUnitAtLocation(position)) {
           artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }

@@ -11,26 +11,26 @@ namespace HexStrategyGame.ScenarioData
 {
   public class UnitMovementWrapper
   {
-    public Unit ActiveUnit;
+    public Unit Unit;
     public Position origin, destination;
     public Position Leg { get { return UnitPath[PositionIndex].Position; } }
     public Dictionary<MapTile, int> CostToMove { get; set; }
     public Dictionary<MapTile, MapTile> PreviousStep { get; set; }
     public List<MapTile> UnitPath { get; set; }
-    public float Movement = 0.0f;
+    public float PercentTravelled = 0.0f;
     public int PositionIndex = 0;
 
-    public UnitMovementWrapper()
+    public UnitMovementWrapper(Unit unit)
     {
       CostToMove = new Dictionary<MapTile, int>();
       PreviousStep = new Dictionary<MapTile, MapTile>();
       UnitPath = new List<MapTile>();
+      Unit = unit;
     }
 
-    public void SetMovementOptions(Map map, Unit selectedUnit)
+    public void SetMovementOptions(Map map)
     {
-      ActiveUnit = selectedUnit;
-      origin = ActiveUnit.Position;
+      origin = Unit.Position;
       MapTile UnitOrigin = map.GetTileAtLocation(origin);
       CostToMove[UnitOrigin] = 0;
       PriorityQueue<MapTile, int> steps = new PriorityQueue<MapTile, int>();
@@ -61,7 +61,7 @@ namespace HexStrategyGame.ScenarioData
 
     private bool IsWithinMovementRange(int cost)
     {
-      return cost <= ActiveUnit.MovementRange;
+      return cost <= Unit.MovementRange;
     }
 
     public void Clear()
@@ -69,14 +69,13 @@ namespace HexStrategyGame.ScenarioData
       CostToMove.Clear();
       PreviousStep.Clear();
       UnitPath.Clear();
-      ClearMovement();
+      ResetMovement();
     }
 
-    public Unit CompleteMovement()
+    public void CompleteMovement()
     {
       Clear();
-      ActiveUnit.Position = destination;
-      return ActiveUnit;
+      Unit.Position = destination;
     }
 
     public void UpdatePath(MapTile nextStep)
@@ -90,7 +89,7 @@ namespace HexStrategyGame.ScenarioData
           UnitPath.Add(nextStep);
           int movementTotal = UnitPath.Sum(x => x.Cost);
           movementTotal -= UnitPath[0].Cost;
-          if(movementTotal > ActiveUnit.MovementRange) {
+          if(movementTotal > Unit.MovementRange) {
             UnitPath = ShortestPathTo(nextStep);
           }
         }
@@ -107,17 +106,17 @@ namespace HexStrategyGame.ScenarioData
       return result;
     }
 
-    public bool IsInMovementRange(Position position)
+    public bool HasPositionInRange(Position position)
     {
       return CostToMove.Any(x => x.Key.Position == position);
     }
 
-    public void UpdateMovement()
+    public void Move()
     {
       if(!IsUnitAtDestination()) {
-        Movement += 0.1f;
-        if(Movement >= 1) {
-          Movement = 0.0f;
+        PercentTravelled += 0.1f;
+        if(PercentTravelled >= 1) {
+          PercentTravelled = 0.0f;
           PositionIndex++;
         }
       }
@@ -131,7 +130,7 @@ namespace HexStrategyGame.ScenarioData
     public int XMovementOffset()
     {
       if (!IsUnitAtDestination()) {
-        int result = (int)((UnitPath[PositionIndex + 1].Position.X - Leg.X) * Movement * TileData.xStep);
+        int result = (int)((UnitPath[PositionIndex + 1].Position.X - Leg.X) * PercentTravelled * TileData.xStep);
         return result;
       }
       else {
@@ -141,7 +140,7 @@ namespace HexStrategyGame.ScenarioData
     public int YMovementOffset()
     {
       if (!IsUnitAtDestination()) {
-        int result = (int)((UnitPath[PositionIndex + 1].Position.Y - Leg.Y) * Movement * TileData.yStep);
+        int result = (int)((UnitPath[PositionIndex + 1].Position.Y - Leg.Y) * PercentTravelled * TileData.yStep);
         return result;
       }
       else {
@@ -149,9 +148,9 @@ namespace HexStrategyGame.ScenarioData
       }
     }
 
-    public void ClearMovement()
+    public void ResetMovement()
     {
-      Movement = 0.0f;
+      PercentTravelled = 0.0f;
       PositionIndex = 0;
     }
   }

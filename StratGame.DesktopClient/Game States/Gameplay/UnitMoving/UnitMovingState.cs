@@ -11,9 +11,9 @@ namespace HexStrategyGame.Gameplay
 {
   public class UnitMovingState : IGameState
   {
-    GameStateMachine gameStateMachine;
-    UnitMovingPatron patron;
-    Scenario scenario;
+    readonly GameStateMachine gameStateMachine;
+    readonly UnitMovingPatron patron;
+    readonly Scenario scenario;
 
     public UnitMovingState(GameStateMachine gameStateMachine)
     {
@@ -24,13 +24,13 @@ namespace HexStrategyGame.Gameplay
     public void Update(Input input)
     {
       if(input.cancel.Pressed) {
-        scenario.ClearUnitMovement();
+        scenario.ResetActiveUnitMovement();
         gameStateMachine.Pop();
         gameStateMachine.Push(gameStateMachine.unitSelectedState);
       }
       else {
-        scenario.UpdateUnitMovement();
-        if(scenario.IsUnitMovementComplete()) {
+        scenario.MoveActiveUnits();
+        if(scenario.HaveActiveUnitsCompletedMovement()) {
           gameStateMachine.Pop();
           gameStateMachine.Push(gameStateMachine.unitMenuState);
         }

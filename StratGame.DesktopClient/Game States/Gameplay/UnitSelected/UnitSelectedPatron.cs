@@ -21,11 +21,12 @@ namespace HexStrategyGame.Gameplay
 
     public void Draw(IArtist artist)
     {
-      artist.Draw(
+/*      artist.Draw(
         TC.UnitSprites,
         scenario.DestinationRectangleForPosition(scenario.GetActiveUnitPosition()),
         new Rectangle(0,0, TileData.width, TileData.height),
         Color.White);
+*/
     }
   }
 }
