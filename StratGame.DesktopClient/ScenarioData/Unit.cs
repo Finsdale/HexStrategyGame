@@ -14,19 +14,19 @@ namespace HexStrategyGame.ScenarioData
     public string Player { get; set; }
     public int MovementRange;
     private bool _Active = false;
-    private UnitMovementWrapper MovementData { get; set; }
+    private UnitMovement MovementData { get; set; }
     public bool Active { get { return _Active; } }
 
     public Unit()
     { 
-      MovementData = new UnitMovementWrapper(this);
+      MovementData = new UnitMovement(this);
     }
     public Unit(Position position, string player)
     {
       Position = position;
       Player = player;
       MovementRange = 7;
-      MovementData = new UnitMovementWrapper(this);
+      MovementData = new UnitMovement(this);
     }
 
     public void SetMovementOptions(Map map)
@@ -38,6 +38,7 @@ namespace HexStrategyGame.ScenarioData
     public void ClearMovementData()
     {
       _Active = false;
+      MovementData.Clear();
     }
 
     public bool HasPositionInRange(Position position)

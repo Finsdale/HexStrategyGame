@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.ScenarioData
 {
-  public class UnitMovementWrapper
+  public class UnitMovement
   {
-    public Unit Unit;
-    public Position origin, destination;
-    public Position Leg { get { return UnitPath[PositionIndex].Position; } }
-    public Dictionary<MapTile, int> CostToMove { get; set; }
-    public Dictionary<MapTile, MapTile> PreviousStep { get; set; }
-    public List<MapTile> UnitPath { get; set; }
-    public float PercentTravelled = 0.0f;
-    public int PositionIndex = 0;
+    readonly Unit Unit;
+    Position Origin { get { return Unit.Position; } }
+    public Position destination;
+    Position Leg { get { return UnitPath[PositionIndex].Position; } }
+    Dictionary<MapTile, int> CostToMove { get; set; }
+    Dictionary<MapTile, MapTile> PreviousStep { get; set; }
+    List<MapTile> UnitPath { get; set; }
+    float PercentTravelled = 0.0f;
+    int PositionIndex = 0;
 
-    public UnitMovementWrapper(Unit unit)
+    public UnitMovement(Unit unit)
     {
       CostToMove = new Dictionary<MapTile, int>();
       PreviousStep = new Dictionary<MapTile, MapTile>();
@@ -30,8 +31,7 @@ namespace HexStrategyGame.ScenarioData
 
     public void SetMovementOptions(Map map)
     {
-      origin = Unit.Position;
-      MapTile UnitOrigin = map.GetTileAtLocation(origin);
+      MapTile UnitOrigin = map.GetTileAtLocation(Origin);
       CostToMove[UnitOrigin] = 0;
       PriorityQueue<MapTile, int> steps = new PriorityQueue<MapTile, int>();
       steps.Enqueue(UnitOrigin, 0);
