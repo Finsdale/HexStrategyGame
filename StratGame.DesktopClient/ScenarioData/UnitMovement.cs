@@ -13,7 +13,7 @@ namespace HexStrategyGame.ScenarioData
   {
     readonly Unit Unit;
     Position Origin { get { return Unit.Position; } }
-    public Position destination;
+    public Position destination {get; set;}
     Position Leg { get { return UnitPath[PositionIndex].Position; } }
     Dictionary<MapTile, int> CostToMove { get; set; }
     Dictionary<MapTile, MapTile> PreviousStep { get; set; }
