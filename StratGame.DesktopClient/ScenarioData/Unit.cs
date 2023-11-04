@@ -48,7 +48,7 @@ namespace HexStrategyGame.ScenarioData
 
     public void SetMovementDestination(Position destination)
     {
-      MovementData.destination = destination;
+      MovementData.Destination = destination;
     }
 
     public void UpdateMovementPath(MapTile nextStep)
@@ -73,8 +73,8 @@ namespace HexStrategyGame.ScenarioData
 
     public void CompleteMovement()
     {
-      //Ewwww, this changes the values of variables within this class!
-      MovementData.CompleteMovement();
+      Position = MovementData.Destination;
+      MovementData.Clear();
     }
   }
 }

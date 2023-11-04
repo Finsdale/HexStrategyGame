@@ -31,7 +31,7 @@ namespace HexStrategyGame.Gameplay
       {
         if (scenario.IsUnitAtCursorLocation()) {
           if (gameStateMachine.Scenario.ActivePlayer == scenario.GetUnitAtCursorLocation().Player) {
-            scenario.SetMovementOptionsForUnitAtCursor();
+            scenario.CursorPlayStateSelectUnitAtCursorLocation();
             gameStateMachine.Push(gameStateMachine.unitSelectedState);
           }
           else {
@@ -39,7 +39,7 @@ namespace HexStrategyGame.Gameplay
           }
         }
         else {
-          gameStateMachine.Push(new GameMenuState(gameStateMachine));
+          gameStateMachine.Push(gameStateMachine.gameMenuState);
         }
       }
       else if (input.cancel.Pressed)

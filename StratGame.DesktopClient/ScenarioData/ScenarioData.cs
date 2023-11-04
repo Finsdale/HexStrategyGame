@@ -16,7 +16,6 @@ namespace HexStrategyGame.ScenarioData
     public Cursor cursor;
     public List<Player> Players;
     public UnitList Units;
-    //public UnitMovementWrapper UnitRange;
     public string ActivePlayer;
 
     public Scenario()
@@ -31,7 +30,6 @@ namespace HexStrategyGame.ScenarioData
         new Player("Player2")
       };
       ActivePlayer = Players[0].Name;
-      //UnitRange = new UnitMovementWrapper();
       Units.AddUnit(new Unit(new Position(2, 5, -7), Players[0].Name));
     }
 
@@ -94,7 +92,7 @@ namespace HexStrategyGame.ScenarioData
       return cursor.Position;
     }
 
-    public void SetMovementOptionsForUnitAtCursor()
+    public void CursorPlayStateSelectUnitAtCursorLocation()
     {
       Unit selectedUnit = GetUnitAtCursorLocation();
       selectedUnit.SetMovementOptions(map);
@@ -204,7 +202,11 @@ namespace HexStrategyGame.ScenarioData
     {
       return Units.GetActiveUnits;
     }
-
 */
+
+    public bool IsActivePlayer(Player player)
+    {
+      return player.Name == ActivePlayer;
+    }
   }
 }

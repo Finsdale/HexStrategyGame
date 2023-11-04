@@ -9,6 +9,14 @@ namespace HexStrategyGame.ScenarioData
   public class UnitList
   {
     List<Unit> Units;
+
+    public Unit SelectedUnit
+    {
+      get
+      {
+        return Units.SingleOrDefault(x => x.Active == true);
+      }
+    }
     public UnitList()
     {
       Units = new List<Unit>();
