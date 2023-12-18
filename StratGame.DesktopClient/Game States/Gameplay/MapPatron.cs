@@ -36,9 +36,6 @@ namespace HexStrategyGame.Gameplay
           artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
         }
       }
-      //artist.DrawString(TC.GameFont, $"{(Map.GetTileAtLocation(Cursor.Position).Unit == null ? "false" : Map.GetTileAtLocation(Cursor.Position).Unit.Player)}", new Vector2(0, 120), Color.Black);
-      //spriteBatch.DrawString(TC.GameFont, $"CameraX: {Camera.X}", new Vector2(0, 150), Color.Black);
-      //spriteBatch.DrawString(TC.GameFont, $"CameraY: {Camera.Y}", new Vector2(0, 180), Color.Black);
     }
 
 
@@ -63,10 +60,12 @@ namespace HexStrategyGame.Gameplay
       int result = TileData.height * (int)Scenario.GetTileAtMapLocation(position).TileTerrain;
       return result;
     }
+    /*
     int TerrainXPosition(int x, int y)
     {
       int result = TerrainXPosition(new Position(x, y));
       return result;
     }
+    */
   }
 }

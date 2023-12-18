@@ -14,6 +14,7 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
     public Point Position { get; set; }
     public int X { get => Position.X; }
     public int Y { get => Position.Y; }
+    public Point DisplayPoint { get => HelperMethods.PixelPoint(Position) - Offset; }
     public int ScreenWidth, ScreenHeight;
     public Point Offset, MinPos, MaxPos;
     readonly int YTileOverlap = TileData.height - TileData.yStep;
@@ -114,9 +115,10 @@ namespace HexStrategyGame.Game_States.Gameplay.Camera
 
     public Rectangle DestinationRectangleForPosition(Position position)
     {
+      Point destination = HelperMethods.PixelPoint(position) - DisplayPoint;
       return new Rectangle(
-        ((position.X - X) * TileData.xStep) + Offset.X,
-        ((position.Y - Y) * TileData.yStep) + Offset.Y,
+        destination.X,
+        destination.Y,
         TileData.width,
         TileData.height);
     }

@@ -10,7 +10,7 @@ namespace HexStrategyGame.ScenarioData
 {
   public class Unit
   {
-    public Position Position { get; set; }
+    public Position Position { get => MovementData.Origin; set => MovementData.Origin = value; }
     public string Player { get; set; }
     public int MovementRange;
     private bool _Active = false;
@@ -23,10 +23,10 @@ namespace HexStrategyGame.ScenarioData
     }
     public Unit(Position position, string player)
     {
+      MovementData = new UnitMovement(this);
       Position = position;
       Player = player;
       MovementRange = 7;
-      MovementData = new UnitMovement(this);
     }
 
     public void SetMovementOptions(Map map)
@@ -76,5 +76,6 @@ namespace HexStrategyGame.ScenarioData
       Position = MovementData.Destination;
       MovementData.Clear();
     }
+
   }
 }
