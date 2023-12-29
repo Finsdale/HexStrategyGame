@@ -28,6 +28,14 @@ namespace HexStrategyGame.ScenarioData
       UnitPath = new List<MapTile>();
       Unit = unit;
     }
+    public Position GetDisplayPosition()
+    {
+      Position result = Origin;
+      if(UnitPath.Count > 0) {
+        result = IsUnitAtDestination() ? Destination : Leg;
+      }
+      return result;
+    }
 
     public void SetMovementOptions(Map map)
     {

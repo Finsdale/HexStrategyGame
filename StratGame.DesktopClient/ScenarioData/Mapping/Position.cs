@@ -10,16 +10,16 @@ namespace HexStrategyGame.ScenarioData
 {
   public class Position
   {
-    public Point DoubledPosition;
-    public int X { get { return DoubledPosition.X; } }
-    public int Y { get { return DoubledPosition.Y; } }
+    public Point DoubledPoint;
+    public int X { get { return DoubledPoint.X; } }
+    public int Y { get { return DoubledPoint.Y; } }
     public int Q { get { return (X - Y) / 2; } }
     public int R { get { return Y; } }
     public int S { get { return -((X - Y) / 2) - Y; } }
     
     public Position()
     {
-      DoubledPosition = new Point();
+      DoubledPoint = new Point();
     }
 
     public Position(Point point)
@@ -27,7 +27,7 @@ namespace HexStrategyGame.ScenarioData
       if((point.X + point.Y) % 2 != 0) {
         throw new ArgumentException("The sum of the axes of a doubled position - x,y - must always be even.");
       }
-      DoubledPosition = point;
+      DoubledPoint = point;
     }
 
     public Position(int x, int y)
@@ -35,7 +35,7 @@ namespace HexStrategyGame.ScenarioData
       if ((x + y) % 2 != 0) {
         throw new ArgumentException("The sum of the axes of a doubled position - x,y - must always be even.");
       }
-      DoubledPosition = new Point(x, y);
+      DoubledPoint = new Point(x, y);
     }
 
     public Position(int q, int r, int s)
@@ -43,7 +43,7 @@ namespace HexStrategyGame.ScenarioData
       if(q + r + s != 0) {
         throw new ArgumentException("The sum of the axes from a cubed position - q,r,s - must equal zero.");
       }
-      DoubledPosition = new Point(2 * q + r, r);
+      DoubledPoint = new Point(2 * q + r, r);
     }
 
     public override bool Equals(object value)

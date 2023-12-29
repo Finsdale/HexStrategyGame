@@ -11,6 +11,7 @@ namespace HexStrategyGame.ScenarioData
   public class Unit
   {
     public Position Position { get => MovementData.Origin; set => MovementData.Origin = value; }
+    public Position DisplayPosition { get => MovementData.GetDisplayPosition(); }
     public string Player { get; set; }
     public int MovementRange;
     private bool _Active = false;
