@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HexStrategyGame.ScenarioData
 {
-  public class UnitList
+  public class UnitList : IEnumerable<Unit>
   {
     List<Unit> Units;
 
@@ -42,6 +43,16 @@ namespace HexStrategyGame.ScenarioData
     public List<Unit> GetActiveUnits()
     {
       return Units.FindAll(unit => unit.Active == true);
+    }
+
+    public IEnumerator<Unit> GetEnumerator()
+    {
+      return ((IEnumerable<Unit>)Units).GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return ((IEnumerable)Units).GetEnumerator();
     }
   }
 }

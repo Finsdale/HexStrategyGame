@@ -10,13 +10,13 @@ namespace HexStrategyGame.ScenarioData
 {
   public class Unit
   {
-    public Position Position { get => MovementData.Origin; set => MovementData.Origin = value; }
+    public Position Position { get; set; }
     public Position DisplayPosition { get => MovementData.GetDisplayPosition(); }
     public string Player { get; set; }
     public int MovementRange;
     private bool _Active = false;
     private UnitMovement MovementData { get; set; }
-    public bool Active { get { return _Active; } }
+    public bool Active { get { return MovementData.CostToMove.Count > 0; } }
 
     public Unit()
     { 
@@ -28,6 +28,11 @@ namespace HexStrategyGame.ScenarioData
       Position = position;
       Player = player;
       MovementRange = 7;
+    }
+
+    public Point GetPixelDisplayPoint()
+    {
+      return MovementData.GetDisplayPoint();
     }
 
     public void SetMovementOptions(Map map)

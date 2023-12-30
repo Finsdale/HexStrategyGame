@@ -12,10 +12,10 @@ namespace HexStrategyGame.ScenarioData
   public class UnitMovement
   {
     readonly Unit Unit;
-    public Position Origin { get; set; }
+    public Position Origin { get => Unit.Position; }
     public Position Destination {get; set;}
-    Position Leg { get { return UnitPath[PositionIndex].Position; } }
-    Dictionary<MapTile, int> CostToMove { get; set; }
+    Position Leg { get => GetLeg(); }
+    public Dictionary<MapTile, int> CostToMove { get; set; }
     Dictionary<MapTile, MapTile> PreviousStep { get; set; }
     List<MapTile> UnitPath { get; set; }
     float PercentTravelled = 0.0f;
@@ -28,10 +28,31 @@ namespace HexStrategyGame.ScenarioData
       UnitPath = new List<MapTile>();
       Unit = unit;
     }
+
+    Position GetLeg()
+    {
+      if(UnitPath.Count > 0) {
+        return UnitPath[PositionIndex].Position;
+      }
+      else {
+        return Destination;
+      }
+    }
+
+    public Point GetDisplayPoint()
+    {
+      Position position = GetDisplayPosition();
+      Point result = HelperMethods.PixelPoint(position);
+      if(Destination is not null) {
+        result += new Point(XMovementOffset(), YMovementOffset());
+      }
+      return result;
+    }
     public Position GetDisplayPosition()
     {
       Position result = Origin;
-      if(UnitPath.Count > 0) {
+      Console.WriteLine(result.ToString());
+      if(Destination is not null) {
         result = IsUnitAtDestination() ? Destination : Leg;
       }
       return result;
@@ -129,9 +150,14 @@ namespace HexStrategyGame.ScenarioData
       return (UnitPath.Count == PositionIndex + 1); 
     }
 
+    public bool IsNextPositionIndexWithinCount()
+    {
+      return (UnitPath.Count >= PositionIndex + 1);
+    }
+
     public int XMovementOffset()
     {
-      if (!IsUnitAtDestination()) {
+      if (!IsUnitAtDestination() && IsNextPositionIndexWithinCount()) {
         int result = (int)((UnitPath[PositionIndex + 1].Position.X - Leg.X) * PercentTravelled * TileData.xStep);
         return result;
       }
@@ -141,7 +167,7 @@ namespace HexStrategyGame.ScenarioData
     }
     public int YMovementOffset()
     {
-      if (!IsUnitAtDestination()) {
+      if (!IsUnitAtDestination() && IsNextPositionIndexWithinCount()) {
         int result = (int)((UnitPath[PositionIndex + 1].Position.Y - Leg.Y) * PercentTravelled * TileData.yStep);
         return result;
       }

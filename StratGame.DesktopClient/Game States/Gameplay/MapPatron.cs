@@ -32,9 +32,18 @@ namespace HexStrategyGame.Gameplay
           DestinationRectangle(position),
           SourceRectangle(position),
           Scenario.PositionIsWithinActiveUnitRange(position) ? Color.Tan : Color.White);
-        if(Scenario.IsUnitAtLocation(position)) {
-          artist.Draw(TC.UnitSprites, DestinationRectangle(position), new Rectangle(0,0,TileData.width,TileData.height), Color.White);
-        }
+      }
+
+      foreach(Unit unit in Scenario.Units) {
+          artist.Draw(TC.UnitSprites,
+            new Rectangle(
+              unit.GetPixelDisplayPoint().X - Scenario.camera.DisplayPoint.X,
+              unit.GetPixelDisplayPoint().Y - Scenario.camera.DisplayPoint.Y,
+              TileData.width,
+              TileData.height),
+            new Rectangle(
+              0, 0, TileData.width, TileData.height),
+            Color.White);
       }
     }
 
