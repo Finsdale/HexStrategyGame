@@ -40,6 +40,7 @@ namespace HexStrategyGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+      artist.SpriteBatch = spriteBatch;
             TC.LoadContent(Content);
             // TODO: use this.Content to load your game content here
         }
@@ -68,7 +69,6 @@ namespace HexStrategyGame
 
             spriteBatch.Begin();
 
-            artist.SpriteBatch = spriteBatch;
             gameStateMachine.Draw(artist);
 
             if (debugInfo)
